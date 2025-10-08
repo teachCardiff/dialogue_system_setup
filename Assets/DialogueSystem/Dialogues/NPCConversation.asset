@@ -1,0 +1,381 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7379606190478602933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_7
+  m_EditorClassIdentifier: 
+  nodeId: d21146a5-f15e-445c-983e-a81fd93ae3f6
+  speakerName: NPC
+  dialogueText: A stranger cared to listen.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  nextNode: {fileID: -1099254920691089549}
+--- !u!114 &-7243155603609255987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_2
+  m_EditorClassIdentifier: 
+  nodeId: dfa69a6f-6802-4138-ae53-5ca33db177fd
+  speakerName: NPC
+  dialogueText: How rude.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  nextNode: {fileID: 0}
+--- !u!114 &-7040376988828299445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_3
+  m_EditorClassIdentifier: 
+  nodeId: b45e4ebd-02c9-4590-9f51-dfe26ffa0a92
+  speakerName: 
+  dialogueText: 
+  choices: []
+  conditionalBranches:
+  - condition: {fileID: 11400000, guid: 4a7c3d483a17dae4e89a11bbe18149ea, type: 2}
+    targetNode: {fileID: 3605216962116302010}
+  - condition: {fileID: 11400000, guid: 7f64e2c9f646c3d48851775afd3f8bcd, type: 2}
+    targetNode: {fileID: 620993339223878688}
+  - condition: {fileID: 11400000, guid: f15304280a063d140b1f084f756a772e, type: 2}
+    targetNode: {fileID: 1523775201836828207}
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  nextNode: {fileID: 1523775201836828207}
+--- !u!114 &-6976142709937523548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_6
+  m_EditorClassIdentifier: 
+  nodeId: 3a6f1cf1-bdaf-4e85-a33c-c569a7ca214f
+  speakerName: NPC
+  dialogueText: He wanted to tell a story.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  nextNode: {fileID: -7379606190478602933}
+--- !u!114 &-1243025271700145772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_10
+  m_EditorClassIdentifier: 
+  nodeId: 6a7ecdb2-91c5-4bcd-a9b3-3c122db40d7b
+  speakerName: NPC
+  dialogueText: Thank you! You're too kind.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  nextNode: {fileID: 0}
+--- !u!114 &-1099254920691089549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_8
+  m_EditorClassIdentifier: 
+  nodeId: e261d9d2-2236-4091-b175-f709b3c20af1
+  speakerName: NPC
+  dialogueText: This brought great joy to the old man.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  nextNode: {fileID: 9205835618650714311}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a09afc92a506d184c8c8e3fc2292ece4, type: 3}
+  m_Name: NPCConversation
+  m_EditorClassIdentifier: 
+  startNode: {fileID: -7040376988828299445}
+  nodes:
+  - {fileID: 1523775201836828207}
+  - {fileID: 1807640103486342718}
+  - {fileID: -7243155603609255987}
+  - {fileID: -7040376988828299445}
+  - {fileID: 3605216962116302010}
+  - {fileID: 620993339223878688}
+  - {fileID: -6976142709937523548}
+  - {fileID: -7379606190478602933}
+  - {fileID: -1099254920691089549}
+  - {fileID: 9205835618650714311}
+  - {fileID: -1243025271700145772}
+  - {fileID: 356341450503266405}
+  nodePositions:
+  - nodeId: a2b436e1-4344-4e5d-b4ad-a4c28c76dcf5
+    position: {x: 2166.5, y: 281}
+  - nodeId: 50363956-beee-442a-9fdf-9429a40c4135
+    position: {x: 2589.5, y: 203.5}
+  - nodeId: dfa69a6f-6802-4138-ae53-5ca33db177fd
+    position: {x: 2589.5, y: 406.5}
+  - nodeId: b45e4ebd-02c9-4590-9f51-dfe26ffa0a92
+    position: {x: 1644.5, y: 618}
+  - nodeId: 5a2faa30-807f-44dc-a16d-4d6f96c6d46f
+    position: {x: 2166.5, y: 843}
+  - nodeId: 15af8a43-adf8-474a-98dd-38d8d07d7e1c
+    position: {x: 2166.5, y: 618}
+  - nodeId: 3a6f1cf1-bdaf-4e85-a33c-c569a7ca214f
+    position: {x: 2501, y: 618}
+  - nodeId: d21146a5-f15e-445c-983e-a81fd93ae3f6
+    position: {x: 2824.5, y: 618}
+  - nodeId: e261d9d2-2236-4091-b175-f709b3c20af1
+    position: {x: 3140.5, y: 618}
+  - nodeId: d4099526-572f-457c-a113-c719bf042d28
+    position: {x: 3545.5, y: 618}
+  - nodeId: 6a7ecdb2-91c5-4bcd-a9b3-3c122db40d7b
+    position: {x: 3918, y: 540.5}
+  - nodeId: 1c9617f6-a79c-484c-b49b-65c11dc75652
+    position: {x: 3918, y: 750}
+  currentNode: {fileID: 1523775201836828207}
+--- !u!114 &356341450503266405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_11
+  m_EditorClassIdentifier: 
+  nodeId: 1c9617f6-a79c-484c-b49b-65c11dc75652
+  speakerName: NPC
+  dialogueText: Oh.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  nextNode: {fileID: 0}
+--- !u!114 &620993339223878688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_5
+  m_EditorClassIdentifier: 
+  nodeId: 15af8a43-adf8-474a-98dd-38d8d07d7e1c
+  speakerName: NPC
+  dialogueText: Once there was an old man.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  nextNode: {fileID: -6976142709937523548}
+--- !u!114 &1523775201836828207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_0
+  m_EditorClassIdentifier: 
+  nodeId: a2b436e1-4344-4e5d-b4ad-a4c28c76dcf5
+  speakerName: NPC
+  dialogueText: Hello traveler. Do you want to hear a story?
+  choices:
+  - choiceText: Yes.
+    targetNode: {fileID: 1807640103486342718}
+    conditions:
+    - {fileID: 11400000, guid: ba7d8518a39cba94e996bb9a217f1ec8, type: 2}
+    consequences:
+    - {fileID: 11400000, guid: f88bf14088c131044903160e317ac9b3, type: 2}
+  - choiceText: No.
+    targetNode: {fileID: -7243155603609255987}
+    conditions: []
+    consequences: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  nextNode: {fileID: 0}
+--- !u!114 &1807640103486342718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_1
+  m_EditorClassIdentifier: 
+  nodeId: 50363956-beee-442a-9fdf-9429a40c4135
+  speakerName: NPC
+  dialogueText: Ahh! Please, talk to me again if you want to hear it.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 97660f1527b9e5f45b07606829a8c479, type: 2}
+        m_TargetAssemblyTypeName: StartQuestConsequence, Assembly-CSharp
+        m_MethodName: Execute
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: fba666e5e122a0c49a11f09f7c588e8e, type: 2}
+          m_ObjectArgumentAssemblyTypeName: GameState, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  nextNode: {fileID: 0}
+--- !u!114 &3605216962116302010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_4
+  m_EditorClassIdentifier: 
+  nodeId: 5a2faa30-807f-44dc-a16d-4d6f96c6d46f
+  speakerName: NPC
+  dialogueText: Thank you for listening to my story. It has brought this old man
+    great joy.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  nextNode: {fileID: 0}
+--- !u!114 &9205835618650714311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_9
+  m_EditorClassIdentifier: 
+  nodeId: d4099526-572f-457c-a113-c719bf042d28
+  speakerName: NPC
+  dialogueText: Great story don't you think?
+  choices:
+  - choiceText: Yeah!
+    targetNode: {fileID: -1243025271700145772}
+    conditions: []
+    consequences:
+    - {fileID: 11400000, guid: 0f0652964da3fb24eb00b46554a3afcb, type: 2}
+  - choiceText: Not really.
+    targetNode: {fileID: 356341450503266405}
+    conditions: []
+    consequences:
+    - {fileID: 11400000, guid: 0f0652964da3fb24eb00b46554a3afcb, type: 2}
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  nextNode: {fileID: 0}

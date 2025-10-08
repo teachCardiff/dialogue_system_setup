@@ -1,0 +1,156 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-5885616772297964669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_4
+  m_EditorClassIdentifier: 
+  nodeId: c3056d59-daf9-4ffa-ad65-4ebdab5a38c0
+  speakerName: 
+  dialogueText: 
+  choices: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  nextNode: {fileID: 0}
+--- !u!114 &-5874696631578062426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_1
+  m_EditorClassIdentifier: 
+  nodeId: 0a536f28-6a85-4f7c-8a22-90e345ea88ae
+  speakerName: 
+  dialogueText: 
+  choices:
+  - choiceText: New Choice
+    targetNode: {fileID: -164134952364898161}
+    conditions: []
+    consequences: []
+  - choiceText: New Choice
+    targetNode: {fileID: 4023779814458039506}
+    conditions: []
+    consequences: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  nextNode: {fileID: 0}
+--- !u!114 &-164134952364898161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_2
+  m_EditorClassIdentifier: 
+  nodeId: 28ac6ce4-04f0-4cf5-b3e0-c2cdd0b8a3a8
+  speakerName: 
+  dialogueText: 
+  choices: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  nextNode: {fileID: -5885616772297964669}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a09afc92a506d184c8c8e3fc2292ece4, type: 3}
+  m_Name: NewDialogue
+  m_EditorClassIdentifier: 
+  startNode: {fileID: 7117456877462682969}
+  nodes:
+  - {fileID: 7117456877462682969}
+  - {fileID: -5874696631578062426}
+  - {fileID: -164134952364898161}
+  - {fileID: 4023779814458039506}
+  - {fileID: -5885616772297964669}
+  nodePositions:
+  - nodeId: 1a2a6dc4-eabb-4fc4-8a7d-d456d5c6f17d
+    position: {x: 3911, y: 717}
+  - nodeId: 0a536f28-6a85-4f7c-8a22-90e345ea88ae
+    position: {x: 4173, y: 704}
+  - nodeId: 28ac6ce4-04f0-4cf5-b3e0-c2cdd0b8a3a8
+    position: {x: 4587, y: 659}
+  - nodeId: 7cc1520a-0ea4-419b-8330-cffa24f51095
+    position: {x: 4587, y: 816}
+  - nodeId: c3056d59-daf9-4ffa-ad65-4ebdab5a38c0
+    position: {x: 4787, y: 659}
+  currentNode: {fileID: 0}
+--- !u!114 &4023779814458039506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_3
+  m_EditorClassIdentifier: 
+  nodeId: 7cc1520a-0ea4-419b-8330-cffa24f51095
+  speakerName: 
+  dialogueText: 
+  choices: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  nextNode: {fileID: 0}
+--- !u!114 &7117456877462682969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_0
+  m_EditorClassIdentifier: 
+  nodeId: 1a2a6dc4-eabb-4fc4-8a7d-d456d5c6f17d
+  speakerName: 
+  dialogueText: 
+  choices: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  nextNode: {fileID: -5874696631578062426}
