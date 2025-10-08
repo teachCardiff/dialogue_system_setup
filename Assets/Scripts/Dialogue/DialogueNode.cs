@@ -19,6 +19,7 @@ public class DialogueNode : ScriptableObject
     [System.Serializable]
     public class ConditionalBranch
     {
+        public string branchName = "New Branch";
         public Condition condition; // The check (e.g., CheckQuestCondition)
         public DialogueNode targetNode; // Branch to here if met
     }

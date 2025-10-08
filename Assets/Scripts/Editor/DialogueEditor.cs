@@ -1,7 +1,10 @@
 // using UnityEditor;
+// using UnityEditor.Callbacks;
 // using UnityEditor.Experimental.GraphView;
+// using UnityEditor.UIElements;
 // using UnityEngine;
 // using UnityEngine.UIElements;
+
 // using System;
 // using System.Linq;
 // using System.Collections.Generic;
@@ -12,11 +15,13 @@
 //     /// Custom Editor Window for visual dialogue editing.
 //     /// Provides a node-based interface for designers to create/edit dialogue trees.
 //     /// Open via Menu: Window > Dialogue Editor.
+//     /// Supports creating nodes at click position, edge-drop node creation, immediate node display, persistent node positions, choice deletion, and node deletion (via context menu or Delete key).
 //     /// </summary>
 //     public class DialogueEditor : EditorWindow
 //     {
 //         public Dialogue selectedDialogue;
-//         private DialogueGraphView graphView;
+//         public DialogueGraphView graphView;
+//         private Vector2 lastMousePosition; // Track for node-right-click creation
 
 //         [MenuItem("Window/Dialogue Editor")]
 //         public static void Open()
@@ -26,13 +31,47 @@
 
 //         private void OnEnable()
 //         {
-//             ConstructGraphView();
-//             AddToolbar();
+//             // ConstructGraphView();
+//             // AddToolbar();
+
+//             var root = rootVisualElement;
+//             root.Clear();
+
+//             var container = new VisualElement();
+//             container.style.flexDirection = FlexDirection.Column;
+//             container.style.flexGrow = 1;
+
+//             AddToolbar(container);
+
+//             graphView = new DialogueGraphView(this)
+//             {
+//                 name = "Dialogue Graph"
+//             };
+//             graphView.StretchToParentSize();
+//             graphView.style.flexGrow = 1;
+//             container.Add(graphView);
+
+//             root.Add(container);
 //         }
 
 //         private void OnDisable()
 //         {
 //             rootVisualElement.Remove(graphView);
+//         }
+
+//         private void AddToolbar(VisualElement parent)
+//         {
+//             var toolbar = new VisualElement
+//             {
+//                 style = {
+//                     flexDirection = FlexDirection.Row,
+//                     paddingTop = 5,
+//                     paddingBottom = 5,
+//                     backgroundColor = new Color(0.2f, 0.2f, 0.2f)
+//                 }
+//             };
+//             // ... add buttons ...
+//             parent.Add(toolbar);
 //         }
 
 //         private void ConstructGraphView()
@@ -54,7 +93,9 @@
 
 //         private void BuildContextualMenu(ContextualMenuPopulateEvent evt)
 //         {
-//             evt.menu.AppendAction("Create Node", a => CreateNode(evt.localMousePosition));
+//             // Store the mouse position for accurate node placement
+//             lastMousePosition = evt.mousePosition;
+//             evt.menu.AppendAction("Create Node", a => CreateNode(lastMousePosition));
 //         }
 
 //         private void AddToolbar()
@@ -72,12 +113,10 @@
 //             var loadButton = new Button(() => LoadDialogue()) { text = "Load Dialogue" };
 //             var saveButton = new Button(() => SaveDialogue()) { text = "Save" };
 //             var previewButton = new Button(() => PreviewDialogue()) { text = "Preview" };
-//             var resetButton = new Button(() => { if (selectedDialogue != null) selectedDialogue.ResetProgress(); EditorUtility.SetDirty(selectedDialogue); }) { text = "Reset Progress" };
 
 //             toolbar.Add(loadButton);
 //             toolbar.Add(saveButton);
 //             toolbar.Add(previewButton);
-//             toolbar.Add(resetButton);
 //             rootVisualElement.Add(toolbar);
 //         }
 
@@ -120,6 +159,7 @@
 
 //             // Refresh choices display
 //             nodeView.RefreshChoices();
+//             nodeView.RefreshBranches();
 
 //             return nodeView;
 //         }
@@ -131,21 +171,34 @@
 //             {
 //                 foreach (var edge in change.edgesToCreate)
 //                 {
-//                     var outputNode = edge.output.node as DialogueNodeView;
-//                     var inputNode = edge.input.node as DialogueNodeView;
-//                     if (outputNode != null && inputNode != null)
+//                     var outputNodeView = edge.output.node as DialogueNodeView;
+//                     var inputNodeView = edge.input.node as DialogueNodeView;
+//                     if (outputNodeView != null && inputNodeView != null)
 //                     {
 //                         // Check if this is a choice connection or nextNode
-//                         int choiceIndex = outputNode.GetOutputPortChoiceIndex(edge.output);
-//                         if (choiceIndex >= 0)
+//                         int index = outputNodeView.GetOutputPortIndex(edge.output);
+//                         if (index >= 0)
 //                         {
-//                             // Connect as a choice target
-//                             outputNode.dialogueNode.choices[choiceIndex].targetNode = inputNode.dialogueNode;
+//                             // Check if this is a choice or branch port (assume choices first, branches after in outputContainer)
+//                             if (index < outputNodeView.dialogueNode.choices.Count)
+//                             {
+//                                 // Choice connection
+//                                 outputNodeView.dialogueNode.choices[index].targetNode = inputNodeView.dialogueNode;
+//                             }
+//                             else
+//                             {
+//                                 // Branch connection (adjust index)
+//                                 int branchIndex = index - outputNodeView.dialogueNode.choices.Count; // If branches follow choices in container
+//                                 if (branchIndex < outputNodeView.dialogueNode.conditionalBranches.Count)
+//                                 {
+//                                     outputNodeView.dialogueNode.conditionalBranches[branchIndex].targetNode = inputNodeView.dialogueNode;
+//                                 }
+//                             }
 //                         }
 //                         else
 //                         {
-//                             // Linear connection
-//                             outputNode.dialogueNode.nextNode = inputNode.dialogueNode;
+//                             // Linear nextNode
+//                             outputNodeView.dialogueNode.nextNode = inputNodeView.dialogueNode;
 //                         }
 //                         EditorUtility.SetDirty(selectedDialogue);
 //                     }
@@ -178,6 +231,8 @@
 //                 if (selectedDialogue != null)
 //                 {
 //                     RebuildGraph();
+//                     // Auto-center view on nodes after load
+//                     FrameNodes();
 //                 }
 //                 else
 //                 {
@@ -186,7 +241,7 @@
 //             }
 //         }
 
-//         private void RebuildGraph()
+//         public void RebuildGraph()
 //         {
 //             graphView.DeleteElements(graphView.graphElements.ToList());
 //             if (selectedDialogue == null) return;
@@ -195,6 +250,11 @@
 //             foreach (var node in selectedDialogue.nodes)
 //             {
 //                 AddNodeToGraph(node, Vector2.zero);
+//             }
+
+//             foreach (var nodeView in graphView.nodes.ToList().OfType<DialogueNodeView>())
+//             {
+//                 nodeView.RefreshBranches();
 //             }
 
 //             // Reconnect edges
@@ -232,7 +292,37 @@
 //                         }
 //                     }
 //                 }
+
+//                 for (int i = 0; i < node.conditionalBranches.Count; i++)
+//                 {
+//                     var branch = node.conditionalBranches[i];
+//                     if (branch.targetNode != null)
+//                     {
+//                         var targetView = graphView.nodes.ToList().OfType<DialogueNodeView>()
+//                             .FirstOrDefault(n => n.dialogueNode == branch.targetNode);
+//                         if (targetView != null)
+//                         {
+//                             // The branch ports come after the "Next" and choice ports
+//                             int branchPortIndex = 1 + node.choices.Count + i;
+//                             var branchPort = nodeView.outputContainer[branchPortIndex].Q<Port>();
+//                             var edge = branchPort.ConnectTo(targetView.inputContainer[0].Q<Port>());
+//                             graphView.AddElement(edge);
+//                         }
+//                     }
+//                 }
 //             }
+//         }
+
+//         // New: Auto-center and frame all nodes after load
+//         private void FrameNodes()
+//         {
+//             if (selectedDialogue?.nodes == null || selectedDialogue.nodes.Count == 0) return;
+
+//             var nodes = graphView.nodes.ToList();
+//             if (nodes.Count == 0) return;
+
+//             // Use FrameAll to center on all nodes
+//             graphView.FrameAll();
 //         }
 
 //         private void SaveDialogue()
@@ -271,6 +361,21 @@
 //                 depth++;
 //             }
 //         }
+
+//         [OnOpenAsset(1)]
+//         public static bool OnOpenDialogueAsset(int instanceID, int line)
+//         {
+//             var obj = EditorUtility.InstanceIDToObject(instanceID);
+//             if (obj is Dialogue dialogueAsset) // Adjust namespace if needed
+//             {
+//                 DialogueEditor.Open();
+//                 var window = EditorWindow.GetWindow<DialogueEditor>();
+//                 window.selectedDialogue = dialogueAsset;
+//                 window.RebuildGraph();
+//                 return true;
+//             }
+//             return false;
+//         }
 //     }
 
 //     /// <summary>
@@ -279,7 +384,7 @@
 //     /// </summary>
 //     public class DialogueGraphView : GraphView
 //     {
-//         private readonly DialogueEditor editor;
+//         public readonly DialogueEditor editor;
 
 //         public DialogueGraphView(DialogueEditor editor)
 //         {
@@ -289,10 +394,18 @@
 //             this.AddManipulator(new SelectionDragger());
 //             this.AddManipulator(new RectangleSelector());
 
-//             // Add grid background
-//             var grid = new GridBackground();
+//             // Add grid background with better visibility
+//             var grid = new GridBackground() {
+//                 name = "GridBackground"
+//             };
+//             grid.style.backgroundColor = new Color(0.22f, 0.22f, 0.22f, 1); // Dark background
+//             // Make grid lines more visible
+//             var gridStyle = grid.style;
+//             gridStyle.unityBackgroundImageTintColor = new Color(0.5f, 0.5f, 0.5f, 1f);
 //             Insert(0, grid);
 //             grid.StretchToParentSize();
+
+
 
 //             // Set up edge connector for creating nodes on drop
 //             var edgeConnector = new EdgeConnector<Edge>(new CustomEdgeConnectorListener(this, editor));
@@ -322,7 +435,7 @@
 //                         var inputNode = edge.input.node as DialogueNodeView;
 //                         if (outputNode != null && inputNode != null)
 //                         {
-//                             int choiceIndex = outputNode.GetOutputPortChoiceIndex(edge.output);
+//                             int choiceIndex = outputNode.GetOutputPortIndex(edge.output);
 //                             if (choiceIndex >= 0)
 //                             {
 //                                 outputNode.dialogueNode.choices[choiceIndex].targetNode = null;
@@ -351,6 +464,13 @@
 //                 }
 //             }
 //             return compatiblePorts;
+//         }
+
+//         public DialogueNodeView CreateNodeAtPosition(Vector2 localPosition)
+//         {
+//             // Convert to world position for the CreateNode method
+//             var worldPosition = contentViewContainer.LocalToWorld(localPosition);
+//             return editor.CreateNode(worldPosition);
 //         }
 //     }
 
@@ -387,7 +507,7 @@
 //                 graphView.AddElement(edge);
 
 //                 // Update the dialogue node connections
-//                 int choiceIndex = outputNode.GetOutputPortChoiceIndex(edge.output);
+//                 int choiceIndex = outputNode.GetOutputPortIndex(edge.output);
 //                 if (choiceIndex >= 0)
 //                 {
 //                     outputNode.dialogueNode.choices[choiceIndex].targetNode = newNodeView.dialogueNode;
@@ -420,6 +540,9 @@
 //         public DialogueNode dialogueNode;
 //         private readonly Dialogue selectedDialogue;
 //         private readonly List<VisualElement> choiceElements = new List<VisualElement>();
+//         private VisualElement branchContainer;
+//         private List<Port> branchPorts = new List<Port>();
+//         private List<VisualElement> branchElements = new List<VisualElement>();
 
 //         public DialogueNodeView(DialogueNode node, Dialogue dialogue)
 //         {
@@ -442,7 +565,7 @@
 //             // Add context menu for node deletion
 //             this.AddManipulator(new ContextualMenuManipulator(BuildNodeContextMenu));
 
-//             // Node fields
+//             // Node fields (basic; detailed editing via Inspector)
 //             var speakerField = new TextField("Speaker") { value = dialogueNode.speakerName };
 //             speakerField.RegisterValueChangedCallback(evt =>
 //             {
@@ -478,6 +601,91 @@
 
 //             var addChoiceButton = new Button(() => AddChoice()) { text = "Add Choice" };
 //             mainContainer.Add(addChoiceButton);
+
+//             branchContainer = new VisualElement { name = "branch-container" };
+//             branchContainer.style.flexDirection = FlexDirection.Column;
+//             extensionContainer.Add(branchContainer);
+
+//             var addBranchButton = new Button(AddBranch) { text = "Add Conditional Branch" };
+//             mainContainer.Add(addBranchButton);
+//         }
+
+//         // Refresh method for branches (call in constructor and after changes)
+//         public void RefreshBranches()
+//         {
+//             // Clear old
+//             branchContainer.Clear();
+//             branchElements.Clear();
+
+//             int basePortCount = 1 + dialogueNode.choices.Count;
+//             while (outputContainer.childCount > basePortCount)
+//             {
+//                 outputContainer.RemoveAt(outputContainer.childCount - 1);
+//             }
+//             branchPorts.Clear();
+
+//             for (int i = 0; i < dialogueNode.conditionalBranches.Count; i++)
+//             {
+//                 var branch = dialogueNode.conditionalBranches[i];
+//                 var branchElement = new VisualElement { style = { flexDirection = FlexDirection.Row } };
+
+//                 // Name field
+//                 var nameField = new TextField("Branch Name") { value = branch.branchName };
+//                 nameField.RegisterValueChangedCallback(evt =>
+//                 {
+//                     branch.branchName = evt.newValue;
+//                     EditorUtility.SetDirty(dialogueNode);
+//                     if (i < branchPorts.Count && branchPorts[i] != null)
+//                     {
+//                         branchPorts[i].portName = evt.newValue;
+//                     }    
+//                 });
+//                 branchElement.Add(nameField);
+
+//                 // Condition assign
+//                 var condField = new ObjectField("Condition") { objectType = typeof(Condition), value = branch.condition };
+//                 condField.style.width = 200;
+//                 condField.RegisterValueChangedCallback(evt => { branch.condition = evt.newValue as Condition; EditorUtility.SetDirty(dialogueNode); });
+//                 branchElement.Add(condField);
+
+//                 // Delete button
+//                 int index = i; // Capture for lambda
+//                 var deleteButton = new Button(() => DeleteBranch(index)) { text = "X" };
+//                 branchElement.Add(deleteButton);
+
+//                 branchContainer.Add(branchElement);
+//                 branchElements.Add(branchElement);
+
+//                 // Create port
+//                 var branchPort = Port.Create<Edge>(Orientation.Horizontal, Direction.Output, Port.Capacity.Single, typeof(DialogueNode));
+//                 branchPort.portName = branch.branchName; // Dynamic label
+//                 branchPort.userData = i; // Store index for linking
+//                 outputContainer.Add(branchPort); // Or a new 'branchOutputContainer' for left side
+//                 branchPorts.Add(branchPort);
+//             }
+//         }
+
+//         private void AddBranch()
+//         {
+//             dialogueNode.conditionalBranches.Add(new DialogueNode.ConditionalBranch());
+//             EditorUtility.SetDirty(dialogueNode);
+//             var graphView = this.GetFirstAncestorOfType<DialogueGraphView>();
+//             graphView?.editor?.RebuildGraph();
+//         }
+
+//         private void DeleteBranch(int index)
+//         {
+//             var graphView = this.GetFirstAncestorOfType<DialogueGraphView>();
+//             if (index < branchPorts.Count)
+//             {
+//                 var port = branchPorts[index];
+//                 var connections = port.connections.ToList();
+//                 foreach (var edge in connections) { graphView.RemoveElement(edge); }
+//             }
+
+//             dialogueNode.conditionalBranches.RemoveAt(index);
+//             EditorUtility.SetDirty(dialogueNode);
+//             graphView?.editor?.RebuildGraph();
 //         }
 
 //         // Override to handle selection: Show this node's SO in Inspector
@@ -503,6 +711,9 @@
 
 //         private void BuildNodeContextMenu(ContextualMenuPopulateEvent evt)
 //         {
+//             // Add option to create connected node
+//             evt.menu.AppendAction("Create Connected Node", a => CreateConnectedNode());
+
 //             if (selectedDialogue.startNode != dialogueNode)
 //             {
 //                 evt.menu.AppendAction("Delete Node", a => DeleteNode());
@@ -510,6 +721,40 @@
 //             else
 //             {
 //                 evt.menu.AppendAction("Delete Node", a => { }, DropdownMenuAction.Status.Disabled);
+//             }
+//         }
+
+//         private void CreateConnectedNode()
+//         {
+//             if (selectedDialogue == null) return;
+
+//             // Calculate position to the right of current node
+//             var currentPos = GetPosition();
+//             var newPosition = new Vector2(currentPos.x + currentPos.width + 50, currentPos.y);
+
+//             // Get the graph view reference
+//             var graphView = this.GetFirstAncestorOfType<DialogueGraphView>();
+//             if (graphView == null) return;
+
+//             // Convert to world position for the CreateNode method
+//             var worldPosition = graphView.contentViewContainer.LocalToWorld(newPosition);
+
+//             // Create the new node using the editor's method
+//             var editor = graphView.editor;
+//             var newNodeView = editor.CreateNode(worldPosition);
+
+//             if (newNodeView != null)
+//             {
+//                 // Connect the current node to the new node
+//                 dialogueNode.nextNode = newNodeView.dialogueNode;
+//                 EditorUtility.SetDirty(dialogueNode);
+//                 EditorUtility.SetDirty(selectedDialogue);
+
+//                 // Create visual connection
+//                 var outputPort = outputContainer[0].Q<Port>();
+//                 var inputPort = newNodeView.inputContainer[0].Q<Port>();
+//                 var edge = outputPort.ConnectTo(inputPort);
+//                 graphView.AddElement(edge);
 //             }
 //         }
 
@@ -597,8 +842,10 @@
 //         {
 //             if (dialogueNode == null) return;
 //             dialogueNode.choices.Add(new DialogueChoice { choiceText = "New Choice" });
-//             RefreshChoices();
+//             //RefreshChoices();
 //             EditorUtility.SetDirty(dialogueNode);
+//             var graphView = this.GetFirstAncestorOfType<DialogueGraphView>();
+//             graphView?.editor?.RebuildGraph();
 //         }
 
 //         public void RefreshChoices()
@@ -666,15 +913,19 @@
 //             dialogueNode.choices.RemoveAt(index);
 
 //             // Refresh the UI and ports
-//             RefreshChoices();
+//             //RefreshChoices();
 
 //             // Mark the node and dialogue as dirty to save changes
 //             EditorUtility.SetDirty(dialogueNode);
 //             EditorUtility.SetDirty(selectedDialogue);
+
+//             var graphView = this.GetFirstAncestorOfType<DialogueGraphView>();
+//             graphView?.editor?.RebuildGraph();
+
 //             AssetDatabase.SaveAssets();
 //         }
 
-//         public int GetOutputPortChoiceIndex(Port port)
+//         public int GetOutputPortIndex(Port port)
 //         {
 //             if (port.userData is int index)
 //             {
@@ -686,6 +937,7 @@
 // }
 
 using UnityEditor;
+using UnityEditor.UIElements;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -877,7 +1129,9 @@ namespace DialogueSystem.Editor
             }
         }
 
-        private void RebuildGraph()
+        
+
+        public void RebuildGraph()
         {
             graphView.DeleteElements(graphView.graphElements.ToList());
             if (selectedDialogue == null) return;
@@ -1138,6 +1392,9 @@ namespace DialogueSystem.Editor
         public DialogueNode dialogueNode;
         private readonly Dialogue selectedDialogue;
         private readonly List<VisualElement> choiceElements = new List<VisualElement>();
+        private VisualElement branchContainer;
+        private List<Port> branchPorts = new List<Port>();
+        private List<VisualElement> branchElements = new List<VisualElement>();
 
         public DialogueNodeView(DialogueNode node, Dialogue dialogue)
         {
@@ -1196,6 +1453,13 @@ namespace DialogueSystem.Editor
 
             var addChoiceButton = new Button(() => AddChoice()) { text = "Add Choice" };
             mainContainer.Add(addChoiceButton);
+
+            branchContainer = new VisualElement { name = "branch-container" };
+            branchContainer.style.flexDirection = FlexDirection.Column;
+            extensionContainer.Add(branchContainer);
+
+            var addBranchButton = new Button(AddBranch) { text = "Add Conditional Branch" };
+            mainContainer.Add(addBranchButton);
         }
 
         // Override to handle selection: Show this node's SO in Inspector
@@ -1427,6 +1691,84 @@ namespace DialogueSystem.Editor
             EditorUtility.SetDirty(dialogueNode);
             EditorUtility.SetDirty(selectedDialogue);
             AssetDatabase.SaveAssets();
+        }
+
+        // Refresh method for branches (call in constructor and after changes)
+        public void RefreshBranches()
+        {
+            // Clear old
+            branchContainer.Clear();
+            branchElements.Clear();
+
+            int basePortCount = 1 + dialogueNode.choices.Count;
+            while (outputContainer.childCount > basePortCount)
+            {
+                outputContainer.RemoveAt(outputContainer.childCount - 1);
+            }
+            branchPorts.Clear();
+
+            for (int i = 0; i < dialogueNode.conditionalBranches.Count; i++)
+            {
+                var branch = dialogueNode.conditionalBranches[i];
+                var branchElement = new VisualElement { style = { flexDirection = FlexDirection.Row } };
+
+                // Name field
+                var nameField = new TextField("Branch Name") { value = branch.branchName };
+                nameField.RegisterValueChangedCallback(evt =>
+                {
+                    branch.branchName = evt.newValue;
+                    EditorUtility.SetDirty(dialogueNode);
+                    if (i < branchPorts.Count && branchPorts[i] != null)
+                    {
+                        branchPorts[i].portName = evt.newValue;
+                    }    
+                });
+                branchElement.Add(nameField);
+
+                // Condition assign
+                var condField = new ObjectField("Condition") { objectType = typeof(Condition), value = branch.condition };
+                condField.style.width = 200;
+                condField.RegisterValueChangedCallback(evt => { branch.condition = evt.newValue as Condition; EditorUtility.SetDirty(dialogueNode); });
+                branchElement.Add(condField);
+
+                // Delete button
+                int index = i; // Capture for lambda
+                var deleteButton = new Button(() => DeleteBranch(index)) { text = "X" };
+                branchElement.Add(deleteButton);
+
+                branchContainer.Add(branchElement);
+                branchElements.Add(branchElement);
+
+                // Create port
+                var branchPort = Port.Create<Edge>(Orientation.Horizontal, Direction.Output, Port.Capacity.Single, typeof(DialogueNode));
+                branchPort.portName = branch.branchName; // Dynamic label
+                branchPort.userData = i; // Store index for linking
+                outputContainer.Add(branchPort); // Or a new 'branchOutputContainer' for left side
+                branchPorts.Add(branchPort);
+            }
+        }
+
+        private void AddBranch()
+        {
+            dialogueNode.conditionalBranches.Add(new DialogueNode.ConditionalBranch());
+            EditorUtility.SetDirty(dialogueNode);
+            var graphView = this.GetFirstAncestorOfType<DialogueGraphView>();
+            graphView?.editor?.RebuildGraph();
+        }
+
+        private void DeleteBranch(int index)
+        {
+            var graphView = this.GetFirstAncestorOfType<DialogueGraphView>();
+            if (index < branchPorts.Count)
+            {
+                var port = branchPorts[index];
+                var connections = port.connections.ToList();
+                foreach (var edge in connections) { graphView.RemoveElement(edge); }
+            }
+
+            dialogueNode.conditionalBranches.RemoveAt(index);
+            EditorUtility.SetDirty(dialogueNode);
+            graphView?.editor?.RebuildGraph();
         }
 
         public int GetOutputPortChoiceIndex(Port port)

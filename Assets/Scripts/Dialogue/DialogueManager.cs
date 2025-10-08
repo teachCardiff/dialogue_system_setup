@@ -91,6 +91,23 @@ public class DialogueManager : MonoBehaviour
             }
         }
 
+        if (string.IsNullOrWhiteSpace(currentNode.speakerName) && string.IsNullOrWhiteSpace(currentNode.dialogueText))
+        {
+            // If there are no conditional branches, just go to next node
+            if (currentNode.nextNode != null)
+            {
+                currentNode = currentNode.nextNode;
+                yield return RunNode();
+                yield break;
+            }
+            // Or end dialogue if nothing else
+            else if (currentNode.IsEndNode)
+            {
+                EndDialogue();
+                yield break;
+            }
+        }
+
         dialogueUI.ShowDialogue(currentNode.speakerName, currentNode.dialogueText);
 
         if (currentNode.IsEndNode)

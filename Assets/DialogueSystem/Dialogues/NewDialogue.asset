@@ -16,6 +16,7 @@ MonoBehaviour:
   speakerName: 
   dialogueText: 
   choices: []
+  conditionalBranches: []
   onEnterNode:
     m_PersistentCalls:
       m_Calls: []
@@ -47,6 +48,7 @@ MonoBehaviour:
     targetNode: {fileID: 4023779814458039506}
     conditions: []
     consequences: []
+  conditionalBranches: []
   onEnterNode:
     m_PersistentCalls:
       m_Calls: []
@@ -70,6 +72,7 @@ MonoBehaviour:
   speakerName: 
   dialogueText: 
   choices: []
+  conditionalBranches: []
   onEnterNode:
     m_PersistentCalls:
       m_Calls: []
@@ -124,6 +127,7 @@ MonoBehaviour:
   speakerName: 
   dialogueText: 
   choices: []
+  conditionalBranches: []
   onEnterNode:
     m_PersistentCalls:
       m_Calls: []
@@ -147,6 +151,7 @@ MonoBehaviour:
   speakerName: 
   dialogueText: 
   choices: []
+  conditionalBranches: []
   onEnterNode:
     m_PersistentCalls:
       m_Calls: []
