@@ -23,4 +23,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   activeQuests: []
-  completedQuests: []
+  completedQuests:
+  - questName: Listen to the Old Man's story
+    finalStatus: 2

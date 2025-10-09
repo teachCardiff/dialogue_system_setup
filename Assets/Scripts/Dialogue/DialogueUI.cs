@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -9,8 +10,9 @@ using UnityEngine.UI;
 /// </summary>
 public class DialogueUI : MonoBehaviour
 {
+    [Header("UI Elements")]
     [SerializeField] private TextMeshProUGUI speakerText;
-    [SerializeField] private TextMeshProUGUI dialogueText;
+    [SerializeField] public TextMeshProUGUI dialogueText;
     [SerializeField] private Button nextButton;
     [SerializeField] private Transform choicesPanel;
     [SerializeField] private Button choiceButtonPrefab;
@@ -18,6 +20,13 @@ public class DialogueUI : MonoBehaviour
     public DialogueChoice selectedChoice { get; private set; }
 
     private bool nextPressed;
+
+    [Header("Typewriter Settings")]
+    [Tooltip("Characters per second. 0 = instant.")]
+    public float typewriterSpeed = 30f;
+
+    private Coroutine typewriterCoroutine;
+    private bool skipTypewriter;
 
     private void Awake()
     {
@@ -27,13 +36,38 @@ public class DialogueUI : MonoBehaviour
 
     public void ShowDialogue(string speaker, string text)
     {
-        
-        gameObject.SetActive(true);
+        // If UI is not active, enable and defer typewriter to next frame
+        if (!gameObject.activeInHierarchy)
+        {
+            print("Deferred Dialogue");
+            gameObject.SetActive(true);
+            StartCoroutine(ShowDialogueDeferred(speaker, text));
+            return;
+        }
+
+        ShowDialogueInternal(speaker, text);
+    }
+
+    private IEnumerator ShowDialogueDeferred(string speaker, string text)
+    {
+        yield return null;
+        ShowDialogueInternal(speaker, text);
+    }
+
+    private void ShowDialogueInternal(string speaker, string text)
+    {
         speakerText.text = speaker;
-        dialogueText.text = text;
+        dialogueText.text = "";
         choicesPanel.gameObject.SetActive(false);
         nextButton.gameObject.SetActive(true);
         nextPressed = false;
+        skipTypewriter = false;
+
+        if (typewriterCoroutine != null)
+        {
+            StopCoroutine(typewriterCoroutine);
+        }
+        typewriterCoroutine = StartCoroutine(TypeText(text));
     }
 
     public void ShowChoices(List<DialogueChoice> choices)
@@ -49,6 +83,32 @@ public class DialogueUI : MonoBehaviour
             btn.GetComponentInChildren<TextMeshProUGUI>().text = choice.choiceText;
             btn.onClick.AddListener(() => SelectChoice(choice));
         }
+    }
+
+    private IEnumerator TypeText(string text)
+    {
+        if (typewriterSpeed <= 0f)
+        {
+            dialogueText.text = text;
+            yield break;
+        }
+
+        dialogueText.text = "";
+        for (int i = 0; i < text.Length; i++)
+        {
+            if (skipTypewriter)
+            {
+                dialogueText.text = text;
+                yield break;
+            }
+            dialogueText.text += text[i];
+            yield return new WaitForSeconds(1f / typewriterSpeed);
+        }
+    }
+
+    public void SkipTypewriter()
+    {
+        skipTypewriter = true;
     }
 
     public void ClearChoices()

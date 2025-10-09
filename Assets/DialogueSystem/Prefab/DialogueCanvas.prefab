@@ -97,7 +97,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5014839434165480362
 RectTransform:
   m_ObjectHideFlags: 0
@@ -301,6 +301,7 @@ MonoBehaviour:
   nextButton: {fileID: 7404823470396030413}
   choicesPanel: {fileID: 5014839434165480362}
   choiceButtonPrefab: {fileID: 8821813406351550881, guid: a7f39b21590ed7c41b07e0b2379c26d8, type: 3}
+  typewriterSpeed: 30
 --- !u!1 &4268283627871262281
 GameObject:
   m_ObjectHideFlags: 0
@@ -455,7 +456,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &654595003819802891
 RectTransform:
   m_ObjectHideFlags: 0

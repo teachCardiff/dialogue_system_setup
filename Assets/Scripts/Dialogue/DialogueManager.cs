@@ -110,6 +110,16 @@ public class DialogueManager : MonoBehaviour
 
         dialogueUI.ShowDialogue(currentNode.speakerName, currentNode.dialogueText);
 
+        // Wait for typewriter to finish or for user to skip
+        while (dialogueUI.dialogueText.text != currentNode.dialogueText)
+        {
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) // TODO: Update to integrate new input system
+            {
+                dialogueUI.SkipTypewriter();
+            }
+            yield return null;
+        }
+
         if (currentNode.IsEndNode)
         {
             yield return new WaitUntil(() => dialogueUI.IsNextPressed()); // Wait for player to advance

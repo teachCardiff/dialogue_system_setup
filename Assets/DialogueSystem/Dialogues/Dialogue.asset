@@ -1,5 +1,29 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-4743727824786004865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_9
+  m_EditorClassIdentifier: 
+  nodeId: e7baeaf6-1652-42c8-8394-42e3d44caf52
+  speakerName: NPC
+  dialogueText: Oh.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  nextNode: {fileID: 0}
 --- !u!114 &-3063634061554661374
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34,8 +58,20 @@ MonoBehaviour:
         m_CallState: 2
   onExitNode:
     m_PersistentCalls:
-      m_Calls: []
-  nextNode: {fileID: 0}
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 0f0652964da3fb24eb00b46554a3afcb, type: 2}
+        m_TargetAssemblyTypeName: UpdateQuestProgressConsequence, Assembly-CSharp
+        m_MethodName: Execute
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: fba666e5e122a0c49a11f09f7c588e8e, type: 2}
+          m_ObjectArgumentAssemblyTypeName: GameState, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  nextNode: {fileID: 4469832741757719247}
 --- !u!114 &-2731943756198299316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,7 +195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a09afc92a506d184c8c8e3fc2292ece4, type: 3}
   m_Name: Dialogue
   m_EditorClassIdentifier: 
-  startNode: {fileID: 0}
+  startNode: {fileID: -1978411813078665388}
   nodes:
   - {fileID: -1978411813078665388}
   - {fileID: -907327734933666265}
@@ -169,9 +205,12 @@ MonoBehaviour:
   - {fileID: -2731943756198299316}
   - {fileID: 9009729886228292110}
   - {fileID: -3063634061554661374}
+  - {fileID: 4469832741757719247}
+  - {fileID: -4743727824786004865}
+  - {fileID: 2941993304389859710}
   nodePositions:
   - nodeId: 0c30ac13-6922-43d9-b29b-5d358546e8f0
-    position: {x: -338, y: 189.5}
+    position: {x: 49, y: 236.5}
   - nodeId: fbe1bc8e-ebd4-4052-a653-bfe880ba928c
     position: {x: 742.5, y: 189.5}
   - nodeId: 94f91b5e-9d8e-484f-8ef7-f247f3d0db83
@@ -186,7 +225,69 @@ MonoBehaviour:
     position: {x: 1083.5, y: 512}
   - nodeId: 851d4d79-7a65-4b9a-8fae-95dfb9a4ae29
     position: {x: 1428.5, y: 512}
-  currentNode: {fileID: 0}
+  - nodeId: d83b9d99-7aaa-4188-8711-abede7649c6f
+    position: {x: 1794.5, y: 512}
+  - nodeId: e7baeaf6-1652-42c8-8394-42e3d44caf52
+    position: {x: 2104.5, y: 651}
+  - nodeId: cef6a9f4-a299-45d6-b4b6-d3fc1cbff181
+    position: {x: 2104.5, y: 476}
+  currentNode: {fileID: -1978411813078665388}
+--- !u!114 &2941993304389859710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_10
+  m_EditorClassIdentifier: 
+  nodeId: cef6a9f4-a299-45d6-b4b6-d3fc1cbff181
+  speakerName: NPC
+  dialogueText: I thought you would!
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  nextNode: {fileID: 0}
+--- !u!114 &4469832741757719247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_8
+  m_EditorClassIdentifier: 
+  nodeId: d83b9d99-7aaa-4188-8711-abede7649c6f
+  speakerName: NPC
+  dialogueText: Did you like my story?
+  choices:
+  - choiceText: Yes.
+    targetNode: {fileID: 2941993304389859710}
+    conditions: []
+    consequences: []
+  - choiceText: No.
+    targetNode: {fileID: -4743727824786004865}
+    conditions: []
+    consequences: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  nextNode: {fileID: 0}
 --- !u!114 &5883649114378326673
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -209,7 +310,19 @@ MonoBehaviour:
       m_Calls: []
   onExitNode:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 97660f1527b9e5f45b07606829a8c479, type: 2}
+        m_TargetAssemblyTypeName: StartQuestConsequence, Assembly-CSharp
+        m_MethodName: Execute
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: fba666e5e122a0c49a11f09f7c588e8e, type: 2}
+          m_ObjectArgumentAssemblyTypeName: GameState, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   nextNode: {fileID: 0}
 --- !u!114 &6714163155600291584
 MonoBehaviour:
