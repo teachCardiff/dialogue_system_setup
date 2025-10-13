@@ -87,13 +87,20 @@ public class GameState : ScriptableObject
 
     public void StartQuest(Quest quest)
     {
-        // Avoid duplicates
-        if (GetQuest(quest.questName) != null) return;
-        
-        quest.currentStatus = Quest.Status.InProgress;
-        var entry = new QuestEntry { questName = quest.questName, questJson = quest.ToJson() };
+        if (quest == null) return;
+
+        string qName = quest.questName;
+        if (GetQuest(qName) != null || IsQuestCompleted(qName)) return; // Avoid duplicates or restarting completed quests
+
+        var tempQuest = ScriptableObject.CreateInstance<Quest>();
+        JsonUtility.FromJsonOverwrite(quest.ToJson(), tempQuest);
+        tempQuest.currentStatus = Quest.Status.InProgress;
+
+        var entry = new QuestEntry { questName = qName, questJson = tempQuest.ToJson() };
         activeQuests.Add(entry);
-        onStateChanged?.Invoke(); // Notify UI/listeners
+
+        DestroyImmediate(tempQuest);
+        onStateChanged?.Invoke();
     }
 
     public void UpdateQuestProgress(string questName, int objectiveIndex, int progress)
@@ -102,13 +109,11 @@ public class GameState : ScriptableObject
         if (quest != null)
         {
             quest.SetObjectiveProgress(objectiveIndex, progress);
-            // Update the stored JSON
             var entry = activeQuests.Find(q => q.questName == questName);
             entry.questJson = quest.ToJson();
 
             if (quest.currentStatus == Quest.Status.Completed)
             {
-                // Archive instead of just removing
                 var activeEntry = activeQuests.Find(q => q.questName == questName);
                 if (activeEntry != null)
                 {
@@ -116,17 +121,21 @@ public class GameState : ScriptableObject
                     activeQuests.Remove(activeEntry);
                     Debug.Log($"Archived completed quest: {questName}");
                 }
-                onStateChanged?.Invoke();
             }
 
+            DestroyImmediate(quest);
             onStateChanged?.Invoke();
         }
     }
 
     public bool IsQuestNotStarted(string questName)
     {
-        return !activeQuests.Exists(q => q.questName == questName) &&
-               !completedQuests.Exists(q => q.questName == questName);
+        return !IsQuestStarted(questName);
+    }
+
+    public bool IsQuestStarted(string questName)
+    {
+        return activeQuests.Exists(q => q.questName == questName) || IsQuestCompleted(questName);
     }
 
     public bool IsQuestCompleted(string questName)
@@ -136,10 +145,17 @@ public class GameState : ScriptableObject
 
     public void CompleteQuest(string questName)
     {
-        var entry = activeQuests.Find(q => q.questName == questName);
-        if (entry != null)
+        var quest = GetQuest(questName);
+        if (quest != null)
         {
+            quest.currentStatus = Quest.Status.Completed;
+            var entry = activeQuests.Find(q => q.questName == questName);
+            entry.questJson = quest.ToJson(); // Optional, but ensures status is saved
+
+            completedQuests.Add(new CompletedQuestEntry { questName = questName, finalStatus = Quest.Status.Completed });
             activeQuests.Remove(entry);
+
+            DestroyImmediate(quest);
             onStateChanged?.Invoke();
         }
     }

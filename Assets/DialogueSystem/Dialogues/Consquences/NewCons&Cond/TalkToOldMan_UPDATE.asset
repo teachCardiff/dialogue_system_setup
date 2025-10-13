@@ -9,8 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28da64b8c13eb0943b7093afbdd911c3, type: 3}
-  m_Name: CheckListenToStory-NOTSTARTED
+  m_Script: {fileID: 11500000, guid: 3dba787d424e7e9468604f8783a4f96a, type: 3}
+  m_Name: TalkToOldMan_UPDATE
   m_EditorClassIdentifier: 
-  questName: Listen to the Old Man's story
-  requiredStatus: 0
+  quest: {fileID: 11400000, guid: 0a7cc125ce3d34c4899cb607eac25eb7, type: 2}
+  questName: Talk to Old Man
+  consequenceType: 1
+  objectiveIndex: 0
+  progressDelta: 1

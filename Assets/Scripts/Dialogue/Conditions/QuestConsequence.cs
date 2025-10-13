@@ -4,10 +4,11 @@ using UnityEngine;
 public enum QuestConsequenceType { Start, UpdateProgress, Complete }
 
 // GenericQuestConsequence.cs
-[CreateAssetMenu(menuName = "Dialogue/Consequences/GenericQuestConsequence")]
-public class GenericQuestConsequence : Consequence
+[CreateAssetMenu(menuName = "Dialogue/Consequences/QuestConsequence")]
+public class QuestConsequence : Consequence
 {
-    public string questName;
+    public Quest quest;
+    //public string questName;
     public QuestConsequenceType consequenceType;
     public int objectiveIndex;
     public int progressDelta;
@@ -17,15 +18,16 @@ public class GenericQuestConsequence : Consequence
         switch (consequenceType)
         {
             case QuestConsequenceType.Start:
-                var quest = gameState.GetQuest(questName);
-                if (quest != null && quest.currentStatus == Quest.Status.NotStarted)
+                if (quest != null)
                     gameState.StartQuest(quest);
+                else
+                    Debug.LogError($"Cannot start quest: No questTemplate assigned in {name}.");
                 break;
             case QuestConsequenceType.UpdateProgress:
-                gameState.UpdateQuestProgress(questName, objectiveIndex, progressDelta);
+                gameState.UpdateQuestProgress(quest.questName, objectiveIndex, progressDelta);
                 break;
             case QuestConsequenceType.Complete:
-                gameState.CompleteQuest(questName);
+                gameState.CompleteQuest(quest.questName);
                 break;
         }
     }

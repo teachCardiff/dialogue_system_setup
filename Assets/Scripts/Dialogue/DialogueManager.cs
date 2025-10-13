@@ -75,7 +75,6 @@ public class DialogueManager : MonoBehaviour
     {
         debugCurrentNode = currentNode;
         currentNode.onEnterNode?.Invoke();
-        print("Running the node");
         // Auto-branch if conditions met (before showing this node)
         if (currentNode.conditionalBranches.Count > 0)
         {
@@ -83,7 +82,6 @@ public class DialogueManager : MonoBehaviour
             {
                 if (branch.condition != null && branch.condition.IsMet(gameState))
                 {
-                    print("Skip hub node");
                     currentNode = branch.targetNode;
                     // Recurse immediately (skip showing this hub node)
                     yield return RunNode();
@@ -114,7 +112,6 @@ public class DialogueManager : MonoBehaviour
         // Wait for typewriter to finish or for user to skip
         while (dialogueUI.dialogueText.text != currentNode.dialogueText)
         {
-            print("Can skip");
             if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) // TODO: Update to integrate new input system
             {
                 

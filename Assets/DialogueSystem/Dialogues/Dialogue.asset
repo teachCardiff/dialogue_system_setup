@@ -59,8 +59,8 @@ MonoBehaviour:
   onExitNode:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11400000, guid: 0f0652964da3fb24eb00b46554a3afcb, type: 2}
-        m_TargetAssemblyTypeName: UpdateQuestProgressConsequence, Assembly-CSharp
+      - m_Target: {fileID: 11400000, guid: cc6700cbeac2fac4dba0432d11fc7df1, type: 2}
+        m_TargetAssemblyTypeName: GenericQuestConsequence, Assembly-CSharp
         m_MethodName: Execute
         m_Mode: 2
         m_Arguments:
@@ -113,19 +113,22 @@ MonoBehaviour:
   dialogueText: 
   choices: []
   conditionalBranches:
-  - branchName: New Branch
-    condition: {fileID: 11400000, guid: 4a7c3d483a17dae4e89a11bbe18149ea, type: 2}
+  - branchName: Completed
+    condition: {fileID: 11400000, guid: bd932db482e7c884fa3009db9a1ab43a, type: 2}
     targetNode: {fileID: -1339523450164281275}
-  - branchName: New Branch
-    condition: {fileID: 11400000, guid: 7f64e2c9f646c3d48851775afd3f8bcd, type: 2}
+  - branchName: In Progress
+    condition: {fileID: 11400000, guid: 60aa94019388bdb4399630ba03b2d8be, type: 2}
     targetNode: {fileID: -2731943756198299316}
+  - branchName: Not Started
+    condition: {fileID: 11400000, guid: 294aa7969ea111c4a9cdf87ed5a665e2, type: 2}
+    targetNode: {fileID: -907327734933666265}
   onEnterNode:
     m_PersistentCalls:
       m_Calls: []
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
-  nextNode: {fileID: -907327734933666265}
+  nextNode: {fileID: 0}
 --- !u!114 &-1339523450164281275
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -210,7 +213,7 @@ MonoBehaviour:
   - {fileID: 2941993304389859710}
   nodePositions:
   - nodeId: 0c30ac13-6922-43d9-b29b-5d358546e8f0
-    position: {x: 49, y: 236.5}
+    position: {x: -563.5, y: 237}
   - nodeId: fbe1bc8e-ebd4-4052-a653-bfe880ba928c
     position: {x: 742.5, y: 189.5}
   - nodeId: 94f91b5e-9d8e-484f-8ef7-f247f3d0db83
@@ -311,8 +314,8 @@ MonoBehaviour:
   onExitNode:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11400000, guid: 97660f1527b9e5f45b07606829a8c479, type: 2}
-        m_TargetAssemblyTypeName: StartQuestConsequence, Assembly-CSharp
+      - m_Target: {fileID: 11400000, guid: b83b9d5313333964ab0e420d9e463b2d, type: 2}
+        m_TargetAssemblyTypeName: GenericQuestConsequence, Assembly-CSharp
         m_MethodName: Execute
         m_Mode: 2
         m_Arguments:

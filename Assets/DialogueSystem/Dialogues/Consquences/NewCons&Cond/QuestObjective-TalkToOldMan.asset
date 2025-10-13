@@ -9,7 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f055cfd577ff31488852dc1bbad30f9, type: 3}
-  m_Name: Start_ListenToStoryQuest
+  m_Script: {fileID: 11500000, guid: 0a0e5bae4e27eab40aa6514fd13eeb1c, type: 3}
+  m_Name: QuestObjective-TalkToOldMan
   m_EditorClassIdentifier: 
-  questToStart: {fileID: 11400000, guid: 01cef9a40fc175343942d2ba599540bf, type: 2}
+  description: Talk to the old man again.
+  targetValue: 1
+  currentProgress: 1

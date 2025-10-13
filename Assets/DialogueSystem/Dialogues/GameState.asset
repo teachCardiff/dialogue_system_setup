@@ -24,5 +24,5 @@ MonoBehaviour:
       m_Calls: []
   activeQuests: []
   completedQuests:
-  - questName: Listen to the Old Man's story
+  - questName: Talk to Old Man
     finalStatus: 2

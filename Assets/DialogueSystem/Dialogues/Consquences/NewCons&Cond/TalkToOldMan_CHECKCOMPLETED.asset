@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: TalkToOldMan
-  m_EditorClassIdentifier: Assembly-CSharp::QuestObjective
-  description: Talk to the Old Man again
-  targetValue: 1
-  currentProgress: 0
+  m_Script: {fileID: 11500000, guid: c702eda1d72ce2b449445e146259e5b0, type: 3}
+  m_Name: TalkToOldMan_CHECKCOMPLETED
+  m_EditorClassIdentifier: 
+  questName: Talk to Old Man
+  conditionType: 2
