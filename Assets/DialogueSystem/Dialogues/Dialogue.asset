@@ -83,6 +83,9 @@ MonoBehaviour:
   - branchName: New Branch
     condition: {fileID: 11400000, guid: 7f64e2c9f646c3d48851775afd3f8bcd, type: 2}
     targetNode: {fileID: -2731943756198299316}
+  - branchName: New Branch
+    condition: {fileID: 0}
+    targetNode: {fileID: 0}
   onEnterNode:
     m_PersistentCalls:
       m_Calls: []
@@ -159,7 +162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a09afc92a506d184c8c8e3fc2292ece4, type: 3}
   m_Name: Dialogue
   m_EditorClassIdentifier: 
-  startNode: {fileID: 0}
+  startNode: {fileID: -1978411813078665388}
   nodes:
   - {fileID: -1978411813078665388}
   - {fileID: -907327734933666265}
@@ -171,22 +174,22 @@ MonoBehaviour:
   - {fileID: -3063634061554661374}
   nodePositions:
   - nodeId: 0c30ac13-6922-43d9-b29b-5d358546e8f0
-    position: {x: -338, y: 189.5}
+    position: {x: -393, y: 202}
   - nodeId: fbe1bc8e-ebd4-4052-a653-bfe880ba928c
-    position: {x: 742.5, y: 189.5}
+    position: {x: 743, y: 190}
   - nodeId: 94f91b5e-9d8e-484f-8ef7-f247f3d0db83
-    position: {x: 1130.5, y: 112}
+    position: {x: 1131, y: 112}
   - nodeId: d5edda46-3b2a-4a79-89f2-7c9405f1b6e9
-    position: {x: 1130.5, y: 284.5}
+    position: {x: 1131, y: 285}
   - nodeId: 048fcb38-c43d-4538-b05f-9c0af7f09391
-    position: {x: 742.5, y: -151.5}
+    position: {x: 743, y: -151}
   - nodeId: 5e3be03b-7254-44df-80c4-c4a6892df749
-    position: {x: 742.5, y: 512}
+    position: {x: 743, y: 512}
   - nodeId: d26f3255-de2c-4141-94aa-4c9d0d02cdb3
-    position: {x: 1083.5, y: 512}
+    position: {x: 1084, y: 512}
   - nodeId: 851d4d79-7a65-4b9a-8fae-95dfb9a4ae29
-    position: {x: 1428.5, y: 512}
-  currentNode: {fileID: 0}
+    position: {x: 1429, y: 512}
+  currentNode: {fileID: 5883649114378326673}
 --- !u!114 &5883649114378326673
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -209,7 +212,19 @@ MonoBehaviour:
       m_Calls: []
   onExitNode:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: b83b9d5313333964ab0e420d9e463b2d, type: 2}
+        m_TargetAssemblyTypeName: GenericQuestConsequence, Assembly-CSharp
+        m_MethodName: Execute
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: fba666e5e122a0c49a11f09f7c588e8e, type: 2}
+          m_ObjectArgumentAssemblyTypeName: GameState, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   nextNode: {fileID: 0}
 --- !u!114 &6714163155600291584
 MonoBehaviour:

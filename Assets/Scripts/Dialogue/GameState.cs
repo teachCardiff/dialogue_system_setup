@@ -123,6 +123,12 @@ public class GameState : ScriptableObject
         }
     }
 
+    public bool IsQuestNotStarted(string questName)
+    {
+        return !activeQuests.Exists(q => q.questName == questName) &&
+               !completedQuests.Exists(q => q.questName == questName);
+    }
+
     public bool IsQuestCompleted(string questName)
     {
         return completedQuests.Exists(q => q.questName == questName);
