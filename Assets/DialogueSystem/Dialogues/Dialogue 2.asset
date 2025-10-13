@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a09afc92a506d184c8c8e3fc2292ece4, type: 3}
   m_Name: Dialogue 2
   m_EditorClassIdentifier: 
-  startNode: {fileID: 0}
+  startNode: {fileID: 8172702031979293148}
   nodes:
   - {fileID: 8172702031979293148}
   nodePositions:
   - nodeId: 55f37706-bc40-4075-926c-f851c49f2a8b
     position: {x: 602, y: 250.5}
-  currentNode: {fileID: 0}
+  currentNode: {fileID: 8172702031979293148}
 --- !u!114 &8172702031979293148
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32,8 +32,8 @@ MonoBehaviour:
   m_Name: Node_0
   m_EditorClassIdentifier: 
   nodeId: 55f37706-bc40-4075-926c-f851c49f2a8b
-  speakerName: 
-  dialogueText: 
+  speakerName: NPC
+  dialogueText: Test with only 1 node.
   choices: []
   conditionalBranches: []
   onEnterNode:

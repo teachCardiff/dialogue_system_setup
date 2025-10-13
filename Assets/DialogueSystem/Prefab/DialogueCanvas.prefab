@@ -301,6 +301,7 @@ MonoBehaviour:
   nextButton: {fileID: 7404823470396030413}
   choicesPanel: {fileID: 5014839434165480362}
   choiceButtonPrefab: {fileID: 8821813406351550881, guid: a7f39b21590ed7c41b07e0b2379c26d8, type: 3}
+  nextPressed: 0
   typewriterSpeed: 30
 --- !u!1 &4268283627871262281
 GameObject:
@@ -367,7 +368,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Hello traveler. Do you want to hear a story?
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

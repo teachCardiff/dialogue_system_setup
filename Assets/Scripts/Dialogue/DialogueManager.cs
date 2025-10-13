@@ -161,6 +161,7 @@ public class DialogueManager : MonoBehaviour
     private void EndDialogue()
     {
         print("End of dialogue");
+        dialogueUI.nextPressed = false;
         dialogueUI.Hide();
         onDialogueEnd.Invoke();
         currentDialogue = null;

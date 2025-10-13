@@ -19,7 +19,7 @@ public class DialogueUI : MonoBehaviour
 
     public DialogueChoice selectedChoice { get; private set; }
 
-    private bool nextPressed;
+    public bool nextPressed; // Set to public so DialogueManager can reset it to false at the end of a dialogue.
 
     [Header("Typewriter Settings")]
     [Tooltip("Characters per second. 0 = instant.")]
@@ -39,7 +39,7 @@ public class DialogueUI : MonoBehaviour
         // If UI is not active, enable and defer typewriter to next frame
         if (!gameObject.activeInHierarchy)
         {
-            print("Deferred Dialogue");
+            print("NextPressed: " + nextPressed);
             gameObject.SetActive(true);
             StartCoroutine(ShowDialogueDeferred(speaker, text));
             return;
@@ -65,8 +65,10 @@ public class DialogueUI : MonoBehaviour
 
         if (typewriterCoroutine != null)
         {
+            print("Stop coroutine");
             StopCoroutine(typewriterCoroutine);
         }
+        print("Start typing");
         typewriterCoroutine = StartCoroutine(TypeText(text));
     }
 
