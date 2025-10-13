@@ -423,7 +423,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 838c544fe1c0643469481c1508aac8c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueAsset: {fileID: 11400000, guid: e1026d065e4ad244ab859f17d3e3ac24, type: 2}
+  dialogueAsset: {fileID: 11400000, guid: 5312b29f9afb78f40835e5b32a4b470e, type: 2}
 --- !u!4 &1271666692
 Transform:
   m_ObjectHideFlags: 0

@@ -39,7 +39,6 @@ public class DialogueUI : MonoBehaviour
         // If UI is not active, enable and defer typewriter to next frame
         if (!gameObject.activeInHierarchy)
         {
-            print("NextPressed: " + nextPressed);
             gameObject.SetActive(true);
             StartCoroutine(ShowDialogueDeferred(speaker, text));
             return;
@@ -65,10 +64,8 @@ public class DialogueUI : MonoBehaviour
 
         if (typewriterCoroutine != null)
         {
-            print("Stop coroutine");
             StopCoroutine(typewriterCoroutine);
         }
-        print("Start typing");
         typewriterCoroutine = StartCoroutine(TypeText(text));
     }
 
@@ -127,6 +124,9 @@ public class DialogueUI : MonoBehaviour
 
     public void Hide()
     {
+        nextPressed = false;
+        speakerText.text = "";
+        dialogueText.text = "";
         gameObject.SetActive(false);
     }
 }
