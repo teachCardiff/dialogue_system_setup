@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c702eda1d72ce2b449445e146259e5b0, type: 3}
   m_Name: TalkToOldMan_CHECKINPROGRESS
   m_EditorClassIdentifier: 
-  questName: Talk to Old Man
+  quest: {fileID: 11400000, guid: 0a7cc125ce3d34c4899cb607eac25eb7, type: 2}
   conditionType: 1

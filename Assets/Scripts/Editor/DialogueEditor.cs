@@ -608,6 +608,7 @@ namespace DialogueSystem.Editor
         private VisualElement branchContainer;
         private List<Port> branchPorts = new List<Port>();
         private List<VisualElement> branchElements = new List<VisualElement>();
+        PopupField<string> expressionDropdown = null;
 
         public DialogueNodeView(DialogueNode node, Dialogue dialogue)
         {
@@ -639,6 +640,16 @@ namespace DialogueSystem.Editor
                 EditorUtility.SetDirty(dialogueNode);
             });
             mainContainer.Add(speakerField);
+
+            var charField = new ObjectField("NPC") { objectType = typeof(Character), value = dialogueNode.character };
+            charField.RegisterValueChangedCallback(evt =>
+            {
+                dialogueNode.character = evt.newValue as Character;
+                EditorUtility.SetDirty(dialogueNode);
+                RefreshCharFields();
+            });
+            mainContainer.Add(charField);
+            RefreshCharFields();
 
             var textField = new TextField("Dialogue Text") { value = dialogueNode.dialogueText, multiline = true };
             textField.RegisterValueChangedCallback(evt =>
@@ -674,6 +685,35 @@ namespace DialogueSystem.Editor
             extensionContainer.Add(addBranchButton); // Place below choices
 
             RefreshBranches(); // Initial call
+            
+        }
+
+        void RefreshCharFields()
+        {
+            if (expressionDropdown != null)
+                mainContainer.Remove(expressionDropdown);
+
+            if (dialogueNode.character != null)
+            {
+                var expressions = dialogueNode.character.expressions.ConvertAll(e => e.expressionName);
+                if (!expressions.Contains("Default")) expressions.Insert(0, "Default");
+
+                // Ensure the current value is valid
+                string currentValue = dialogueNode.charExpression;
+                if (string.IsNullOrEmpty(currentValue) || !expressions.Contains(currentValue))
+                {
+                    currentValue = "Default";
+                    dialogueNode.charExpression = currentValue;
+                }
+
+                expressionDropdown = new PopupField<string>("Expression", expressions, currentValue);
+                expressionDropdown.RegisterValueChangedCallback(e =>
+                {
+                    dialogueNode.charExpression = e.newValue;
+                    EditorUtility.SetDirty(dialogueNode);
+                });
+                mainContainer.Add(expressionDropdown);
+            }
         }
 
         // Override to handle selection: Show this node's SO in Inspector
@@ -875,6 +915,8 @@ namespace DialogueSystem.Editor
                 choicePort.userData = i; // Store choice index
                 outputContainer.Add(choicePort);
             }
+            
+            RefreshCharFields();
         }
 
         private void DeleteChoice(int index)
@@ -946,6 +988,8 @@ namespace DialogueSystem.Editor
                 outputContainer.Add(branchPort); // Append after choices
                 branchPorts.Add(branchPort);
             }
+
+            RefreshCharFields();
         }
 
         private void AddBranch()

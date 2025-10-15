@@ -16,6 +16,7 @@ public class DialogueUI : MonoBehaviour
     [SerializeField] private Button nextButton;
     [SerializeField] private Transform choicesPanel;
     [SerializeField] private Button choiceButtonPrefab;
+    [SerializeField] private Image charImage;
 
     public DialogueChoice selectedChoice { get; private set; }
 
@@ -34,31 +35,38 @@ public class DialogueUI : MonoBehaviour
         nextButton.onClick.AddListener(() => nextPressed = true);
     }
 
-    public void ShowDialogue(string speaker, string text)
+    public void ShowDialogue(string speaker, string text, Sprite sprite)
     {
         // If UI is not active, enable and defer typewriter to next frame
         if (!gameObject.activeInHierarchy)
         {
             gameObject.SetActive(true);
-            StartCoroutine(ShowDialogueDeferred(speaker, text));
+            StartCoroutine(ShowDialogueDeferred(speaker, text, sprite));
             return;
         }
 
-        ShowDialogueInternal(speaker, text);
+        ShowDialogueInternal(speaker, text, sprite);
     }
 
-    private IEnumerator ShowDialogueDeferred(string speaker, string text)
+    private IEnumerator ShowDialogueDeferred(string speaker, string text, Sprite sprite)
     {
         yield return null;
-        ShowDialogueInternal(speaker, text);
+        ShowDialogueInternal(speaker, text, sprite);
     }
 
-    private void ShowDialogueInternal(string speaker, string text)
+    private void ShowDialogueInternal(string speaker, string text, Sprite sprite)
     {
         speakerText.text = speaker;
         dialogueText.text = "";
+        if (sprite != null)
+        {
+            charImage.sprite = sprite;
+            //charImage.gameObject.SetActive(true);
+        }
+
         choicesPanel.gameObject.SetActive(false);
         nextButton.gameObject.SetActive(true);
+        charImage.gameObject.SetActive(true);
         nextPressed = false;
         skipTypewriter = false;
 
@@ -127,6 +135,7 @@ public class DialogueUI : MonoBehaviour
         nextPressed = false;
         speakerText.text = "";
         dialogueText.text = "";
+        charImage.gameObject.SetActive(false);
         gameObject.SetActive(false);
     }
 }

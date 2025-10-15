@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeId: e7baeaf6-1652-42c8-8394-42e3d44caf52
   speakerName: NPC
+  character: {fileID: 0}
+  charExpression: 
   dialogueText: Oh.
   choices: []
   conditionalBranches: []
@@ -38,6 +40,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeId: 851d4d79-7a65-4b9a-8fae-95dfb9a4ae29
   speakerName: NPC
+  character: {fileID: 11400000, guid: 41ab1a86490455c46a9f5f41604bcf4f, type: 2}
+  charExpression: Happy
   dialogueText: It brought him great joy to do so.
   choices: []
   conditionalBranches: []
@@ -86,6 +90,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeId: 5e3be03b-7254-44df-80c4-c4a6892df749
   speakerName: NPC
+  character: {fileID: 11400000, guid: 41ab1a86490455c46a9f5f41604bcf4f, type: 2}
+  charExpression: Talking
   dialogueText: Once there was an old man.
   choices: []
   conditionalBranches: []
@@ -110,6 +116,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeId: 0c30ac13-6922-43d9-b29b-5d358546e8f0
   speakerName: 
+  character: {fileID: 0}
+  charExpression: 
   dialogueText: 
   choices: []
   conditionalBranches:
@@ -143,6 +151,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeId: 048fcb38-c43d-4538-b05f-9c0af7f09391
   speakerName: NPC
+  character: {fileID: 11400000, guid: 41ab1a86490455c46a9f5f41604bcf4f, type: 2}
+  charExpression: Happy
   dialogueText: Thank you for listening to my story. It brought me great joy to share
     it with you.
   choices: []
@@ -168,6 +178,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeId: fbe1bc8e-ebd4-4052-a653-bfe880ba928c
   speakerName: NPC
+  character: {fileID: 11400000, guid: 41ab1a86490455c46a9f5f41604bcf4f, type: 2}
+  charExpression: Talking
   dialogueText: Hello! Would you like to hear a story?
   choices:
   - choiceText: Yes
@@ -213,27 +225,27 @@ MonoBehaviour:
   - {fileID: 2941993304389859710}
   nodePositions:
   - nodeId: 0c30ac13-6922-43d9-b29b-5d358546e8f0
-    position: {x: -563.5, y: 237}
+    position: {x: -551.5, y: 338}
   - nodeId: fbe1bc8e-ebd4-4052-a653-bfe880ba928c
-    position: {x: 742.5, y: 189.5}
+    position: {x: 256.5, y: 189.5}
   - nodeId: 94f91b5e-9d8e-484f-8ef7-f247f3d0db83
-    position: {x: 1130.5, y: 112}
+    position: {x: 689, y: 73.5}
   - nodeId: d5edda46-3b2a-4a79-89f2-7c9405f1b6e9
-    position: {x: 1130.5, y: 284.5}
+    position: {x: 689, y: 284.5}
   - nodeId: 048fcb38-c43d-4538-b05f-9c0af7f09391
-    position: {x: 742.5, y: -151.5}
+    position: {x: 256.5, y: -171}
   - nodeId: 5e3be03b-7254-44df-80c4-c4a6892df749
-    position: {x: 742.5, y: 512}
+    position: {x: 303.5, y: 600}
   - nodeId: d26f3255-de2c-4141-94aa-4c9d0d02cdb3
-    position: {x: 1083.5, y: 512}
+    position: {x: 646.5, y: 600}
   - nodeId: 851d4d79-7a65-4b9a-8fae-95dfb9a4ae29
-    position: {x: 1428.5, y: 512}
+    position: {x: 1033.5, y: 600}
   - nodeId: d83b9d99-7aaa-4188-8711-abede7649c6f
-    position: {x: 1794.5, y: 512}
+    position: {x: 1434, y: 556}
   - nodeId: e7baeaf6-1652-42c8-8394-42e3d44caf52
-    position: {x: 2104.5, y: 651}
+    position: {x: 1763.5, y: 688}
   - nodeId: cef6a9f4-a299-45d6-b4b6-d3fc1cbff181
-    position: {x: 2104.5, y: 476}
+    position: {x: 1763.5, y: 475.5}
   currentNode: {fileID: -1978411813078665388}
 --- !u!114 &2941993304389859710
 MonoBehaviour:
@@ -249,6 +261,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeId: cef6a9f4-a299-45d6-b4b6-d3fc1cbff181
   speakerName: NPC
+  character: {fileID: 11400000, guid: 41ab1a86490455c46a9f5f41604bcf4f, type: 2}
+  charExpression: Default
   dialogueText: I thought you would!
   choices: []
   conditionalBranches: []
@@ -273,6 +287,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeId: d83b9d99-7aaa-4188-8711-abede7649c6f
   speakerName: NPC
+  character: {fileID: 11400000, guid: 41ab1a86490455c46a9f5f41604bcf4f, type: 2}
+  charExpression: Serious
   dialogueText: Did you like my story?
   choices:
   - choiceText: Yes.
@@ -305,6 +321,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeId: 94f91b5e-9d8e-484f-8ef7-f247f3d0db83
   speakerName: NPC
+  character: {fileID: 11400000, guid: 41ab1a86490455c46a9f5f41604bcf4f, type: 2}
+  charExpression: Smiling
   dialogueText: Talk to me again if you want to hear it!
   choices: []
   conditionalBranches: []
@@ -341,6 +359,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeId: d5edda46-3b2a-4a79-89f2-7c9405f1b6e9
   speakerName: NPC
+  character: {fileID: 11400000, guid: 41ab1a86490455c46a9f5f41604bcf4f, type: 2}
+  charExpression: Serious
   dialogueText: Kids these days!
   choices: []
   conditionalBranches: []
@@ -365,6 +385,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeId: d26f3255-de2c-4141-94aa-4c9d0d02cdb3
   speakerName: NPC
+  character: {fileID: 11400000, guid: 41ab1a86490455c46a9f5f41604bcf4f, type: 2}
+  charExpression: Talking
   dialogueText: He told a young man a story.
   choices: []
   conditionalBranches: []

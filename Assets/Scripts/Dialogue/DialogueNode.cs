@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.TextCore.Text;
 
 /// <summary>
 /// ScriptableObject for a single dialogue node.
@@ -12,6 +13,8 @@ public class DialogueNode : ScriptableObject
 {
     public string nodeId; // Unique ID for saving/linking
     public string speakerName;
+    public Character character;
+    public string charExpression;
     [TextArea(3, 10)] public string dialogueText;
 
     public List<DialogueChoice> choices = new List<DialogueChoice>();

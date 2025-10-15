@@ -107,7 +107,13 @@ public class DialogueManager : MonoBehaviour
             }
         }
 
-        dialogueUI.ShowDialogue(currentNode.speakerName, currentNode.dialogueText);
+        Sprite spriteToShow = null;
+        if (currentNode.character != null)
+        {
+            spriteToShow = currentNode.character.GetSprite(currentNode.charExpression);
+        }
+
+        dialogueUI.ShowDialogue(currentNode.speakerName, currentNode.dialogueText, spriteToShow);
 
         // Wait for typewriter to finish or for user to skip
         while (dialogueUI.dialogueText.text != currentNode.dialogueText)
