@@ -609,6 +609,8 @@ namespace DialogueSystem.Editor
         private List<Port> branchPorts = new List<Port>();
         private List<VisualElement> branchElements = new List<VisualElement>();
         PopupField<string> expressionDropdown = null;
+        private TextField speakerField;
+        private ObjectField charField;
 
         public DialogueNodeView(DialogueNode node, Dialogue dialogue)
         {
@@ -632,7 +634,7 @@ namespace DialogueSystem.Editor
             this.AddManipulator(new ContextualMenuManipulator(BuildNodeContextMenu));
 
             // Node fields (basic; detailed editing via Inspector)
-            var speakerField = new TextField("Speaker") { value = dialogueNode.speakerName };
+            speakerField = new TextField("Speaker") { value = dialogueNode.speakerName };
             speakerField.RegisterValueChangedCallback(evt =>
             {
                 dialogueNode.speakerName = evt.newValue;
@@ -641,7 +643,7 @@ namespace DialogueSystem.Editor
             });
             mainContainer.Add(speakerField);
 
-            var charField = new ObjectField("NPC") { objectType = typeof(Character), value = dialogueNode.character };
+            charField = new ObjectField("NPC") { objectType = typeof(Character), value = dialogueNode.character };
             charField.RegisterValueChangedCallback(evt =>
             {
                 dialogueNode.character = evt.newValue as Character;
@@ -690,15 +692,51 @@ namespace DialogueSystem.Editor
 
         void RefreshCharFields()
         {
+            // if (expressionDropdown != null)
+            //     mainContainer.Remove(expressionDropdown);
+
+            // if (dialogueNode.character != null)
+            // {
+            //     var expressions = dialogueNode.character.expressions.ConvertAll(e => e.expressionName);
+            //     if (!expressions.Contains("Default")) expressions.Insert(0, "Default");
+
+            //     // Ensure the current value is valid
+            //     string currentValue = dialogueNode.charExpression;
+            //     if (string.IsNullOrEmpty(currentValue) || !expressions.Contains(currentValue))
+            //     {
+            //         currentValue = "Default";
+            //         dialogueNode.charExpression = currentValue;
+            //     }
+
+            //     expressionDropdown = new PopupField<string>("Expression", expressions, currentValue);
+            //     expressionDropdown.RegisterValueChangedCallback(e =>
+            //     {
+            //         dialogueNode.charExpression = e.newValue;
+            //         EditorUtility.SetDirty(dialogueNode);
+            //     });
+            //     mainContainer.Add(expressionDropdown);
+            // }
+            // Remove old dropdown if present
             if (expressionDropdown != null)
+            {
                 mainContainer.Remove(expressionDropdown);
+                expressionDropdown = null;
+            }
 
             if (dialogueNode.character != null)
             {
+                // Overwrite speaker name with character SO name and disable editing
+                speakerField.value = dialogueNode.character.npcName;
+                speakerField.SetEnabled(false);
+
+                dialogueNode.speakerName = dialogueNode.character.npcName;
+                EditorUtility.SetDirty(dialogueNode);
+
+                // Build expression list
                 var expressions = dialogueNode.character.expressions.ConvertAll(e => e.expressionName);
                 if (!expressions.Contains("Default")) expressions.Insert(0, "Default");
 
-                // Ensure the current value is valid
+                // Ensure current value is valid
                 string currentValue = dialogueNode.charExpression;
                 if (string.IsNullOrEmpty(currentValue) || !expressions.Contains(currentValue))
                 {
@@ -712,7 +750,14 @@ namespace DialogueSystem.Editor
                     dialogueNode.charExpression = e.newValue;
                     EditorUtility.SetDirty(dialogueNode);
                 });
-                mainContainer.Add(expressionDropdown);
+
+                // Insert directly after the character field
+                mainContainer.Insert(mainContainer.IndexOf(charField) + 1, expressionDropdown);
+            }
+            else
+            {
+                // No character: enable speaker field for manual entry
+                speakerField.SetEnabled(true);
             }
         }
 
