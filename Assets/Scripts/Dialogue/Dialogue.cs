@@ -10,6 +10,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Dialogue", menuName = "Dialogue/Dialogue", order = 2)]
 public class Dialogue : ScriptableObject
 {
+    public Character defaultSpeaker;
+    public string defaultSpeakerName;
+    public bool showDefaultListener;
+    public Character defaultListener;
     public DialogueNode startNode;
     public List<DialogueNode> nodes = new List<DialogueNode>();
 

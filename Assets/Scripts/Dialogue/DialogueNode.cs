@@ -12,13 +12,18 @@ using UnityEngine.TextCore.Text;
 public class DialogueNode : ScriptableObject
 {
     public string nodeId; // Unique ID for saving/linking
-    public string speakerName;
+    public bool overrideSpeaker;
+    public bool overrideListener;
     public Character speakerCharacter;
+    public Character listenerCharacter;
+    public string speakerName;
+    //public Character speakerCharacter;
     public string speakerExpression;
     // Optional 2nd character to display both sprites
-    public Character listenerCharacter;
+    //public Character listenerCharacter;
     public string listenerExpression;
     public bool listenerIsSpeaker;
+    
     [TextArea(3, 10)] public string dialogueText;
 
     public List<DialogueChoice> choices = new List<DialogueChoice>();

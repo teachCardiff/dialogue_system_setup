@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: Node_9
   m_EditorClassIdentifier: 
   nodeId: e7baeaf6-1652-42c8-8394-42e3d44caf52
-  speakerName: Old Man
+  overrideSpeaker: 0
+  overrideListener: 0
   speakerCharacter: {fileID: 11400000, guid: 41ab1a86490455c46a9f5f41604bcf4f, type: 2}
-  speakerExpression: Default
   listenerCharacter: {fileID: 0}
+  speakerName: Old Man
+  speakerExpression: Default
   listenerExpression: 
   listenerIsSpeaker: 0
   dialogueText: Oh.
@@ -42,10 +44,12 @@ MonoBehaviour:
   m_Name: Node_7
   m_EditorClassIdentifier: 
   nodeId: 851d4d79-7a65-4b9a-8fae-95dfb9a4ae29
-  speakerName: Old Man
+  overrideSpeaker: 0
+  overrideListener: 0
   speakerCharacter: {fileID: 11400000, guid: 41ab1a86490455c46a9f5f41604bcf4f, type: 2}
-  speakerExpression: Default
   listenerCharacter: {fileID: 0}
+  speakerName: Old Man
+  speakerExpression: Default
   listenerExpression: 
   listenerIsSpeaker: 0
   dialogueText: It brought him great joy to do so.
@@ -95,10 +99,12 @@ MonoBehaviour:
   m_Name: Node_5
   m_EditorClassIdentifier: 
   nodeId: 5e3be03b-7254-44df-80c4-c4a6892df749
-  speakerName: Old Man
+  overrideSpeaker: 0
+  overrideListener: 0
   speakerCharacter: {fileID: 11400000, guid: 41ab1a86490455c46a9f5f41604bcf4f, type: 2}
-  speakerExpression: Default
   listenerCharacter: {fileID: 0}
+  speakerName: Old Man
+  speakerExpression: Default
   listenerExpression: 
   listenerIsSpeaker: 0
   dialogueText: Once there was an old man.
@@ -124,10 +130,12 @@ MonoBehaviour:
   m_Name: Node_11
   m_EditorClassIdentifier: 
   nodeId: df5df906-ef83-4c0a-b88b-de18c48798fd
-  speakerName: Hero
+  overrideSpeaker: 0
+  overrideListener: 0
   speakerCharacter: {fileID: 11400000, guid: 41ab1a86490455c46a9f5f41604bcf4f, type: 2}
-  speakerExpression: Default
   listenerCharacter: {fileID: 11400000, guid: 2d90c1cea61b3d6428253b9783ae5698, type: 2}
+  speakerName: Hero
+  speakerExpression: Default
   listenerExpression: Smile
   listenerIsSpeaker: 1
   dialogueText: Sure thing.
@@ -153,10 +161,12 @@ MonoBehaviour:
   m_Name: Node_0
   m_EditorClassIdentifier: 
   nodeId: 0c30ac13-6922-43d9-b29b-5d358546e8f0
-  speakerName: NPC
+  overrideSpeaker: 0
+  overrideListener: 0
   speakerCharacter: {fileID: 0}
-  speakerExpression: 
   listenerCharacter: {fileID: 0}
+  speakerName: NPC
+  speakerExpression: 
   listenerExpression: 
   listenerIsSpeaker: 0
   dialogueText: 
@@ -191,10 +201,12 @@ MonoBehaviour:
   m_Name: Node_4
   m_EditorClassIdentifier: 
   nodeId: 048fcb38-c43d-4538-b05f-9c0af7f09391
-  speakerName: Old Man
+  overrideSpeaker: 0
+  overrideListener: 0
   speakerCharacter: {fileID: 11400000, guid: 41ab1a86490455c46a9f5f41604bcf4f, type: 2}
-  speakerExpression: Smiling
   listenerCharacter: {fileID: 11400000, guid: 2d90c1cea61b3d6428253b9783ae5698, type: 2}
+  speakerName: Old Man
+  speakerExpression: Smiling
   listenerExpression: Default
   listenerIsSpeaker: 0
   dialogueText: Thank you for listening to my story. It brought me great joy to share
@@ -221,10 +233,12 @@ MonoBehaviour:
   m_Name: Node_1
   m_EditorClassIdentifier: 
   nodeId: fbe1bc8e-ebd4-4052-a653-bfe880ba928c
-  speakerName: Old Man
+  overrideSpeaker: 0
+  overrideListener: 0
   speakerCharacter: {fileID: 11400000, guid: 41ab1a86490455c46a9f5f41604bcf4f, type: 2}
-  speakerExpression: Default
   listenerCharacter: {fileID: 0}
+  speakerName: Old Man
+  speakerExpression: Default
   listenerExpression: 
   listenerIsSpeaker: 0
   dialogueText: Hello! Would you like to hear a story?
@@ -257,6 +271,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a09afc92a506d184c8c8e3fc2292ece4, type: 3}
   m_Name: Dialogue
   m_EditorClassIdentifier: 
+  defaultSpeaker: {fileID: 0}
+  defaultSpeakerName: 
+  showDefaultListener: 0
+  defaultListener: {fileID: 0}
   startNode: {fileID: -1978411813078665388}
   nodes:
   - {fileID: -1978411813078665388}
@@ -310,10 +328,12 @@ MonoBehaviour:
   m_Name: Node_10
   m_EditorClassIdentifier: 
   nodeId: cef6a9f4-a299-45d6-b4b6-d3fc1cbff181
-  speakerName: Old Man
+  overrideSpeaker: 0
+  overrideListener: 0
   speakerCharacter: {fileID: 11400000, guid: 41ab1a86490455c46a9f5f41604bcf4f, type: 2}
-  speakerExpression: Default
   listenerCharacter: {fileID: 0}
+  speakerName: Old Man
+  speakerExpression: Default
   listenerExpression: 
   listenerIsSpeaker: 0
   dialogueText: I thought you would!
@@ -339,10 +359,12 @@ MonoBehaviour:
   m_Name: Node_8
   m_EditorClassIdentifier: 
   nodeId: d83b9d99-7aaa-4188-8711-abede7649c6f
-  speakerName: Old Man
+  overrideSpeaker: 0
+  overrideListener: 0
   speakerCharacter: {fileID: 11400000, guid: 41ab1a86490455c46a9f5f41604bcf4f, type: 2}
-  speakerExpression: Default
   listenerCharacter: {fileID: 0}
+  speakerName: Old Man
+  speakerExpression: Default
   listenerExpression: 
   listenerIsSpeaker: 0
   dialogueText: Did you like my story?
@@ -376,10 +398,12 @@ MonoBehaviour:
   m_Name: Node_2
   m_EditorClassIdentifier: 
   nodeId: 94f91b5e-9d8e-484f-8ef7-f247f3d0db83
-  speakerName: Old Man
+  overrideSpeaker: 0
+  overrideListener: 0
   speakerCharacter: {fileID: 11400000, guid: 41ab1a86490455c46a9f5f41604bcf4f, type: 2}
-  speakerExpression: Default
   listenerCharacter: {fileID: 0}
+  speakerName: Old Man
+  speakerExpression: Default
   listenerExpression: 
   listenerIsSpeaker: 0
   dialogueText: Talk to me again if you want to hear it!
@@ -417,10 +441,12 @@ MonoBehaviour:
   m_Name: Node_3
   m_EditorClassIdentifier: 
   nodeId: d5edda46-3b2a-4a79-89f2-7c9405f1b6e9
-  speakerName: Old Man
+  overrideSpeaker: 0
+  overrideListener: 0
   speakerCharacter: {fileID: 11400000, guid: 41ab1a86490455c46a9f5f41604bcf4f, type: 2}
-  speakerExpression: Default
   listenerCharacter: {fileID: 0}
+  speakerName: Old Man
+  speakerExpression: Default
   listenerExpression: 
   listenerIsSpeaker: 0
   dialogueText: Kids these days!
@@ -446,10 +472,12 @@ MonoBehaviour:
   m_Name: Node_6
   m_EditorClassIdentifier: 
   nodeId: d26f3255-de2c-4141-94aa-4c9d0d02cdb3
-  speakerName: Old Man
+  overrideSpeaker: 0
+  overrideListener: 0
   speakerCharacter: {fileID: 11400000, guid: 41ab1a86490455c46a9f5f41604bcf4f, type: 2}
-  speakerExpression: Default
   listenerCharacter: {fileID: 0}
+  speakerName: Old Man
+  speakerExpression: Default
   listenerExpression: 
   listenerIsSpeaker: 0
   dialogueText: He told a young man a story.

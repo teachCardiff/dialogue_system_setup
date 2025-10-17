@@ -108,6 +108,9 @@ public class DialogueManager : MonoBehaviour
             }
         }
 
+        Character speaker = currentNode.overrideSpeaker ? currentNode.speakerCharacter : currentDialogue.defaultSpeaker;
+        Character listener = currentNode.overrideListener ? currentNode.listenerCharacter : currentDialogue.defaultListener;
+
         Sprite speakerSprite = null;
         if (currentNode.speakerCharacter != null)
             speakerSprite = currentNode.speakerCharacter.GetSprite(currentNode.speakerExpression);
