@@ -16,11 +16,13 @@ public class DialogueUI : MonoBehaviour
     [SerializeField] private Button nextButton;
     [SerializeField] private Transform choicesPanel;
     [SerializeField] private Button choiceButtonPrefab;
-    [SerializeField] private Image charImage;
+    [Header("Optional UI Elements")]
+    [SerializeField] private Image speakerImage;
+    [SerializeField] private Image listenerImage;
 
     public DialogueChoice selectedChoice { get; private set; }
 
-    public bool nextPressed; // Set to public so DialogueManager can reset it to false at the end of a dialogue.
+    [HideInInspector] public bool nextPressed; // Set to public so DialogueManager can reset it to false at the end of a dialogue.
 
     [Header("Typewriter Settings")]
     [Tooltip("Characters per second. 0 = instant.")]
@@ -35,38 +37,52 @@ public class DialogueUI : MonoBehaviour
         nextButton.onClick.AddListener(() => nextPressed = true);
     }
 
-    public void ShowDialogue(string speaker, string text, Sprite sprite)
+    public void ShowDialogue(string speaker, string text, Sprite speakerSprite, Sprite listenerSprite = null)
     {
         // If UI is not active, enable and defer typewriter to next frame
         if (!gameObject.activeInHierarchy)
         {
             gameObject.SetActive(true);
-            StartCoroutine(ShowDialogueDeferred(speaker, text, sprite));
+            StartCoroutine(ShowDialogueDeferred(speaker, text, speakerSprite, listenerSprite));
             return;
         }
 
-        ShowDialogueInternal(speaker, text, sprite);
+        ShowDialogueInternal(speaker, text, speakerSprite, listenerSprite);
     }
 
-    private IEnumerator ShowDialogueDeferred(string speaker, string text, Sprite sprite)
+    private IEnumerator ShowDialogueDeferred(string speaker, string text, Sprite speakerSprite, Sprite listenerSprite = null)
     {
         yield return null;
-        ShowDialogueInternal(speaker, text, sprite);
+        ShowDialogueInternal(speaker, text, speakerSprite, listenerSprite);
     }
 
-    private void ShowDialogueInternal(string speaker, string text, Sprite sprite)
+    private void ShowDialogueInternal(string speaker, string text, Sprite speakerSprite, Sprite listenerSprite = null)
     {
         speakerText.text = speaker;
         dialogueText.text = "";
-        if (sprite != null)
+        if (speakerSprite != null && speakerImage != null)
         {
-            charImage.sprite = sprite;
-            //charImage.gameObject.SetActive(true);
+            speakerImage.sprite = speakerSprite;
+            speakerImage.gameObject.SetActive(true);
+        }
+        else
+        {
+            speakerImage?.gameObject?.SetActive(false);
+        }
+
+        if (listenerSprite != null && listenerImage != null)
+        {
+            listenerImage.sprite = listenerSprite;
+            listenerImage.gameObject.SetActive(true);
+        }
+        else
+        {
+            listenerImage?.gameObject?.SetActive(false);
         }
 
         choicesPanel.gameObject.SetActive(false);
         nextButton.gameObject.SetActive(true);
-        charImage.gameObject.SetActive(true);
+        //speakerImage.gameObject.SetActive(true);
         nextPressed = false;
         skipTypewriter = false;
 
@@ -135,7 +151,7 @@ public class DialogueUI : MonoBehaviour
         nextPressed = false;
         speakerText.text = "";
         dialogueText.text = "";
-        charImage.gameObject.SetActive(false);
+        //speakerImage.gameObject.SetActive(false);
         gameObject.SetActive(false);
     }
 }

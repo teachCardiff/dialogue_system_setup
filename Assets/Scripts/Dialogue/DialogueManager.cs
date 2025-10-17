@@ -108,13 +108,25 @@ public class DialogueManager : MonoBehaviour
             }
         }
 
-        Sprite spriteToShow = null;
-        if (currentNode.character != null)
+        Sprite speakerSprite = null;
+        if (currentNode.speakerCharacter != null)
+            speakerSprite = currentNode.speakerCharacter.GetSprite(currentNode.speakerExpression);
+
+        Sprite listenerSprite = null;
+        if (currentNode.listenerCharacter != null)
         {
-            spriteToShow = currentNode.character.GetSprite(currentNode.charExpression);
+            listenerSprite = currentNode.listenerCharacter.GetSprite(currentNode.listenerExpression);
         }
 
-        dialogueUI.ShowDialogue(currentNode.speakerName, currentNode.dialogueText, spriteToShow);
+        // Update speaker name based on who is active speaker
+        string speakerName = currentNode.speakerName;
+        if (currentNode.listenerIsSpeaker && currentNode.listenerCharacter != null)
+        {
+            speakerName = currentNode.listenerCharacter.npcName;
+        }
+        dialogueUI.ShowDialogue(speakerName, currentNode.dialogueText, speakerSprite, listenerSprite);
+
+        // dialogueUI.ShowDialogue(currentNode.speakerName, currentNode.dialogueText, speakerSprite, listenerSprite);
 
         // Wait for typewriter to finish or for user to skip
         while (dialogueUI.dialogueText.text != currentNode.dialogueText)
