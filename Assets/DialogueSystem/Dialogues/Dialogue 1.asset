@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Node_1
   m_EditorClassIdentifier: 
   nodeId: 6d993715-66d3-4579-99fe-f95bfc9fe0d1
-  speakerName: 
-  dialogueText: 
+  speakerName: NPC
+  dialogueText: I ahve an issue with my dog. Can you take it for a walk?
   choices: []
   conditionalBranches: []
   onEnterNode:
@@ -36,16 +36,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a09afc92a506d184c8c8e3fc2292ece4, type: 3}
   m_Name: Dialogue 1
   m_EditorClassIdentifier: 
-  startNode: {fileID: 0}
+  startNode: {fileID: 1243316973761281098}
   nodes:
   - {fileID: 1243316973761281098}
   - {fileID: -8785408305610688504}
   nodePositions:
   - nodeId: 9c28cb6b-ac87-4df2-9890-29934208f62e
-    position: {x: 629, y: 222}
+    position: {x: 135, y: 247}
   - nodeId: 6d993715-66d3-4579-99fe-f95bfc9fe0d1
-    position: {x: 830, y: 222}
-  currentNode: {fileID: 0}
+    position: {x: 680, y: 247}
+  currentNode: {fileID: -8785408305610688504}
 --- !u!114 &1243316973761281098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59,8 +59,8 @@ MonoBehaviour:
   m_Name: Node_0
   m_EditorClassIdentifier: 
   nodeId: 9c28cb6b-ac87-4df2-9890-29934208f62e
-  speakerName: 
-  dialogueText: 
+  speakerName: NPC
+  dialogueText: Hellow there good sir. I'm so glad you game to me.
   choices: []
   conditionalBranches: []
   onEnterNode:

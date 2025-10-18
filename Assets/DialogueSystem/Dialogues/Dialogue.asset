@@ -1,5 +1,29 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8881064333733254506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_12
+  m_EditorClassIdentifier: 
+  nodeId: 2d23a3d6-301b-46c5-8a5a-224819789057
+  speakerName: 
+  dialogueText: 
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  nextNode: {fileID: 0}
 --- !u!114 &-4743727824786004865
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15,6 +39,30 @@ MonoBehaviour:
   nodeId: e7baeaf6-1652-42c8-8394-42e3d44caf52
   speakerName: NPC
   dialogueText: Oh.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  nextNode: {fileID: 0}
+--- !u!114 &-3848529885013942465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_11
+  m_EditorClassIdentifier: 
+  nodeId: deb49dbb-d0b7-42ca-918f-e9ef4439cd4c
+  speakerName: NPC
+  dialogueText: '[b][gradient=rainbow]Important[/gradient][/b] and [wave=4,3]sway[/wave]'
   choices: []
   conditionalBranches: []
   onEnterNode:
@@ -143,8 +191,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeId: 048fcb38-c43d-4538-b05f-9c0af7f09391
   speakerName: NPC
-  dialogueText: Thank you for listening to my story. It brought me great joy to share
-    it with you.
+  dialogueText: Thank you for listening to my [b]story[/b]. It brought me great [shake]joy[/shake]
+    to share it with you.
   choices: []
   conditionalBranches: []
   onEnterNode:
@@ -153,7 +201,7 @@ MonoBehaviour:
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
-  nextNode: {fileID: 0}
+  nextNode: {fileID: -3848529885013942465}
 --- !u!114 &-907327734933666265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,29 +259,35 @@ MonoBehaviour:
   - {fileID: 4469832741757719247}
   - {fileID: -4743727824786004865}
   - {fileID: 2941993304389859710}
+  - {fileID: -3848529885013942465}
+  - {fileID: -8881064333733254506}
   nodePositions:
   - nodeId: 0c30ac13-6922-43d9-b29b-5d358546e8f0
-    position: {x: -563.5, y: 237}
+    position: {x: -393, y: 202}
   - nodeId: fbe1bc8e-ebd4-4052-a653-bfe880ba928c
-    position: {x: 742.5, y: 189.5}
+    position: {x: 743, y: 190}
   - nodeId: 94f91b5e-9d8e-484f-8ef7-f247f3d0db83
-    position: {x: 1130.5, y: 112}
+    position: {x: 1131, y: 112}
   - nodeId: d5edda46-3b2a-4a79-89f2-7c9405f1b6e9
-    position: {x: 1130.5, y: 284.5}
+    position: {x: 1131, y: 285}
   - nodeId: 048fcb38-c43d-4538-b05f-9c0af7f09391
-    position: {x: 742.5, y: -151.5}
+    position: {x: 743, y: -151}
   - nodeId: 5e3be03b-7254-44df-80c4-c4a6892df749
-    position: {x: 742.5, y: 512}
+    position: {x: 743, y: 512}
   - nodeId: d26f3255-de2c-4141-94aa-4c9d0d02cdb3
-    position: {x: 1083.5, y: 512}
+    position: {x: 1084, y: 512}
   - nodeId: 851d4d79-7a65-4b9a-8fae-95dfb9a4ae29
-    position: {x: 1428.5, y: 512}
+    position: {x: 1429, y: 512}
   - nodeId: d83b9d99-7aaa-4188-8711-abede7649c6f
-    position: {x: 1794.5, y: 512}
+    position: {x: 1795, y: 512}
   - nodeId: e7baeaf6-1652-42c8-8394-42e3d44caf52
-    position: {x: 2104.5, y: 651}
+    position: {x: 2105, y: 651}
   - nodeId: cef6a9f4-a299-45d6-b4b6-d3fc1cbff181
-    position: {x: 2104.5, y: 476}
+    position: {x: 2105, y: 476}
+  - nodeId: deb49dbb-d0b7-42ca-918f-e9ef4439cd4c
+    position: {x: 1465, y: -151}
+  - nodeId: 2d23a3d6-301b-46c5-8a5a-224819789057
+    position: {x: 2051, y: -151}
   currentNode: {fileID: -1978411813078665388}
 --- !u!114 &2941993304389859710
 MonoBehaviour:

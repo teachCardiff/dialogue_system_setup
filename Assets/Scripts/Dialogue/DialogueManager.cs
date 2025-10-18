@@ -109,12 +109,14 @@ public class DialogueManager : MonoBehaviour
 
         dialogueUI.ShowDialogue(currentNode.speakerName, currentNode.dialogueText);
 
-        // Wait for typewriter to finish or for user to skip
-        while (dialogueUI.dialogueText.text != currentNode.dialogueText)
+        // If the UI was inactive it may have deferred initialization for one frame. Wait until the UI reports ready.
+        yield return new WaitUntil(() => dialogueUI != null && dialogueUI.IsReady);
+
+        // Wait for typewriter to finish or for user to skip. Use the UI's visibility state instead of comparing strings
+        while (!dialogueUI.IsTextFullyRevealed())
         {
             if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) // TODO: Update to integrate new input system
             {
-                
                 dialogueUI.SkipTypewriter();
             }
             yield return null;
@@ -162,7 +164,31 @@ public class DialogueManager : MonoBehaviour
     {
         print("End of dialogue");
         //dialogueUI.nextPressed = false; // Moved to DialogueUI.Hide()
-        dialogueUI.Hide();
+        if (dialogueUI != null)
+        {
+            // Subscribe to the UI hide complete event, then trigger hide.
+            dialogueUI.onHideComplete.AddListener(HandleOnHideComplete);
+            dialogueUI.Hide();
+        }
+        else
+        {
+            // Fallback: no UI available, clean up immediately
+            CleanupAfterDialogue();
+        }
+    }
+
+    private void HandleOnHideComplete()
+    {
+        if (dialogueUI != null)
+        {
+            dialogueUI.onHideComplete.RemoveListener(HandleOnHideComplete);
+        }
+
+        CleanupAfterDialogue();
+    }
+
+    private void CleanupAfterDialogue()
+    {
         onDialogueEnd.Invoke();
         currentDialogue = null;
         currentNode = null;
