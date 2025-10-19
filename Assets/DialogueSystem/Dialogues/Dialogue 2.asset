@@ -33,6 +33,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeId: 55f37706-bc40-4075-926c-f851c49f2a8b
   speakerName: NPC
+  character: {fileID: 0}
+  charExpression: 
   dialogueText: Test with only 1 node.
   choices: []
   conditionalBranches: []

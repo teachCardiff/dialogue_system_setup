@@ -608,6 +608,12 @@ namespace DialogueSystem.Editor
         private VisualElement branchContainer;
         private List<Port> branchPorts = new List<Port>();
         private List<VisualElement> branchElements = new List<VisualElement>();
+        PopupField<string> expressionDropdown = null;
+        private PopupField<string> listenerExpressionDropdown = null;
+        private TextField speakerField;
+        private ObjectField charField;
+        private ObjectField listenerField;
+        private Toggle showListenerToggle;
 
         public DialogueNodeView(DialogueNode node, Dialogue dialogue)
         {
@@ -631,7 +637,7 @@ namespace DialogueSystem.Editor
             this.AddManipulator(new ContextualMenuManipulator(BuildNodeContextMenu));
 
             // Node fields (basic; detailed editing via Inspector)
-            var speakerField = new TextField("Speaker") { value = dialogueNode.speakerName };
+            speakerField = new TextField("Speaker Name") { value = dialogueNode.speakerName };
             speakerField.RegisterValueChangedCallback(evt =>
             {
                 dialogueNode.speakerName = evt.newValue;
@@ -639,6 +645,42 @@ namespace DialogueSystem.Editor
                 EditorUtility.SetDirty(dialogueNode);
             });
             mainContainer.Add(speakerField);
+
+            charField = new ObjectField("Speaker") { objectType = typeof(Character), value = dialogueNode.speakerCharacter };
+            charField.RegisterValueChangedCallback(evt =>
+            {
+                dialogueNode.speakerCharacter = evt.newValue as Character;
+                EditorUtility.SetDirty(dialogueNode);
+                RefreshCharFields();
+            });
+            mainContainer.Add(charField);
+
+            /// ----- ADD LISTENER CHARACTER ------ ///
+            showListenerToggle = new Toggle("Show Listener") { value = dialogueNode.listenerCharacter != null };
+            showListenerToggle.RegisterValueChangedCallback(evt =>
+            {
+                if (!evt.newValue)
+                {
+                    dialogueNode.listenerCharacter = null;
+                    dialogueNode.listenerExpression = null;
+                }
+                EditorUtility.SetDirty(dialogueNode);
+                RefreshCharFields();
+            });
+            mainContainer.Add(showListenerToggle);
+
+            listenerField = new ObjectField("Listener") { objectType = typeof(Character), value = dialogueNode.listenerCharacter };
+            listenerField.RegisterValueChangedCallback(evt =>
+            {
+                dialogueNode.listenerCharacter = evt.newValue as Character;
+                EditorUtility.SetDirty(dialogueNode);
+                RefreshCharFields();
+            });
+            //mainContainer.Add(listenerField);
+
+            
+            /// ----- END OF LISTENER CHARACTER ----- ///
+            
 
             var textField = new TextField("Dialogue Text") { value = dialogueNode.dialogueText, multiline = true };
             textField.RegisterValueChangedCallback(evt =>
@@ -674,6 +716,153 @@ namespace DialogueSystem.Editor
             extensionContainer.Add(addBranchButton); // Place below choices
 
             RefreshBranches(); // Initial call
+            
+        }
+
+        void RefreshCharFields()
+        {
+            // if (expressionDropdown != null)
+            //     mainContainer.Remove(expressionDropdown);
+
+            // if (dialogueNode.character != null)
+            // {
+            //     var expressions = dialogueNode.character.expressions.ConvertAll(e => e.expressionName);
+            //     if (!expressions.Contains("Default")) expressions.Insert(0, "Default");
+
+            //     // Ensure the current value is valid
+            //     string currentValue = dialogueNode.charExpression;
+            //     if (string.IsNullOrEmpty(currentValue) || !expressions.Contains(currentValue))
+            //     {
+            //         currentValue = "Default";
+            //         dialogueNode.charExpression = currentValue;
+            //     }
+
+            //     expressionDropdown = new PopupField<string>("Expression", expressions, currentValue);
+            //     expressionDropdown.RegisterValueChangedCallback(e =>
+            //     {
+            //         dialogueNode.charExpression = e.newValue;
+            //         EditorUtility.SetDirty(dialogueNode);
+            //     });
+            //     mainContainer.Add(expressionDropdown);
+            // }
+            // Remove old dropdown if present
+            if (expressionDropdown != null)
+            {
+                mainContainer.Remove(expressionDropdown);
+                expressionDropdown = null;
+            }
+
+            // Remove listener UI if present
+            if (listenerField != null && mainContainer.Contains(listenerField))
+                mainContainer.Remove(listenerField);
+            if (listenerExpressionDropdown != null && mainContainer.Contains(listenerExpressionDropdown))
+                mainContainer.Remove(listenerExpressionDropdown);
+
+            if (dialogueNode.speakerCharacter != null)
+            {
+                // Overwrite speaker name with character SO name and disable editing
+                speakerField.value = dialogueNode.speakerCharacter.npcName;
+                speakerField.SetEnabled(false);
+
+                dialogueNode.speakerName = dialogueNode.speakerCharacter.npcName;
+                EditorUtility.SetDirty(dialogueNode);
+
+                // Build expression list
+                var expressions = dialogueNode.speakerCharacter.expressions.ConvertAll(e => e.expressionName);
+                if (!expressions.Contains("Default")) expressions.Insert(0, "Default");
+
+                // Ensure current value is valid
+                string currentValue = dialogueNode.speakerExpression;
+                if (string.IsNullOrEmpty(currentValue) || !expressions.Contains(currentValue))
+                {
+                    currentValue = "Default";
+                    dialogueNode.speakerExpression = currentValue;
+                }
+
+                expressionDropdown = new PopupField<string>("Expression", expressions, currentValue);
+                expressionDropdown.RegisterValueChangedCallback(e =>
+                {
+                    dialogueNode.speakerExpression = e.newValue;
+                    EditorUtility.SetDirty(dialogueNode);
+                });
+
+                // Insert directly after the character field
+                mainContainer.Insert(mainContainer.IndexOf(charField) + 1, expressionDropdown);
+            }
+            else
+            {
+                // No character: enable speaker field for manual entry
+                speakerField.SetEnabled(true);
+            }
+
+            // Expression dropdown for listener (similar to speaker)
+            if (showListenerToggle.value)
+            {
+                if (!mainContainer.Contains(listenerField))
+                    mainContainer.Add(listenerField);
+
+                if (dialogueNode.listenerCharacter != null)
+                {
+                    var expressions = dialogueNode.listenerCharacter.expressions.ConvertAll(e => e.expressionName);
+                    if (!expressions.Contains("Default")) expressions.Insert(0, "Default");
+                    string currentValue = dialogueNode.listenerExpression;
+                    if (string.IsNullOrEmpty(currentValue) || !expressions.Contains(currentValue))
+                    {
+                        currentValue = "Default";
+                        dialogueNode.listenerExpression = currentValue;
+                    }
+                    listenerExpressionDropdown = new PopupField<string>("Listener Expression", expressions, currentValue);
+                    listenerExpressionDropdown.RegisterValueChangedCallback(e =>
+                    {
+                        dialogueNode.listenerExpression = e.newValue;
+                        EditorUtility.SetDirty(dialogueNode);
+                    });
+                    mainContainer.Add(listenerExpressionDropdown);
+                }
+            }
+
+            // Toggle to turn on the listener as the speaker
+            if (listenerExpressionDropdown != null)
+            {
+                // Add "Is Speaker" toggle below listener expression
+                var isSpeakerToggle = new Toggle("Is Speaker") { value = dialogueNode.listenerIsSpeaker };
+                isSpeakerToggle.RegisterValueChangedCallback(e =>
+                {
+                    dialogueNode.listenerIsSpeaker = e.newValue;
+                    EditorUtility.SetDirty(dialogueNode);
+
+                    // If checked, override speaker name in editor UI
+                    if (e.newValue && dialogueNode.listenerCharacter != null)
+                    {
+                        speakerField.value = dialogueNode.listenerCharacter.npcName;
+                        speakerField.SetEnabled(false);
+                        dialogueNode.speakerName = dialogueNode.listenerCharacter.npcName;
+                    }
+                    else
+                    {
+                        // Restore speaker field based on speakerCharacter
+                        if (dialogueNode.speakerCharacter != null)
+                        {
+                            speakerField.value = dialogueNode.speakerCharacter.npcName;
+                            speakerField.SetEnabled(false);
+                            dialogueNode.speakerName = dialogueNode.speakerCharacter.npcName;
+                        }
+                        else
+                        {
+                            speakerField.SetEnabled(true);
+                        }
+                    }
+                });
+                mainContainer.Add(isSpeakerToggle);
+
+                // Initial override if already checked
+                if (dialogueNode.listenerIsSpeaker && dialogueNode.listenerCharacter != null)
+                {
+                    speakerField.value = dialogueNode.listenerCharacter.npcName;
+                    speakerField.SetEnabled(false);
+                    dialogueNode.speakerName = dialogueNode.listenerCharacter.npcName;
+                }
+            }
         }
 
         // Override to handle selection: Show this node's SO in Inspector
@@ -875,6 +1064,8 @@ namespace DialogueSystem.Editor
                 choicePort.userData = i; // Store choice index
                 outputContainer.Add(choicePort);
             }
+            
+            RefreshCharFields();
         }
 
         private void DeleteChoice(int index)
@@ -946,6 +1137,8 @@ namespace DialogueSystem.Editor
                 outputContainer.Add(branchPort); // Append after choices
                 branchPorts.Add(branchPort);
             }
+
+            RefreshCharFields();
         }
 
         private void AddBranch()

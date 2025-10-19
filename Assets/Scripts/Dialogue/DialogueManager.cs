@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 /// <summary>
 /// Singleton manager for running dialogues at runtime.
@@ -107,7 +108,25 @@ public class DialogueManager : MonoBehaviour
             }
         }
 
-        dialogueUI.ShowDialogue(currentNode.speakerName, currentNode.dialogueText);
+        Sprite speakerSprite = null;
+        if (currentNode.speakerCharacter != null)
+            speakerSprite = currentNode.speakerCharacter.GetSprite(currentNode.speakerExpression);
+
+        Sprite listenerSprite = null;
+        if (currentNode.listenerCharacter != null)
+        {
+            listenerSprite = currentNode.listenerCharacter.GetSprite(currentNode.listenerExpression);
+        }
+
+        // Update speaker name based on who is active speaker
+        string speakerName = currentNode.speakerName;
+        if (currentNode.listenerIsSpeaker && currentNode.listenerCharacter != null)
+        {
+            speakerName = currentNode.listenerCharacter.npcName;
+        }
+        dialogueUI.ShowDialogue(speakerName, currentNode.dialogueText, speakerSprite, listenerSprite);
+
+        // dialogueUI.ShowDialogue(currentNode.speakerName, currentNode.dialogueText, speakerSprite, listenerSprite);
 
         // If the UI was inactive it may have deferred initialization for one frame. Wait until the UI reports ready.
         yield return new WaitUntil(() => dialogueUI != null && dialogueUI.IsReady);
@@ -115,7 +134,9 @@ public class DialogueManager : MonoBehaviour
         // Wait for typewriter to finish or for user to skip. Use the UI's visibility state instead of comparing strings
         while (!dialogueUI.IsTextFullyRevealed())
         {
-            if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) // TODO: Update to integrate new input system
+            if ((Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame) ||
+                (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame) ||
+                (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame)) // TODO: Update to integrate the input action asset
             {
                 dialogueUI.SkipTypewriter();
             }
