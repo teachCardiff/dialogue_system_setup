@@ -28,7 +28,7 @@ MonoBehaviour:
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
-  nextNode: {fileID: 0}
+  nextNode: {fileID: 2061414151932271707}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44,9 +44,41 @@ MonoBehaviour:
   startNode: {fileID: 0}
   nodes:
   - {fileID: -4145468394379255466}
+  - {fileID: 2061414151932271707}
   nodePositions:
   - nodeId: 437126c2-6752-4353-a171-c4222af04543
-    position: {x: 2862.1611, y: 1353.6433}
+    position: {x: 2823, y: 1327}
+  - nodeId: 60b421f6-f747-4038-af3d-97187b1ef7ec
+    position: {x: 3126, y: 1327}
   defaultSpeaker: {fileID: 0}
   defaultListener: {fileID: 0}
   currentNode: {fileID: 0}
+--- !u!114 &2061414151932271707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_1
+  m_EditorClassIdentifier: 
+  nodeId: 60b421f6-f747-4038-af3d-97187b1ef7ec
+  speakerName: 
+  speakerCharacter: {fileID: 0}
+  speakerExpression: 
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: 
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  nextNode: {fileID: 0}

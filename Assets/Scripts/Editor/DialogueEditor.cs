@@ -26,6 +26,8 @@ namespace DialogueSystem.Editor
         // When true, OnGraphChanged will ignore element removals to avoid deleting assets while we
         // programmatically clear the graph (for example when switching selected Dialogue assets).
         private bool suppressGraphViewDeletion = false;
+    // Diagnostic dry-run: when true scheduled removals will only log and not actually remove assets
+    private static bool diagnosticsDryRun = false;
 
         [MenuItem("Window/Dialogue Editor")]
         public static void Open()
@@ -48,9 +50,20 @@ namespace DialogueSystem.Editor
 
         // Schedule a delayed removal of a sub-asset to avoid deleting objects while Unity's IMGUI/ObjectSelector
         // or other UI systems are processing events (which can cause MissingReferenceExceptions).
+        private static HashSet<string> scheduledNodeRemovals = new HashSet<string>();
+
         public static void ScheduleDelayedNodeRemoval(DialogueNode node, Dialogue parentDialogue, string reason = "")
         {
             if (node == null || parentDialogue == null) return;
+            if (string.IsNullOrEmpty(node.nodeId)) return;
+
+            // Prevent double-scheduling
+            if (scheduledNodeRemovals.Contains(node.nodeId))
+            {
+                Debug.LogWarning($"Node {node.name} ({node.nodeId}) already scheduled for removal; skipping duplicate.");
+                return;
+            }
+            scheduledNodeRemovals.Add(node.nodeId);
 
             LogNodeDestroyStack(node, reason + " (scheduled)");
 
@@ -59,24 +72,61 @@ namespace DialogueSystem.Editor
             {
                 try
                 {
-                    if (parentDialogue.nodes.Contains(node))
+                    // If the node or parent were destroyed in the meantime, bail out
+                    if (node == null)
+                    {
+                        scheduledNodeRemovals.Remove(node?.nodeId);
+                        return;
+                    }
+
+                    // Remove data references from parent dialogue
+                    if (parentDialogue != null && parentDialogue.nodes.Contains(node))
                     {
                         parentDialogue.nodes.Remove(node);
                         parentDialogue.nodePositions.RemoveAll(np => np.nodeId == node.nodeId);
                         EditorUtility.SetDirty(parentDialogue);
                     }
 
-                    // Remove from asset and destroy
-                    AssetDatabase.RemoveObjectFromAsset(node);
-                    AssetDatabase.SaveAssets();
+                    // Clear Inspector selection if it's referencing the node to avoid MR exceptions
+                    if (Selection.activeObject == node && parentDialogue != null)
+                    {
+                        Selection.activeObject = parentDialogue;
+                    }
+
+                    // Register undo for the dialogue (so user can undo node removal)
+                    if (parentDialogue != null)
+                        Undo.RegisterCompleteObjectUndo(parentDialogue, "Delete Node");
 
                     // Final log for the actual destroy moment
                     LogNodeDestroyStack(node, reason + " (delayed destroy)");
-                    UnityEngine.Object.DestroyImmediate(node, true);
+
+                    // Use Undo.DestroyObjectImmediate so the deletion is undoable
+                    try
+                    {
+                        Undo.DestroyObjectImmediate(node);
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.LogError("Error destroying node with Undo: " + ex.Message + "\n" + ex.StackTrace);
+                        try
+                        {
+                            UnityEngine.Object.DestroyImmediate(node, true);
+                        }
+                        catch (Exception ex2)
+                        {
+                            Debug.LogError("Fallback destroy also failed: " + ex2.Message + "\n" + ex2.StackTrace);
+                        }
+                    }
+
+                    AssetDatabase.SaveAssets();
                 }
                 catch (Exception ex)
                 {
                     Debug.LogError("Error during delayed node removal: " + ex.Message + "\n" + ex.StackTrace);
+                }
+                finally
+                {
+                    scheduledNodeRemovals.Remove(node.nodeId);
                 }
             };
         }
@@ -94,10 +144,9 @@ namespace DialogueSystem.Editor
                 if (GUILayout.Button("Load Dialogue", EditorStyles.toolbarButton)) LoadDialogue();
                 if (GUILayout.Button("Save", EditorStyles.toolbarButton)) SaveDialogue();
                 if (GUILayout.Button("Preview", EditorStyles.toolbarButton)) PreviewDialogue();
-                if (GUILayout.Button("Rebuild Graph", EditorStyles.toolbarButton)) RebuildGraph();
+                // Rebuild Graph button removed per user request
 
                 GUILayout.Space(8);
-                // Default speaker/listener controls
                 // Dialogue picker so users can select an asset directly from the toolbar
                 GUILayout.Label("Dialogue:", EditorStyles.label);
                 var pickedDialogue = EditorGUILayout.ObjectField(selectedDialogue, typeof(Dialogue), false, GUILayout.Width(180)) as Dialogue;
@@ -131,66 +180,12 @@ namespace DialogueSystem.Editor
                 }
 
                 GUILayout.Space(6);
-                GUILayout.Label("Defaults:", EditorStyles.label);
-                var newSpeaker = EditorGUILayout.ObjectField(selectedDialogue != null ? selectedDialogue.defaultSpeaker : null, typeof(Character), false, GUILayout.Width(140)) as Character;
-                var newListener = EditorGUILayout.ObjectField(selectedDialogue != null ? selectedDialogue.defaultListener : null, typeof(Character), false, GUILayout.Width(140)) as Character;
-                if (selectedDialogue != null)
+                // Diagnostic dry-run toggle (IMGUI fallback)
+                var newDiag = GUILayout.Toggle(DialogueEditor.diagnosticsDryRun, "Diagnostics (dry-run)", GUILayout.Width(160));
+                if (newDiag != DialogueEditor.diagnosticsDryRun)
                 {
-                    if (newSpeaker != selectedDialogue.defaultSpeaker)
-                    {
-                        Undo.RecordObject(selectedDialogue, "Set Default Speaker");
-                        selectedDialogue.defaultSpeaker = newSpeaker;
-                        EditorUtility.SetDirty(selectedDialogue);
-                    }
-                    if (newListener != selectedDialogue.defaultListener)
-                    {
-                        Undo.RecordObject(selectedDialogue, "Set Default Listener");
-                        selectedDialogue.defaultListener = newListener;
-                        EditorUtility.SetDirty(selectedDialogue);
-                    }
+                    DialogueEditor.diagnosticsDryRun = newDiag;
                 }
-
-                EditorGUILayout.BeginVertical();
-                EditorGUILayout.BeginHorizontal();
-                applyOnlyIfMissing = GUILayout.Toggle(applyOnlyIfMissing, "Only apply to missing", GUILayout.Width(160));
-                GUI.enabled = selectedDialogue != null;
-                if (GUILayout.Button("Apply To Existing Nodes", EditorStyles.miniButton, GUILayout.Width(160)))
-                {
-                    if (selectedDialogue != null)
-                    {
-                        Undo.RegisterCompleteObjectUndo(selectedDialogue, "Apply Defaults to Nodes");
-                        int applied = 0;
-                        foreach (var n in selectedDialogue.nodes)
-                        {
-                            bool changed = false;
-                            if (!applyOnlyIfMissing || n.speakerCharacter == null)
-                            {
-                                if (selectedDialogue.defaultSpeaker != null)
-                                {
-                                    n.speakerCharacter = selectedDialogue.defaultSpeaker;
-                                    n.speakerName = selectedDialogue.defaultSpeaker.npcName;
-                                    if (string.IsNullOrEmpty(n.speakerExpression)) n.speakerExpression = "Default";
-                                    changed = true;
-                                }
-                            }
-                            if (!applyOnlyIfMissing || n.listenerCharacter == null)
-                            {
-                                if (selectedDialogue.defaultListener != null)
-                                {
-                                    n.listenerCharacter = selectedDialogue.defaultListener;
-                                    changed = true;
-                                }
-                            }
-                            if (changed) { EditorUtility.SetDirty(n); applied++; }
-                        }
-                        EditorUtility.SetDirty(selectedDialogue);
-                        AssetDatabase.SaveAssets();
-                        Debug.Log($"Applied defaults to {applied} nodes.");
-                    }
-                }
-                GUI.enabled = true;
-                EditorGUILayout.EndHorizontal();
-                EditorGUILayout.EndVertical();
 
                 GUILayout.FlexibleSpace();
                 GUILayout.EndHorizontal();
@@ -203,7 +198,6 @@ namespace DialogueSystem.Editor
             container.style.flexDirection = FlexDirection.Column;
             container.style.flexGrow = 1;
 
-            AddToolbar(container); // Ensure called—toolbar fix
 
             graphView = new DialogueGraphView(this)
             {
@@ -224,6 +218,9 @@ namespace DialogueSystem.Editor
             {
                 RebuildGraph();
             }
+
+            // Add UIElements toolbar after adding the graph view so the toolbar renders on top
+            AddToolbar(container); // Ensure called—toolbar fixed to be top-most
         }
 
         private void OnDisable()
@@ -273,20 +270,39 @@ namespace DialogueSystem.Editor
             var loadButton = new Button(LoadDialogue) { text = "Load Dialogue" }; // Implement LoadDialogue() to load SO, clear/add nodes
             var saveButton = new Button(SaveDialogue) { text = "Save" }; // AssetDatabase.SaveAssets();
             var previewButton = new Button(PreviewDialogue) { text = "Preview" }; // Runtime test
-            var rebuildButton = new Button(RebuildGraph) { text = "Rebuild Graph" }; // NEW: For recovery
 
             // Add with flex for spacing
             loadButton.style.flexGrow = 1;
             saveButton.style.flexGrow = 1;
             previewButton.style.flexGrow = 1;
-            rebuildButton.style.flexGrow = 1;
 
             toolbar.Add(loadButton);
             toolbar.Add(saveButton);
             toolbar.Add(previewButton);
-            toolbar.Add(rebuildButton);
 
-            parent.Add(toolbar);
+            // Create a stacked toolbar area: top row for buttons, bottom row for defaults/foldout
+            var toolbarStack = new VisualElement { style = { flexDirection = FlexDirection.Column } };
+
+            // Top row: main buttons
+            var topRow = toolbar;
+            topRow.style.minHeight = 30;
+            topRow.style.flexShrink = 0;
+
+            // UIElements diagnostic toggle (keeps UIElements and IMGUI in sync)
+            var diagToggle = new Toggle("Diagnostics (dry-run)") { value = DialogueEditor.diagnosticsDryRun };
+            diagToggle.RegisterValueChangedCallback(evt => { DialogueEditor.diagnosticsDryRun = evt.newValue; });
+            // Place toggle at the end of top row
+            topRow.Add(diagToggle);
+
+            // Bottom row: defaults area with explicit height so it's visible
+            var bottomRow = new VisualElement { style = { flexDirection = FlexDirection.Row, minHeight = 72, paddingLeft = 6, paddingTop = 4, paddingBottom = 4, backgroundColor = new Color(0.15f, 0.15f, 0.15f) } };
+            bottomRow.style.flexShrink = 0;
+
+            toolbarStack.Add(topRow);
+            toolbarStack.Add(bottomRow);
+            // Ensure toolbar draws on top of GraphView
+            toolbarStack.BringToFront();
+            parent.Add(toolbarStack);
 
             // Add defaults UI directly under toolbar (shows/edits selectedDialogue defaults)
             var defaultsRow = new VisualElement { style = { flexDirection = FlexDirection.Row, paddingTop = 4, paddingBottom = 4 } };
@@ -331,10 +347,28 @@ namespace DialogueSystem.Editor
                 listenerField.value = selectedDialogue != null ? selectedDialogue.defaultListener : null;
             }
 
-            defaultsRow.Add(speakerField);
-            defaultsRow.Add(listenerField);
-            defaultsRow.Add(applyButton);
-            parent.Add(defaultsRow);
+            // Create a foldout/dropdown for defaults
+            var defaultsFold = new Foldout { text = "Default Characters", value = true };
+            // Style to ensure visibility
+            defaultsFold.style.flexShrink = 0;
+            defaultsFold.style.paddingLeft = 4;
+            defaultsFold.style.marginTop = 4;
+
+            speakerField.style.width = 180;
+            listenerField.style.width = 180;
+
+            defaultsFold.Add(speakerField);
+            defaultsFold.Add(listenerField);
+
+            var applyRow = new VisualElement { style = { flexDirection = FlexDirection.Row, alignItems = Align.Center } };
+            var applyToggle = new Toggle("Only apply to missing") { value = applyOnlyIfMissing };
+            applyToggle.RegisterValueChangedCallback(evt => { applyOnlyIfMissing = evt.newValue; });
+            applyRow.Add(applyToggle);
+
+            applyRow.Add(applyButton);
+            defaultsFold.Add(applyRow);
+            // Put the foldout into the bottomRow to ensure it gets visible space
+            bottomRow.Add(defaultsFold);
 
             // Call once to initialize (if a dialogue is already selected)
             RefreshDefaultsFields();
@@ -532,7 +566,7 @@ namespace DialogueSystem.Editor
 
 
 
-        public void RebuildGraph()
+    private void RebuildGraph()
         {
             graphView.DeleteElements(graphView.graphElements.ToList()); // Clear all
 

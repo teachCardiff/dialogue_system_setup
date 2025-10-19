@@ -1,0 +1,154 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8153010798167856293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_3
+  m_EditorClassIdentifier: 
+  nodeId: 59521d0f-ab02-4b09-ba2f-c932cc1c65a4
+  speakerName: Old Man
+  speakerCharacter: {fileID: 11400000, guid: 41ab1a86490455c46a9f5f41604bcf4f, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 11400000, guid: 2d90c1cea61b3d6428253b9783ae5698, type: 2}
+  listenerExpression: Default
+  listenerIsSpeaker: 0
+  dialogueText: 
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  nextNode: {fileID: 0}
+--- !u!114 &-4710627292480325847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_1
+  m_EditorClassIdentifier: 
+  nodeId: eae06216-2029-4fad-840f-729701fb958c
+  speakerName: 
+  speakerCharacter: {fileID: 0}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: 
+  choices: []
+  conditionalBranches:
+  - branchName: In Progress
+    condition: {fileID: 11400000, guid: 60aa94019388bdb4399630ba03b2d8be, type: 2}
+    targetNode: {fileID: 7408878672668684032}
+  - branchName: Completed
+    condition: {fileID: 11400000, guid: bd932db482e7c884fa3009db9a1ab43a, type: 2}
+    targetNode: {fileID: -8153010798167856293}
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  nextNode: {fileID: -2769371445129643173}
+--- !u!114 &-2769371445129643173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_0
+  m_EditorClassIdentifier: 
+  nodeId: 9a3ef4eb-c0eb-4a44-8f03-0bc56c9e7dc0
+  speakerName: Old Man
+  speakerCharacter: {fileID: 11400000, guid: 41ab1a86490455c46a9f5f41604bcf4f, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 11400000, guid: 2d90c1cea61b3d6428253b9783ae5698, type: 2}
+  listenerExpression: Default
+  listenerIsSpeaker: 0
+  dialogueText: 
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  nextNode: {fileID: 0}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a09afc92a506d184c8c8e3fc2292ece4, type: 3}
+  m_Name: OldManQuestLine
+  m_EditorClassIdentifier: 
+  startNode: {fileID: -4710627292480325847}
+  nodes:
+  - {fileID: -2769371445129643173}
+  - {fileID: -4710627292480325847}
+  - {fileID: 7408878672668684032}
+  - {fileID: -8153010798167856293}
+  nodePositions:
+  - nodeId: 9a3ef4eb-c0eb-4a44-8f03-0bc56c9e7dc0
+    position: {x: 1908, y: 526}
+  - nodeId: eae06216-2029-4fad-840f-729701fb958c
+    position: {x: 1048, y: 674}
+  - nodeId: 2382e0cf-24d9-440c-873f-44dbe989eabc
+    position: {x: 1908, y: 856}
+  - nodeId: 59521d0f-ab02-4b09-ba2f-c932cc1c65a4
+    position: {x: 1908, y: 1162}
+  defaultSpeaker: {fileID: 11400000, guid: 41ab1a86490455c46a9f5f41604bcf4f, type: 2}
+  defaultListener: {fileID: 11400000, guid: 2d90c1cea61b3d6428253b9783ae5698, type: 2}
+  currentNode: {fileID: 0}
+--- !u!114 &7408878672668684032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_2
+  m_EditorClassIdentifier: 
+  nodeId: 2382e0cf-24d9-440c-873f-44dbe989eabc
+  speakerName: Old Man
+  speakerCharacter: {fileID: 11400000, guid: 41ab1a86490455c46a9f5f41604bcf4f, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 11400000, guid: 2d90c1cea61b3d6428253b9783ae5698, type: 2}
+  listenerExpression: Default
+  listenerIsSpeaker: 0
+  dialogueText: 
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  nextNode: {fileID: 0}
