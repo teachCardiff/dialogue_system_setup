@@ -43,6 +43,12 @@ public class DialogueUI : MonoBehaviour
     private List<RichTextParser.PulseRange> pulseRanges = new List<RichTextParser.PulseRange>();
     private List<RichTextParser.GradientRange> gradientRanges = new List<RichTextParser.GradientRange>();
     private Coroutine effectsCoroutine;
+    private int currentRevealCount = 0;
+    [Header("Gradient Animation")]
+    [Tooltip("Global speed at which gradient ranges animate (cycles per second)")]
+    [SerializeField] private float gradientSpeed = 0.2f;
+    [Tooltip("If true, each character will offset the gradient slightly for a flowing effect")]
+    [SerializeField] private bool gradientPerCharacterPhase = true;
     // UI ready flag so external callers can wait until the UI is initialized
     public bool IsReady { get; private set; } = false;
 
@@ -74,6 +80,7 @@ public class DialogueUI : MonoBehaviour
 
     private void ShowDialogueInternal(string speaker, string text)
     {
+        Debug.Log($"[DialogueUI] ShowDialogueInternal: speaker='{speaker}', text length={text?.Length ?? 0}");
         speakerText.text = speaker;
         // We'll set the parsed text below and reveal characters with TMP's maxVisibleCharacters
         choicesPanel.gameObject.SetActive(false);
@@ -86,14 +93,18 @@ public class DialogueUI : MonoBehaviour
 
     // Parse rich/custom tags (now returns multiple effect ranges)
     RichTextParser.Parse(text, out string parsedText, out shakeRanges, out waveRanges, out pulseRanges, out gradientRanges);
+    // Log parsed ranges for debugging
+    Debug.Log($"[DialogueUI] Parsed ranges: shake={shakeRanges?.Count ?? 0}, wave={waveRanges?.Count ?? 0}, pulse={pulseRanges?.Count ?? 0}, gradient={gradientRanges?.Count ?? 0}");
 
-        // Set full parsed text immediately to avoid partial tag rendering, then reveal chars via maxVisibleCharacters
+        // Set parsed text and start with zero visible characters to avoid partial tag rendering or flash
         dialogueText.text = parsedText;
-        dialogueText.ForceMeshUpdate();
         dialogueText.maxVisibleCharacters = 0;
+        dialogueText.ForceMeshUpdate();
+        currentRevealCount = 0;
+        Debug.Log($"[DialogueUI] ShowDialogueInternal: parsed text set, totalChars={dialogueText.textInfo.characterCount}");
 
-        if (typewriterCoroutine != null) StopCoroutine(typewriterCoroutine);
-        typewriterCoroutine = StartCoroutine(TypeText(parsedText));
+    if (typewriterCoroutine != null) StopCoroutine(typewriterCoroutine);
+    typewriterCoroutine = StartCoroutine(TypeText(parsedText));
 
         // start unified effects coroutine if any ranges found
         bool hasAnyEffects = (shakeRanges != null && shakeRanges.Count > 0) ||
@@ -132,6 +143,7 @@ public class DialogueUI : MonoBehaviour
 
     private IEnumerator TypeText(string text)
     {
+        Debug.Log($"[DialogueUI] TypeText start: totalChars={dialogueText.textInfo.characterCount}");
         // If instant
         if (typewriterSpeed <= 0f)
         {
@@ -139,17 +151,28 @@ public class DialogueUI : MonoBehaviour
             yield break;
         }
 
-        // Ensure text info is up-to-date
+        // Reveal characters by advancing TMP's maxVisibleCharacters.
         dialogueText.ForceMeshUpdate();
         int total = dialogueText.textInfo.characterCount;
-        int visible = 0;
+        int visible = dialogueText.maxVisibleCharacters;
         typewriterAccumulator = 0f;
+
+        if (typewriterSpeed <= 0f)
+        {
+            dialogueText.maxVisibleCharacters = total;
+            currentRevealCount = total;
+            typewriterCoroutine = null;
+            yield break;
+        }
 
         while (visible < total)
         {
             if (skipTypewriter)
             {
+                // reveal all immediately
                 dialogueText.maxVisibleCharacters = total;
+                visible = total;
+                currentRevealCount = visible;
                 break;
             }
 
@@ -158,8 +181,11 @@ public class DialogueUI : MonoBehaviour
             int toAdd = Mathf.FloorToInt(typewriterAccumulator);
             if (toAdd > 0)
             {
-                visible = Mathf.Min(total, visible + toAdd);
-                dialogueText.maxVisibleCharacters = visible;
+                int nextVisible = Mathf.Min(total, visible + toAdd);
+                dialogueText.maxVisibleCharacters = nextVisible;
+                Debug.Log($"[DialogueUI] TypeText reveal -> {visible}..{nextVisible}");
+                visible = nextVisible;
+                currentRevealCount = visible;
                 typewriterAccumulator -= toAdd;
             }
 
@@ -168,33 +194,48 @@ public class DialogueUI : MonoBehaviour
 
         // ensure fully visible at end
         dialogueText.maxVisibleCharacters = total;
+        currentRevealCount = total;
+        Debug.Log($"[DialogueUI] TypeText complete: currentRevealCount={currentRevealCount}");
         skipTypewriter = false;
         typewriterCoroutine = null;
+    }
+
+    private void RestoreMeshColorsForRange(int fromInclusive, int toExclusive)
+    {
+        // Removed: reveal is now driven by dialogueText.maxVisibleCharacters
+        return;
     }
 
     public bool IsTextFullyRevealed()
     {
         if (dialogueText == null) return true;
+        // rely on our reveal counter which tracks visible characters when using per-vertex alpha reveal
         dialogueText.ForceMeshUpdate();
-        return dialogueText.maxVisibleCharacters >= dialogueText.textInfo.characterCount;
+        return currentRevealCount >= dialogueText.textInfo.characterCount;
     }
 
     private IEnumerator AnimateTextEffectsRoutine()
     {
+    // Give TMP a couple frames to settle its internal mesh data before we start mutating it.
+    yield return new WaitForEndOfFrame();
+    yield return null;
         while (true)
         {
+            // Give TMP one frame to generate text/mesh data after initialization/typewriter starts.
             dialogueText.ForceMeshUpdate();
             var ti = dialogueText.textInfo;
-            if (ti.characterCount == 0)
+            int totalChars = ti.characterCount;
+            // Use the explicit reveal counter (we manage per-character visibility via alpha)
+            int visibleCount = Mathf.Clamp(currentRevealCount, 0, totalChars);
+            if (totalChars == 0)
             {
                 yield return null;
                 continue;
             }
-
             // take a fresh copy of the base mesh vertices/colors for the current text
             var baseMeshInfo = ti.CopyMeshInfoVertexData();
 
-            // reset verts/colors from base copy
+            // reset verts/colors from base copy (use fresh meshInfo as base)
             for (int i = 0; i < ti.meshInfo.Length && i < baseMeshInfo.Length; i++)
             {
                 var verts = ti.meshInfo[i].vertices;
@@ -203,7 +244,8 @@ public class DialogueUI : MonoBehaviour
 
                 var cols = ti.meshInfo[i].colors32;
                 var srcCols = baseMeshInfo[i].colors32;
-                Array.Copy(srcCols, cols, srcCols.Length);
+                int copyLen = Mathf.Min(srcCols.Length, cols.Length);
+                Array.Copy(srcCols, cols, copyLen);
             }
 
             float time = Time.time;
@@ -211,90 +253,197 @@ public class DialogueUI : MonoBehaviour
             // Apply shake
             foreach (var range in shakeRanges)
             {
-                int start = Mathf.Clamp(range.start, 0, ti.characterCount - 1);
-                int end = Mathf.Clamp(start + range.length, 0, ti.characterCount);
+                int start = Math.Max(0, range.start);
+                int end = Math.Min(visibleCount, range.start + Math.Max(0, range.length));
+                if (start >= end)
+                {
+                    // Range is outside visible area or invalid
+                    // Debug info for diagnosing parser vs visibleCount
+                    if (range.length <= 0) Debug.LogWarning($"[DialogueUI] Shake empty range start={range.start} length={range.length} visible={visibleCount}");
+                    continue;
+                }
                 for (int c = start; c < end; c++)
                 {
-                    var ch = ti.characterInfo[c];
-                    if (!ch.isVisible) continue;
-                    int matIndex = ch.materialReferenceIndex;
-                    int vertIndex = ch.vertexIndex;
-                    float seed = c * 0.13f;
-                    float jitterX = (Mathf.PerlinNoise(time * 10f + seed, seed) - 0.5f) * 2f * 0.5f * range.intensity;
-                    float jitterY = (Mathf.PerlinNoise(seed, time * 10f + seed) - 0.5f) * 2f * 0.5f * range.intensity;
-                    Vector3 offset = new Vector3(jitterX, jitterY, 0f);
-                    var verts = ti.meshInfo[matIndex].vertices;
-                    verts[vertIndex + 0] += offset;
-                    verts[vertIndex + 1] += offset;
-                    verts[vertIndex + 2] += offset;
-                    verts[vertIndex + 3] += offset;
+                    try
+                    {
+                        if (c >= ti.characterCount) break;
+                        var ch = ti.characterInfo[c];
+                        if (!ch.isVisible) continue;
+                        // don't apply positional effects to unrevealed characters
+                        if (c >= currentRevealCount) continue;
+                        int matIndex = ch.materialReferenceIndex;
+                        int vertIndex = ch.vertexIndex;
+                        if (matIndex >= ti.meshInfo.Length || vertIndex < 0 || vertIndex + 3 >= ti.meshInfo[matIndex].vertices.Length)
+                        {
+                            Debug.LogWarning($"[DialogueUI] Shake skip: meshInfo mismatch mat={matIndex} vert={vertIndex} for char={c}");
+                            continue;
+                        }
+                        float seed = c * 0.13f;
+                        float jitterX = (Mathf.PerlinNoise(time * 10f + seed, seed) - 0.5f) * 2f * 0.5f * range.intensity;
+                        float jitterY = (Mathf.PerlinNoise(seed, time * 10f + seed) - 0.5f) * 2f * 0.5f * range.intensity;
+                        Vector3 offset = new Vector3(jitterX, jitterY, 0f);
+                        var verts = ti.meshInfo[matIndex].vertices;
+                        verts[vertIndex + 0] += offset;
+                        verts[vertIndex + 1] += offset;
+                        verts[vertIndex + 2] += offset;
+                        verts[vertIndex + 3] += offset;
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.LogException(ex);
+                        Debug.LogWarning($"[DialogueUI] Exception in Shake for char={c} start={start} end={end} totalChars={totalChars}");
+                        continue;
+                    }
                 }
             }
 
             // Apply wave (vertical sine)
             foreach (var range in waveRanges)
             {
-                int start = Mathf.Clamp(range.start, 0, ti.characterCount - 1);
-                int end = Mathf.Clamp(start + range.length, 0, ti.characterCount);
+                int start = Math.Max(0, range.start);
+                int end = Math.Min(visibleCount, range.start + Math.Max(0, range.length));
+                if (start >= end)
+                {
+                    if (range.length <= 0) Debug.LogWarning($"[DialogueUI] Wave empty range start={range.start} length={range.length} visible={visibleCount}");
+                    continue;
+                }
                 for (int c = start; c < end; c++)
                 {
-                    var ch = ti.characterInfo[c];
-                    if (!ch.isVisible) continue;
-                    int matIndex = ch.materialReferenceIndex;
-                    int vertIndex = ch.vertexIndex;
-                    float phase = c * 0.5f;
-                    float y = Mathf.Sin(time * range.speed + phase) * range.amplitude;
-                    Vector3 offset = new Vector3(0f, y, 0f);
-                    var verts = ti.meshInfo[matIndex].vertices;
-                    verts[vertIndex + 0] += offset;
-                    verts[vertIndex + 1] += offset;
-                    verts[vertIndex + 2] += offset;
-                    verts[vertIndex + 3] += offset;
+                    try
+                    {
+                        if (c >= ti.characterCount) break;
+                        var ch = ti.characterInfo[c];
+                        if (!ch.isVisible) continue;
+                        if (c >= currentRevealCount) continue;
+                        int matIndex = ch.materialReferenceIndex;
+                        int vertIndex = ch.vertexIndex;
+                        if (matIndex >= ti.meshInfo.Length || vertIndex < 0 || vertIndex + 3 >= ti.meshInfo[matIndex].vertices.Length)
+                        {
+                            Debug.LogWarning($"[DialogueUI] Wave skip: meshInfo mismatch mat={matIndex} vert={vertIndex} for char={c}");
+                            continue;
+                        }
+                        float phase = c * 0.5f;
+                        float y = Mathf.Sin(time * range.speed + phase) * range.amplitude;
+                        Vector3 offset = new Vector3(0f, y, 0f);
+                        var verts = ti.meshInfo[matIndex].vertices;
+                        verts[vertIndex + 0] += offset;
+                        verts[vertIndex + 1] += offset;
+                        verts[vertIndex + 2] += offset;
+                        verts[vertIndex + 3] += offset;
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.LogException(ex);
+                        Debug.LogWarning($"[DialogueUI] Exception in Wave for char={c} start={start} end={end} totalChars={totalChars}");
+                        continue;
+                    }
                 }
             }
 
             // Apply pulse (per-character scale)
             foreach (var range in pulseRanges)
             {
-                int start = Mathf.Clamp(range.start, 0, ti.characterCount - 1);
-                int end = Mathf.Clamp(start + range.length, 0, ti.characterCount);
+                int start = Math.Max(0, range.start);
+                int end = Math.Min(visibleCount, range.start + Math.Max(0, range.length));
+                if (start >= end)
+                {
+                    if (range.length <= 0) Debug.LogWarning($"[DialogueUI] Pulse empty range start={range.start} length={range.length} visible={visibleCount}");
+                    continue;
+                }
                 for (int c = start; c < end; c++)
                 {
-                    var ch = ti.characterInfo[c];
-                    if (!ch.isVisible) continue;
-                    int matIndex = ch.materialReferenceIndex;
-                    int vertIndex = ch.vertexIndex;
-                    float scale = 1f + (Mathf.Sin(time * range.speed + c * 0.2f) * 0.5f + 0.5f) * (range.scale - 1f);
-                    // compute mid point of character quad
-                    var verts = ti.meshInfo[matIndex].vertices;
-                    Vector3 mid = (verts[vertIndex + 0] + verts[vertIndex + 2]) * 0.5f;
-                    verts[vertIndex + 0] = mid + (verts[vertIndex + 0] - mid) * scale;
-                    verts[vertIndex + 1] = mid + (verts[vertIndex + 1] - mid) * scale;
-                    verts[vertIndex + 2] = mid + (verts[vertIndex + 2] - mid) * scale;
-                    verts[vertIndex + 3] = mid + (verts[vertIndex + 3] - mid) * scale;
+                    try
+                    {
+                        if (c >= ti.characterCount) break;
+                        var ch = ti.characterInfo[c];
+                        if (!ch.isVisible) continue;
+                        if (c >= currentRevealCount) continue;
+                        int matIndex = ch.materialReferenceIndex;
+                        int vertIndex = ch.vertexIndex;
+                        if (matIndex >= ti.meshInfo.Length || vertIndex < 0 || vertIndex + 3 >= ti.meshInfo[matIndex].vertices.Length)
+                        {
+                            Debug.LogWarning($"[DialogueUI] Pulse skip: meshInfo mismatch mat={matIndex} vert={vertIndex} for char={c}");
+                            continue;
+                        }
+                        float scale = 1f + (Mathf.Sin(time * range.speed + c * 0.2f) * 0.5f + 0.5f) * (range.scale - 1f);
+                        // compute mid point of character quad
+                        var verts = ti.meshInfo[matIndex].vertices;
+                        Vector3 mid = (verts[vertIndex + 0] + verts[vertIndex + 2]) * 0.5f;
+                        verts[vertIndex + 0] = mid + (verts[vertIndex + 0] - mid) * scale;
+                        verts[vertIndex + 1] = mid + (verts[vertIndex + 1] - mid) * scale;
+                        verts[vertIndex + 2] = mid + (verts[vertIndex + 2] - mid) * scale;
+                        verts[vertIndex + 3] = mid + (verts[vertIndex + 3] - mid) * scale;
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.LogException(ex);
+                        Debug.LogWarning($"[DialogueUI] Exception in Pulse for char={c} start={start} end={end} totalChars={totalChars}");
+                        continue;
+                    }
                 }
             }
 
             // Apply gradient colors
             foreach (var range in gradientRanges)
             {
-                int start = Mathf.Clamp(range.start, 0, ti.characterCount - 1);
-                int end = Mathf.Clamp(start + range.length, 0, ti.characterCount);
+                int start = Math.Max(0, range.start);
+                int end = Math.Min(visibleCount, range.start + Math.Max(0, range.length));
+                if (start >= end)
+                {
+                    if (range.length <= 0) Debug.LogWarning($"[DialogueUI] Gradient empty range start={range.start} length={range.length} visible={visibleCount}");
+                    continue;
+                }
                 for (int c = start; c < end; c++)
                 {
-                    var ch = ti.characterInfo[c];
-                    if (!ch.isVisible) continue;
-                    int matIndex = ch.materialReferenceIndex;
-                    int vertIndex = ch.vertexIndex;
-                    float t = (float)(c - start) / Mathf.Max(1, end - start - 1);
-                    Color col = range.rainbow ? Color.HSVToRGB(t, 1f, 1f) : Color.Lerp(range.startColor, range.endColor, t);
-                    var cols = ti.meshInfo[matIndex].colors32;
-                    Color32 c32 = (Color32)col;
-                    cols[vertIndex + 0] = c32;
-                    cols[vertIndex + 1] = c32;
-                    cols[vertIndex + 2] = c32;
-                    cols[vertIndex + 3] = c32;
+                    try
+                    {
+                        if (c >= ti.characterCount) break;
+                        var ch = ti.characterInfo[c];
+                        if (!ch.isVisible) continue;
+                        int matIndex = ch.materialReferenceIndex;
+                        int vertIndex = ch.vertexIndex;
+                        if (matIndex >= baseMeshInfo.Length || vertIndex < 0 || vertIndex + 3 >= baseMeshInfo[matIndex].colors32.Length)
+                        {
+                            Debug.LogWarning($"[DialogueUI] Gradient skip: meshInfo mismatch mat={matIndex} vert={vertIndex} for char={c}");
+                            continue;
+                        }
+                        // base position along the gradient (0..1)
+                        float baseT = (float)(c - start) / Mathf.Max(1, end - start - 1);
+                        // time-driven offset cycles the gradient across the range
+                        float timeOffset = (time * gradientSpeed) % 1f;
+                        float charOffset = gradientPerCharacterPhase ? (c * 0.02f) % 1f : 0f;
+                        float t = (baseT + timeOffset + charOffset) % 1f;
+                        Color col = range.rainbow ? Color.HSVToRGB(t, 1f, 1f) : Color.Lerp(range.startColor, range.endColor, t);
+                        var cols = ti.meshInfo[matIndex].colors32;
+                        // preserve the base alpha from TMP's generated colors
+                        byte a = 255;
+                        var baseCols = baseMeshInfo[matIndex].colors32;
+                        if (baseCols != null && vertIndex < baseCols.Length) a = baseCols[vertIndex].a;
+                        if (c >= currentRevealCount) a = 0; // keep unrevealed characters invisible
+                        Color32 c32 = new Color32(
+                            (byte)(Mathf.Clamp01(col.r) * 255f),
+                            (byte)(Mathf.Clamp01(col.g) * 255f),
+                            (byte)(Mathf.Clamp01(col.b) * 255f),
+                            a
+                        );
+                        cols[vertIndex + 0] = c32;
+                        cols[vertIndex + 1] = c32;
+                        cols[vertIndex + 2] = c32;
+                        cols[vertIndex + 3] = c32;
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.LogException(ex);
+                        Debug.LogWarning($"[DialogueUI] Exception in Gradient for char={c} start={start} end={end} totalChars={totalChars}");
+                        continue;
+                    }
                 }
+            }
+
+            // debug: log per-frame summary occasionally
+            if (Time.frameCount % 60 == 0)
+            {
+                Debug.Log($"[DialogueUI] Effects frame: visible={visibleCount}, reveal={currentRevealCount}, totalChars={totalChars}");
             }
 
             // push changes to meshes
@@ -359,11 +508,28 @@ public class DialogueUI : MonoBehaviour
 
     public void OnHideAnimationComplete()
     {
+        // stop coroutines and clear cached mesh/color data so next show starts fresh
         if (effectsCoroutine != null)
         {
             StopCoroutine(effectsCoroutine);
-            effectsCoroutine = null; ResetMesh();
+            effectsCoroutine = null;
         }
+
+        if (typewriterCoroutine != null)
+        {
+            StopCoroutine(typewriterCoroutine);
+            typewriterCoroutine = null;
+        }
+
+        // restore mesh to a clean state
+        ResetMesh();
+
+    // clear ranges
+        currentRevealCount = 0;
+        shakeRanges?.Clear();
+        waveRanges?.Clear();
+        pulseRanges?.Clear();
+        gradientRanges?.Clear();
 
         nextPressed = false;
         speakerText.text = "";
