@@ -22,6 +22,13 @@ public class Dialogue : ScriptableObject
     }
     public List<NodePosition> nodePositions = new List<NodePosition>(); // Changed to List for serialization
 
+    [Header("Default Speaker/Listener (editor convenience)")]
+    [Tooltip("Default speaker Character assigned to newly created nodes (designer convenience). Nodes can still override per-node.")]
+    public Character defaultSpeaker;
+
+    [Tooltip("Default listener Character assigned to newly created nodes (designer convenience).")]
+    public Character defaultListener;
+
     // For runtime tracking (saved separately)
     [HideInInspector] public DialogueNode currentNode;
     [HideInInspector] public Dictionary<string, bool> visitedNodes = new Dictionary<string, bool>(); // For conditional repeats, etc.

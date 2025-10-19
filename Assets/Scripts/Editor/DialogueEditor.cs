@@ -21,6 +21,11 @@ namespace DialogueSystem.Editor
         public Dialogue selectedDialogue;
         private DialogueGraphView graphView;
         private Vector2 lastMousePosition; // Track for node-right-click creation
+    // IMGUI toolbar state
+    private bool applyOnlyIfMissing = true;
+        // When true, OnGraphChanged will ignore element removals to avoid deleting assets while we
+        // programmatically clear the graph (for example when switching selected Dialogue assets).
+        private bool suppressGraphViewDeletion = false;
 
         [MenuItem("Window/Dialogue Editor")]
         public static void Open()
@@ -28,11 +33,171 @@ namespace DialogueSystem.Editor
             GetWindow<DialogueEditor>("Dialogue Editor");
         }
 
+        // Helper to log a stack trace when destroying/removing nodes for diagnostics
+        public static void LogNodeDestroyStack(UnityEngine.Object obj, string reason = "")
+        {
+            try
+            {
+                Debug.LogWarning($"About to destroy/remove object: {obj} Reason: {reason}\nStackTrace:\n" + Environment.StackTrace);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogWarning("Failed to log stack trace for node destroy: " + ex.Message);
+            }
+        }
+
+        // Schedule a delayed removal of a sub-asset to avoid deleting objects while Unity's IMGUI/ObjectSelector
+        // or other UI systems are processing events (which can cause MissingReferenceExceptions).
+        public static void ScheduleDelayedNodeRemoval(DialogueNode node, Dialogue parentDialogue, string reason = "")
+        {
+            if (node == null || parentDialogue == null) return;
+
+            LogNodeDestroyStack(node, reason + " (scheduled)");
+
+            // Use delayCall to postpone destructive operations until it's safe
+            EditorApplication.delayCall += () =>
+            {
+                try
+                {
+                    if (parentDialogue.nodes.Contains(node))
+                    {
+                        parentDialogue.nodes.Remove(node);
+                        parentDialogue.nodePositions.RemoveAll(np => np.nodeId == node.nodeId);
+                        EditorUtility.SetDirty(parentDialogue);
+                    }
+
+                    // Remove from asset and destroy
+                    AssetDatabase.RemoveObjectFromAsset(node);
+                    AssetDatabase.SaveAssets();
+
+                    // Final log for the actual destroy moment
+                    LogNodeDestroyStack(node, reason + " (delayed destroy)");
+                    UnityEngine.Object.DestroyImmediate(node, true);
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogError("Error during delayed node removal: " + ex.Message + "\n" + ex.StackTrace);
+                }
+            };
+        }
+
         private void OnEnable()
         {
             // ConstructGraphView();
             // AddToolbar();
             rootVisualElement.Clear();
+
+            // Fallback IMGUI toolbar (ensures toolbar is visible even if UIElements toolbar is hidden)
+            var imguiToolbar = new IMGUIContainer(() =>
+            {
+                GUILayout.BeginHorizontal(EditorStyles.toolbar);
+                if (GUILayout.Button("Load Dialogue", EditorStyles.toolbarButton)) LoadDialogue();
+                if (GUILayout.Button("Save", EditorStyles.toolbarButton)) SaveDialogue();
+                if (GUILayout.Button("Preview", EditorStyles.toolbarButton)) PreviewDialogue();
+                if (GUILayout.Button("Rebuild Graph", EditorStyles.toolbarButton)) RebuildGraph();
+
+                GUILayout.Space(8);
+                // Default speaker/listener controls
+                // Dialogue picker so users can select an asset directly from the toolbar
+                GUILayout.Label("Dialogue:", EditorStyles.label);
+                var pickedDialogue = EditorGUILayout.ObjectField(selectedDialogue, typeof(Dialogue), false, GUILayout.Width(180)) as Dialogue;
+                if (pickedDialogue != selectedDialogue)
+                {
+                    // Save current dialogue and clear the existing graph to avoid lingering references
+                    try
+                    {
+                        SaveDialogue();
+                    }
+                    catch (Exception) { }
+
+                    if (graphView != null)
+                    {
+                        var elems = graphView.graphElements.ToList();
+                        if (elems.Count > 0)
+                        {
+                            // Suppress deletion callbacks so nodes are not removed from the underlying asset
+                            suppressGraphViewDeletion = true;
+                            graphView.DeleteElements(elems);
+                            suppressGraphViewDeletion = false;
+                        }
+                    }
+
+                    selectedDialogue = pickedDialogue;
+                    // Rebuild graph when switching dialogue so UI reflects the selected asset
+                    if (selectedDialogue != null)
+                    {
+                        RebuildGraph();
+                    }
+                }
+
+                GUILayout.Space(6);
+                GUILayout.Label("Defaults:", EditorStyles.label);
+                var newSpeaker = EditorGUILayout.ObjectField(selectedDialogue != null ? selectedDialogue.defaultSpeaker : null, typeof(Character), false, GUILayout.Width(140)) as Character;
+                var newListener = EditorGUILayout.ObjectField(selectedDialogue != null ? selectedDialogue.defaultListener : null, typeof(Character), false, GUILayout.Width(140)) as Character;
+                if (selectedDialogue != null)
+                {
+                    if (newSpeaker != selectedDialogue.defaultSpeaker)
+                    {
+                        Undo.RecordObject(selectedDialogue, "Set Default Speaker");
+                        selectedDialogue.defaultSpeaker = newSpeaker;
+                        EditorUtility.SetDirty(selectedDialogue);
+                    }
+                    if (newListener != selectedDialogue.defaultListener)
+                    {
+                        Undo.RecordObject(selectedDialogue, "Set Default Listener");
+                        selectedDialogue.defaultListener = newListener;
+                        EditorUtility.SetDirty(selectedDialogue);
+                    }
+                }
+
+                EditorGUILayout.BeginVertical();
+                EditorGUILayout.BeginHorizontal();
+                applyOnlyIfMissing = GUILayout.Toggle(applyOnlyIfMissing, "Only apply to missing", GUILayout.Width(160));
+                GUI.enabled = selectedDialogue != null;
+                if (GUILayout.Button("Apply To Existing Nodes", EditorStyles.miniButton, GUILayout.Width(160)))
+                {
+                    if (selectedDialogue != null)
+                    {
+                        Undo.RegisterCompleteObjectUndo(selectedDialogue, "Apply Defaults to Nodes");
+                        int applied = 0;
+                        foreach (var n in selectedDialogue.nodes)
+                        {
+                            bool changed = false;
+                            if (!applyOnlyIfMissing || n.speakerCharacter == null)
+                            {
+                                if (selectedDialogue.defaultSpeaker != null)
+                                {
+                                    n.speakerCharacter = selectedDialogue.defaultSpeaker;
+                                    n.speakerName = selectedDialogue.defaultSpeaker.npcName;
+                                    if (string.IsNullOrEmpty(n.speakerExpression)) n.speakerExpression = "Default";
+                                    changed = true;
+                                }
+                            }
+                            if (!applyOnlyIfMissing || n.listenerCharacter == null)
+                            {
+                                if (selectedDialogue.defaultListener != null)
+                                {
+                                    n.listenerCharacter = selectedDialogue.defaultListener;
+                                    changed = true;
+                                }
+                            }
+                            if (changed) { EditorUtility.SetDirty(n); applied++; }
+                        }
+                        EditorUtility.SetDirty(selectedDialogue);
+                        AssetDatabase.SaveAssets();
+                        Debug.Log($"Applied defaults to {applied} nodes.");
+                    }
+                }
+                GUI.enabled = true;
+                EditorGUILayout.EndHorizontal();
+                EditorGUILayout.EndVertical();
+
+                GUILayout.FlexibleSpace();
+                GUILayout.EndHorizontal();
+            });
+            imguiToolbar.style.height = 26;
+            imguiToolbar.style.flexShrink = 0;
+            rootVisualElement.Add(imguiToolbar);
 
             var container = new VisualElement();
             container.style.flexDirection = FlexDirection.Column;
@@ -122,6 +287,57 @@ namespace DialogueSystem.Editor
             toolbar.Add(rebuildButton);
 
             parent.Add(toolbar);
+
+            // Add defaults UI directly under toolbar (shows/edits selectedDialogue defaults)
+            var defaultsRow = new VisualElement { style = { flexDirection = FlexDirection.Row, paddingTop = 4, paddingBottom = 4 } };
+
+            var speakerField = new ObjectField("Default Speaker") { objectType = typeof(Character) };
+            var listenerField = new ObjectField("Default Listener") { objectType = typeof(Character) };
+            var applyButton = new Button(() =>
+            {
+                // Apply defaults to all existing nodes (optional convenience)
+                if (selectedDialogue == null) return;
+                Undo.RegisterCompleteObjectUndo(selectedDialogue, "Apply Defaults to Nodes");
+                foreach (var n in selectedDialogue.nodes)
+                {
+                    if (speakerField.value != null) n.speakerCharacter = speakerField.value as Character;
+                    if (listenerField.value != null) n.listenerCharacter = listenerField.value as Character;
+                    EditorUtility.SetDirty(n);
+                }
+                EditorUtility.SetDirty(selectedDialogue);
+                AssetDatabase.SaveAssets();
+            }) { text = "Apply To Existing Nodes" };
+
+            speakerField.RegisterValueChangedCallback(evt =>
+            {
+                if (selectedDialogue == null) return;
+                Undo.RecordObject(selectedDialogue, "Set Default Speaker");
+                selectedDialogue.defaultSpeaker = evt.newValue as Character;
+                EditorUtility.SetDirty(selectedDialogue);
+            });
+
+            listenerField.RegisterValueChangedCallback(evt =>
+            {
+                if (selectedDialogue == null) return;
+                Undo.RecordObject(selectedDialogue, "Set Default Listener");
+                selectedDialogue.defaultListener = evt.newValue as Character;
+                EditorUtility.SetDirty(selectedDialogue);
+            });
+
+            // Keep fields in sync when a Dialogue asset is selected/loaded
+            void RefreshDefaultsFields()
+            {
+                speakerField.value = selectedDialogue != null ? selectedDialogue.defaultSpeaker : null;
+                listenerField.value = selectedDialogue != null ? selectedDialogue.defaultListener : null;
+            }
+
+            defaultsRow.Add(speakerField);
+            defaultsRow.Add(listenerField);
+            defaultsRow.Add(applyButton);
+            parent.Add(defaultsRow);
+
+            // Call once to initialize (if a dialogue is already selected)
+            RefreshDefaultsFields();
         }
 
         public DialogueNodeView CreateNode(Vector2 screenPosition)
@@ -138,6 +354,19 @@ namespace DialogueSystem.Editor
             var node = ScriptableObject.CreateInstance<DialogueNode>();
             node.nodeId = Guid.NewGuid().ToString();
             node.name = $"Node_{selectedDialogue.nodes.Count}";
+            // Initialize node speaker/listener from dialogue defaults (designer convenience)
+            if (selectedDialogue.defaultSpeaker != null)
+            {
+                node.speakerCharacter = selectedDialogue.defaultSpeaker;
+                node.speakerName = selectedDialogue.defaultSpeaker.npcName;
+                if (string.IsNullOrEmpty(node.speakerExpression)) node.speakerExpression = "Default";
+            }
+
+            if (selectedDialogue.defaultListener != null)
+            {
+                node.listenerCharacter = selectedDialogue.defaultListener;
+            }
+
             AssetDatabase.AddObjectToAsset(node, selectedDialogue);
             selectedDialogue.nodes.Add(node);
             selectedDialogue.SetNodePosition(node.nodeId, new Rect(localPosition, new Vector2(250, 300)));
@@ -153,6 +382,12 @@ namespace DialogueSystem.Editor
             // Load saved position if available
             var savedPos = selectedDialogue.GetNodePosition(dialogueNode.nodeId);
             var finalPos = savedPos != Vector2.zero ? savedPos : position;
+
+            if (dialogueNode == null)
+            {
+                Debug.LogWarning("Attempted to add a null/destroyed DialogueNode to graph; skipping.");
+                return null;
+            }
 
             var nodeView = new DialogueNodeView(dialogueNode, selectedDialogue)
             {
@@ -210,7 +445,7 @@ namespace DialogueSystem.Editor
             }
 
             // Handle deletions (optional but good for cleanup)
-            if (change.elementsToRemove != null)
+            if (!suppressGraphViewDeletion && change.elementsToRemove != null)
             {
                 foreach (var elem in change.elementsToRemove)
                 {
@@ -248,7 +483,8 @@ namespace DialogueSystem.Editor
                         EditorUtility.SetDirty(selectedDialogue);
                         if (nodeView.dialogueNode != null)
                         {
-                            DestroyImmediate(nodeView.dialogueNode, true);
+                            // Schedule removal to avoid deleting during UI event processing
+                            DialogueEditor.ScheduleDelayedNodeRemoval(nodeView.dialogueNode, selectedDialogue, "DeleteNode via GraphView deleteSelection");
                         }
                     }
                 }
@@ -301,6 +537,19 @@ namespace DialogueSystem.Editor
             graphView.DeleteElements(graphView.graphElements.ToList()); // Clear all
 
             if (selectedDialogue == null) return;
+
+            // Defensive cleanup: remove any null/destroyed nodes from the SO to avoid exceptions
+            var removed = selectedDialogue.nodes.Where(n => n == null).ToList();
+            if (removed.Count > 0)
+            {
+                foreach (var r in removed)
+                {
+                    Debug.LogWarning("Removing null/destroyed DialogueNode from Dialogue asset during RebuildGraph.");
+                    selectedDialogue.nodes.Remove(r);
+                }
+                EditorUtility.SetDirty(selectedDialogue);
+                AssetDatabase.SaveAssets();
+            }
 
             // Add nodes
             var nodeViews = new Dictionary<string, DialogueNodeView>();
@@ -614,6 +863,8 @@ namespace DialogueSystem.Editor
         private ObjectField charField;
         private ObjectField listenerField;
         private Toggle showListenerToggle;
+    // NEW: single reusable IsSpeaker toggle instance — prevents duplicates on repeated RefreshCharFields calls
+    private Toggle isSpeakerToggle;
 
         public DialogueNodeView(DialogueNode node, Dialogue dialogue)
         {
@@ -821,11 +1072,10 @@ namespace DialogueSystem.Editor
                 }
             }
 
-            // Toggle to turn on the listener as the speaker
-            if (listenerExpressionDropdown != null)
+            // Toggle to turn on the listener as the speaker (reuse single toggle instance)
+            if (isSpeakerToggle == null)
             {
-                // Add "Is Speaker" toggle below listener expression
-                var isSpeakerToggle = new Toggle("Is Speaker") { value = dialogueNode.listenerIsSpeaker };
+                isSpeakerToggle = new Toggle("Is Speaker") { value = dialogueNode.listenerIsSpeaker };
                 isSpeakerToggle.RegisterValueChangedCallback(e =>
                 {
                     dialogueNode.listenerIsSpeaker = e.newValue;
@@ -853,15 +1103,23 @@ namespace DialogueSystem.Editor
                         }
                     }
                 });
+            }
+            else
+            {
+                // keep toggle's current checked state in sync with the node
+                isSpeakerToggle.value = dialogueNode.listenerIsSpeaker;
+            }
+
+            // Add the toggle to the UI (once)
+            if (!mainContainer.Contains(isSpeakerToggle))
                 mainContainer.Add(isSpeakerToggle);
 
-                // Initial override if already checked
-                if (dialogueNode.listenerIsSpeaker && dialogueNode.listenerCharacter != null)
-                {
-                    speakerField.value = dialogueNode.listenerCharacter.npcName;
-                    speakerField.SetEnabled(false);
-                    dialogueNode.speakerName = dialogueNode.listenerCharacter.npcName;
-                }
+            // Initial override if already checked
+            if (dialogueNode.listenerIsSpeaker && dialogueNode.listenerCharacter != null)
+            {
+                speakerField.value = dialogueNode.listenerCharacter.npcName;
+                speakerField.SetEnabled(false);
+                dialogueNode.speakerName = dialogueNode.listenerCharacter.npcName;
             }
         }
 
@@ -995,15 +1253,8 @@ namespace DialogueSystem.Editor
             this.RemoveFromHierarchy();
 
             // Delete the node asset
-            AssetDatabase.RemoveObjectFromAsset(dialogueNode);
-            EditorUtility.SetDirty(selectedDialogue);
-            AssetDatabase.SaveAssets();
-
-            // Destroy the node object (Unity API call)
-            if (dialogueNode != null)
-            {
-                UnityEngine.Object.DestroyImmediate(dialogueNode);
-            }
+            // Schedule removal so it happens outside the immediate UI event stack
+            DialogueEditor.ScheduleDelayedNodeRemoval(dialogueNode, selectedDialogue, "DeleteNode via DialogueNodeView.DeleteNode");
         }
 
         private void OnGeometryChanged(GeometryChangedEvent evt)

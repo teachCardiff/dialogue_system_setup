@@ -30,12 +30,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 7875863636117697317}
+  - {fileID: 5707155470739959606}
   - {fileID: 7278148918019647010}
   - {fileID: 5012759756011391825}
   - {fileID: 654595003819802891}
   - {fileID: 5014839434165480362}
-  - {fileID: 7875863636117697317}
-  - {fileID: 5707155470739959606}
   m_Father: {fileID: 8273530465474737300}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
@@ -196,6 +196,7 @@ GameObject:
   - component: {fileID: 3496926996162550979}
   - component: {fileID: 5378128189348136018}
   - component: {fileID: 8553308340691154575}
+  - component: {fileID: 5846139691552796910}
   m_Layer: 5
   m_Name: DialogueCanvas
   m_TagString: Untagged
@@ -303,10 +304,41 @@ MonoBehaviour:
   nextButton: {fileID: 7404823470396030413}
   choicesPanel: {fileID: 5014839434165480362}
   choiceButtonPrefab: {fileID: 8821813406351550881, guid: a7f39b21590ed7c41b07e0b2379c26d8, type: 3}
+  animator: {fileID: 5846139691552796910}
+  animationType: 1
+  showTrigger: Show
+  hideTrigger: Hide
+  onHideComplete:
+    m_PersistentCalls:
+      m_Calls: []
   speakerImage: {fileID: 1311945673499759067}
   listenerImage: {fileID: 181038212892551794}
   nextPressed: 0
   typewriterSpeed: 30
+  gradientSpeed: 0.2
+  gradientPerCharacterPhase: 1
+--- !u!95 &5846139691552796910
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4053760665980988185}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 66d17cc1f1cc48f43997a02864e26b56, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4268283627871262281
 GameObject:
   m_ObjectHideFlags: 0
