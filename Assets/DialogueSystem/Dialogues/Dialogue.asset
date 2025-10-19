@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Node_12
   m_EditorClassIdentifier: 
   nodeId: 2d23a3d6-301b-46c5-8a5a-224819789057
-  speakerName: 
-  dialogueText: 
+  speakerName: NPC
+  dialogueText: '[color=#00FF00][pulse=1.3,3]Poppopopopopopopopopopopopopopopopo[/pulse][/color]'
   choices: []
   conditionalBranches: []
   onEnterNode:
@@ -288,7 +288,7 @@ MonoBehaviour:
     position: {x: 1465, y: -151}
   - nodeId: 2d23a3d6-301b-46c5-8a5a-224819789057
     position: {x: 2051, y: -151}
-  currentNode: {fileID: -1978411813078665388}
+  currentNode: {fileID: -3848529885013942465}
 --- !u!114 &2941993304389859710
 MonoBehaviour:
   m_ObjectHideFlags: 0

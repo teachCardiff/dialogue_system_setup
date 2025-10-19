@@ -10,20 +10,53 @@ public class DialogueUIEditor : Editor
 
     private void OnEnable()
     {
-        animatorProp = serializedObject.FindProperty("animator");
+        // serializedObject/target can be null during domain reloads or when Unity creates
+        // editors for assets that are temporarily missing. Guard to avoid exceptions.
+        if (targets == null || targets.Length == 0 || targets[0] == null)
+        {
+            animatorProp = null;
+            return;
+        }
+
+        try
+        {
+            animatorProp = serializedObject.FindProperty("animator");
+        }
+        catch (System.Exception)
+        {
+            // If creating the SerializedObject fails for any reason, leave prop null and
+            // let the inspector draw default fields safely.
+            animatorProp = null;
+        }
     }
 
     public override void OnInspectorGUI()
     {
-        serializedObject.Update();
+        // If the serializedObject isn't available, fall back to the default inspector to
+        // avoid accessing null properties.
+        if (targets == null || targets.Length == 0 || targets[0] == null)
+        {
+            DrawDefaultInspector();
+            return;
+        }
 
+        serializedObject.Update();
         // Draw the default inspector first
         DrawDefaultInspector();
 
         EditorGUILayout.Space();
         EditorGUILayout.LabelField("Animation Event Helper", EditorStyles.boldLabel);
 
-        Animator animator = animatorProp.objectReferenceValue as Animator;
+        Animator animator = null;
+        if (animatorProp != null)
+            animator = animatorProp.objectReferenceValue as Animator;
+        else
+        {
+            // If animatorProp is null, attempt to read directly from the target instance
+            var runtimeTarget = target as DialogueUI;
+            if (runtimeTarget != null)
+                animator = runtimeTarget.GetComponent<Animator>() ?? runtimeTarget.GetType().GetField("animator", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)?.GetValue(runtimeTarget) as Animator;
+        }
         if (animator == null)
         {
             EditorGUILayout.HelpBox("No Animator assigned. Assign an Animator to use animation events for show/hide.", MessageType.Info);
