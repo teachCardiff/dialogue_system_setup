@@ -22,10 +22,5 @@ MonoBehaviour:
   onStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  activeQuests:
-  - questName: Talk to Old Man
-    questJson: "{\n    \"questName\": \"Talk to Old Man\",\n    \"description\":
-      \"The old man wants to tell you a story. Lend him your ear.\",\n    \"objectives\":
-      [\n        {\n            \"instanceID\": 45148\n        }\n    ],\n    \"currentStatus\":
-      1\n}"
+  activeQuests: []
   completedQuests: []

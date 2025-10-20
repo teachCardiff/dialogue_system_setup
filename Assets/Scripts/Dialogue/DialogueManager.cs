@@ -108,6 +108,8 @@ public class DialogueManager : MonoBehaviour
             // Or end dialogue if nothing else
             else if (currentNode.IsEndNode)
             {
+                // Ensure exit callbacks and consequences run before ending
+                ExitNodeAndApplyConsequences(currentNode);
                 EndDialogue();
                 yield break;
             }
@@ -151,11 +153,13 @@ public class DialogueManager : MonoBehaviour
         if (currentNode.IsEndNode)
         {
             yield return new WaitUntil(() => dialogueUI.IsNextPressed()); // Wait for player to advance
+            // Ensure exit callbacks and consequences run before ending
+            ExitNodeAndApplyConsequences(currentNode);
             EndDialogue();
             yield break;
         }
 
-            if (currentNode.choices.Count > 0)
+        if (currentNode.choices.Count > 0)
         {
             var availableChoices = currentNode.choices.FindAll(c => c.IsAvailable(gameState));
             debugAvailableChoices = availableChoices;
@@ -174,14 +178,7 @@ public class DialogueManager : MonoBehaviour
             currentNode = selected.targetNode;
             dialogueUI.ClearChoices();
             // Invoke exit logic for the node we just left
-            previousNode.onExitNode?.Invoke();
-            if (previousNode.exitConsequences != null)
-            {
-                foreach (var conseq in previousNode.exitConsequences)
-                {
-                    if (conseq != null) conseq.Execute(gameState);
-                }
-            }
+            ExitNodeAndApplyConsequences(previousNode);
         }
         else
         {
@@ -189,14 +186,7 @@ public class DialogueManager : MonoBehaviour
             var previousNode = currentNode;
             currentNode = currentNode.nextNode;
             // Invoke exit logic for the node we just left
-            previousNode.onExitNode?.Invoke();
-            if (previousNode.exitConsequences != null)
-            {
-                foreach (var conseq in previousNode.exitConsequences)
-                {
-                    if (conseq != null) conseq.Execute(gameState);
-                }
-            }
+            ExitNodeAndApplyConsequences(previousNode);
         }
         // Update progress and continue
         if (currentNode != null)
@@ -210,6 +200,37 @@ public class DialogueManager : MonoBehaviour
             // Reached a null node; end dialogue gracefully
             EndDialogue();
             yield break;
+        }
+    }
+
+    // Helper: invoke onExit and run exitConsequences safely
+    private void ExitNodeAndApplyConsequences(DialogueNode node)
+    {
+        if (node == null) return;
+
+        try
+        {
+            node.onExitNode?.Invoke();
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogWarning($"Exception while invoking onExitNode for {node.name}: {ex.Message}");
+        }
+
+        if (node.exitConsequences != null)
+        {
+            foreach (var conseq in node.exitConsequences)
+            {
+                if (conseq == null) continue;
+                try
+                {
+                    conseq.Execute(gameState);
+                }
+                catch (System.Exception ex)
+                {
+                    Debug.LogWarning($"Exception executing consequence on node {node.name}: {ex.Message}");
+                }
+            }
         }
     }
 
