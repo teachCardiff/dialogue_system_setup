@@ -359,17 +359,27 @@ namespace DialogueSystem.Editor
             }
 
             // Create a foldout/dropdown for defaults
-            var defaultsFold = new Foldout { text = "Default Characters", value = true };
+            var defaultsFold = new Foldout { text = "Default Characters", value = false };
             // Style to ensure visibility
             defaultsFold.style.flexShrink = 0;
             defaultsFold.style.paddingLeft = 4;
             defaultsFold.style.marginTop = 4;
 
-            speakerField.style.width = 180;
-            listenerField.style.width = 180;
+            speakerField.style.width = 300;
+            listenerField.style.width = 300;
 
             defaultsFold.Add(speakerField);
             defaultsFold.Add(listenerField);
+
+            int expandedHeight = 72;
+            int collapsedHeight = 28;
+
+            bottomRow.style.minHeight = defaultsFold.value ? expandedHeight : collapsedHeight;
+
+            defaultsFold.RegisterValueChangedCallback(evt =>
+            {
+                bottomRow.style.minHeight = evt.newValue ? expandedHeight : collapsedHeight;
+            });
 
             var applyRow = new VisualElement { style = { flexDirection = FlexDirection.Row, alignItems = Align.Center } };
             var applyToggle = new Toggle("Only apply to missing") { value = applyOnlyIfMissing };

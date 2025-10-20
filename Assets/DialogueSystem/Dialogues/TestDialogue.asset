@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Node_0
   m_EditorClassIdentifier: 
   nodeId: 176ab8d0-c506-429a-8b3d-d7f382a8df3b
-  speakerName: Old Man
-  speakerCharacter: {fileID: 11400000, guid: 41ab1a86490455c46a9f5f41604bcf4f, type: 2}
+  speakerName: Hero
+  speakerCharacter: {fileID: 11400000, guid: 2d90c1cea61b3d6428253b9783ae5698, type: 2}
   speakerExpression: Default
-  listenerCharacter: {fileID: 11400000, guid: bfdc14890d62329429384c722e3e51d6, type: 2}
-  listenerExpression: 
+  listenerCharacter: {fileID: 11400000, guid: 2d90c1cea61b3d6428253b9783ae5698, type: 2}
+  listenerExpression: Default
   listenerIsSpeaker: 0
   dialogueText: ssrthsrthsrh
   choices: []
@@ -48,6 +48,6 @@ MonoBehaviour:
   nodePositions:
   - nodeId: 176ab8d0-c506-429a-8b3d-d7f382a8df3b
     position: {x: 1256, y: 590}
-  defaultSpeaker: {fileID: 11400000, guid: 41ab1a86490455c46a9f5f41604bcf4f, type: 2}
-  defaultListener: {fileID: 11400000, guid: bfdc14890d62329429384c722e3e51d6, type: 2}
+  defaultSpeaker: {fileID: 11400000, guid: 2d90c1cea61b3d6428253b9783ae5698, type: 2}
+  defaultListener: {fileID: 11400000, guid: 2d90c1cea61b3d6428253b9783ae5698, type: 2}
   currentNode: {fileID: 0}

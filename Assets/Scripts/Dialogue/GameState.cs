@@ -110,6 +110,13 @@ public class GameState : ScriptableObject
         {
             quest.SetObjectiveProgress(objectiveIndex, progress);
             var entry = activeQuests.Find(q => q.questName == questName);
+            if (entry == null)
+            {
+                Debug.LogWarning($"Active quest entry not found for '{questName}'. Changes were applied to a transient quest instance but will not be saved.");
+                DestroyImmediate(quest);
+                return;
+            }
+
             entry.questJson = quest.ToJson();
 
             if (quest.currentStatus == Quest.Status.Completed)
@@ -125,6 +132,10 @@ public class GameState : ScriptableObject
 
             DestroyImmediate(quest);
             onStateChanged?.Invoke();
+        }
+        else
+        {
+            Debug.LogWarning($"UpdateQuestProgress: Quest '{questName}' not found in active quests.");
         }
     }
 

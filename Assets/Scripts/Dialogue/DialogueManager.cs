@@ -74,6 +74,11 @@ public class DialogueManager : MonoBehaviour
 
     private IEnumerator RunNode()
     {
+        if (currentNode != null)
+            Debug.Log($"[DialogueManager] Entering node: {currentNode.name} (id={currentNode.nodeId})");
+        else
+            Debug.Log("[DialogueManager] RunNode called but currentNode == null");
+        
         debugCurrentNode = currentNode;
         currentNode.onEnterNode?.Invoke();
         // Auto-branch if conditions met (before showing this node)
@@ -210,6 +215,8 @@ public class DialogueManager : MonoBehaviour
 
     private void EndDialogue()
     {
+        Debug.Log("[DialogueManager] EndDialogue called. currentDialogue=" + (currentDialogue ? currentDialogue.name : "null") +
+              " currentNode=" + (currentNode ? currentNode.name : "null"));
         print("End of dialogue");
         //dialogueUI.nextPressed = false; // Moved to DialogueUI.Hide()
         if (dialogueUI != null)

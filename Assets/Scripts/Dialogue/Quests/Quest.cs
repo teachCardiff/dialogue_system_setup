@@ -24,8 +24,26 @@ public class Quest : ScriptableObject
 
     public void SetObjectiveProgress(int objectiveIndex, int progress)
     {
-        if (objectiveIndex < 0 || objectiveIndex >= objectives.Count) return;
-        objectives[objectiveIndex].currentProgress = progress;
+        if (objectives == null)
+        {
+            Debug.LogWarning($"Quest '{questName}' has no objectives. Ignoring SetObjectiveProgress({objectiveIndex}, {progress}).");
+            return;
+        }
+
+        if (objectiveIndex < 0 || objectiveIndex >= objectives.Count)
+        {
+            Debug.LogWarning($"Objective index {objectiveIndex} out of range for quest '{questName}'. Objectives count: {objectives.Count}.");
+            return;
+        }
+
+        var obj = objectives[objectiveIndex];
+        if (obj == null)
+        {
+            Debug.LogWarning($"Objective at index {objectiveIndex} on quest '{questName}' is null. Ignoring progress update.");
+            return;
+        }
+
+        obj.currentProgress = progress;
         currentStatus = CheckCompletionStatus();
     }
 

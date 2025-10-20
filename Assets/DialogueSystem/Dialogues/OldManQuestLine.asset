@@ -120,6 +120,9 @@ MonoBehaviour:
   conditionalBranches: []
   onEnterNode:
     m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11400000, guid: b83b9d5313333964ab0e420d9e463b2d, type: 2}
         m_TargetAssemblyTypeName: QuestConsequence, Assembly-CSharp
@@ -133,9 +136,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onExitNode:
-    m_PersistentCalls:
-      m_Calls: []
   exitConsequences: []
   nextNode: {fileID: 0}
 --- !u!114 &-300062002943716697
@@ -191,22 +191,22 @@ MonoBehaviour:
   - {fileID: -7819923231821977566}
   nodePositions:
   - nodeId: 9a3ef4eb-c0eb-4a44-8f03-0bc56c9e7dc0
-    position: {x: 1908, y: 526}
+    position: {x: 453, y: -254}
   - nodeId: eae06216-2029-4fad-840f-729701fb958c
-    position: {x: 988, y: 721}
+    position: {x: -467, y: -59}
   - nodeId: 2382e0cf-24d9-440c-873f-44dbe989eabc
-    position: {x: 1908, y: 851}
+    position: {x: 453, y: 71}
   - nodeId: 59521d0f-ab02-4b09-ba2f-c932cc1c65a4
-    position: {x: 1908, y: 1162}
+    position: {x: 446, y: 381.5}
   - nodeId: b720adcc-c87b-41cc-99ec-2c1a691161db
-    position: {x: 2257, y: 851}
+    position: {x: 802, y: 71}
   - nodeId: beda1bac-15dc-47af-8361-d75e7db5326d
-    position: {x: 2620, y: 741}
+    position: {x: 1165, y: -39}
   - nodeId: 8b4845c6-b1c6-4ee6-a0b0-5e2e3d7cc272
-    position: {x: 2620, y: 1027}
+    position: {x: 1165, y: 247}
   defaultSpeaker: {fileID: 11400000, guid: 41ab1a86490455c46a9f5f41604bcf4f, type: 2}
   defaultListener: {fileID: 11400000, guid: 2d90c1cea61b3d6428253b9783ae5698, type: 2}
-  currentNode: {fileID: -300062002943716697}
+  currentNode: {fileID: -4710627292480325847}
 --- !u!114 &143090911903638972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -220,12 +220,12 @@ MonoBehaviour:
   m_Name: Node_4
   m_EditorClassIdentifier: 
   nodeId: b720adcc-c87b-41cc-99ec-2c1a691161db
-  speakerName: Hero
+  speakerName: Old Man
   speakerCharacter: {fileID: 11400000, guid: 41ab1a86490455c46a9f5f41604bcf4f, type: 2}
   speakerExpression: Default
   listenerCharacter: {fileID: 11400000, guid: 2d90c1cea61b3d6428253b9783ae5698, type: 2}
   listenerExpression: Default
-  listenerIsSpeaker: 1
+  listenerIsSpeaker: 0
   dialogueText: Did you like it?
   choices:
   - choiceText: Yes!
