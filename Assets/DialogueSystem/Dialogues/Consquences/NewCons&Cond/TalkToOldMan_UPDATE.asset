@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: TalkToOldMan_UPDATE
   m_EditorClassIdentifier: 
   quest: {fileID: 11400000, guid: 0a7cc125ce3d34c4899cb607eac25eb7, type: 2}
-  questName: Talk to Old Man
   consequenceType: 1
   objectiveIndex: 0
   progressDelta: 1

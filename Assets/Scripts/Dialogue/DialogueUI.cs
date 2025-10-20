@@ -87,7 +87,7 @@ public class DialogueUI : MonoBehaviour
 
     private void ShowDialogueInternal(string speaker, string text, Sprite speakerSprite, Sprite listenerSprite = null)
     {
-        Debug.Log($"[DialogueUI] ShowDialogueInternal: speaker='{speaker}', text length={text?.Length ?? 0}");
+        //Debug.Log($"[DialogueUI] ShowDialogueInternal: speaker='{speaker}', text length={text?.Length ?? 0}");
         speakerText.text = speaker;
 
         // Clear TMP text until parsed text is set below
@@ -127,14 +127,14 @@ public class DialogueUI : MonoBehaviour
     // Parse rich/custom tags (now returns multiple effect ranges)
     RichTextParser.Parse(text, out string parsedText, out shakeRanges, out waveRanges, out pulseRanges, out gradientRanges);
     // Log parsed ranges for debugging
-    Debug.Log($"[DialogueUI] Parsed ranges: shake={shakeRanges?.Count ?? 0}, wave={waveRanges?.Count ?? 0}, pulse={pulseRanges?.Count ?? 0}, gradient={gradientRanges?.Count ?? 0}");
+    //Debug.Log($"[DialogueUI] Parsed ranges: shake={shakeRanges?.Count ?? 0}, wave={waveRanges?.Count ?? 0}, pulse={pulseRanges?.Count ?? 0}, gradient={gradientRanges?.Count ?? 0}");
 
         // Set parsed text and start with zero visible characters to avoid partial tag rendering or flash
         dialogueText.text = parsedText;
         dialogueText.maxVisibleCharacters = 0;
         dialogueText.ForceMeshUpdate();
         currentRevealCount = 0;
-        Debug.Log($"[DialogueUI] ShowDialogueInternal: parsed text set, totalChars={dialogueText.textInfo.characterCount}");
+        //Debug.Log($"[DialogueUI] ShowDialogueInternal: parsed text set, totalChars={dialogueText.textInfo.characterCount}");
 
     if (typewriterCoroutine != null) StopCoroutine(typewriterCoroutine);
     typewriterCoroutine = StartCoroutine(TypeText(parsedText));
@@ -176,7 +176,7 @@ public class DialogueUI : MonoBehaviour
 
     private IEnumerator TypeText(string text)
     {
-        Debug.Log($"[DialogueUI] TypeText start: totalChars={dialogueText.textInfo.characterCount}");
+        //Debug.Log($"[DialogueUI] TypeText start: totalChars={dialogueText.textInfo.characterCount}");
         // If instant
         if (typewriterSpeed <= 0f)
         {
@@ -216,7 +216,7 @@ public class DialogueUI : MonoBehaviour
             {
                 int nextVisible = Mathf.Min(total, visible + toAdd);
                 dialogueText.maxVisibleCharacters = nextVisible;
-                Debug.Log($"[DialogueUI] TypeText reveal -> {visible}..{nextVisible}");
+                //Debug.Log($"[DialogueUI] TypeText reveal -> {visible}..{nextVisible}");
                 visible = nextVisible;
                 currentRevealCount = visible;
                 typewriterAccumulator -= toAdd;
@@ -228,7 +228,7 @@ public class DialogueUI : MonoBehaviour
         // ensure fully visible at end
         dialogueText.maxVisibleCharacters = total;
         currentRevealCount = total;
-        Debug.Log($"[DialogueUI] TypeText complete: currentRevealCount={currentRevealCount}");
+        //Debug.Log($"[DialogueUI] TypeText complete: currentRevealCount={currentRevealCount}");
         skipTypewriter = false;
         typewriterCoroutine = null;
     }

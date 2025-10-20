@@ -322,6 +322,17 @@ namespace DialogueSystem.Editor
                 }
                 EditorUtility.SetDirty(selectedDialogue);
                 AssetDatabase.SaveAssets();
+                // Refresh visible node views so editor shows updated speaker/listener without reloading
+                if (graphView != null)
+                {
+                    foreach (var nv in graphView.nodes.OfType<DialogueNodeView>())
+                    {
+                        if (nv.dialogueNode != null)
+                        {
+                            nv.RefreshFromModel();
+                        }
+                    }
+                }
             }) { text = "Apply To Existing Nodes" };
 
             speakerField.RegisterValueChangedCallback(evt =>
@@ -1004,6 +1015,24 @@ namespace DialogueSystem.Editor
             
         }
 
+        // Refresh UI elements to reflect the underlying DialogueNode model
+        public void RefreshFromModel()
+        {
+            if (dialogueNode == null) return;
+
+            // Update title and text fields
+            title = !string.IsNullOrEmpty(dialogueNode.speakerName) ? dialogueNode.speakerName : "Node";
+
+            // Update character object fields
+            if (charField != null) charField.value = dialogueNode.speakerCharacter;
+            if (listenerField != null) listenerField.value = dialogueNode.listenerCharacter;
+
+            // Refresh dynamic parts
+            RefreshChoices();
+            RefreshBranches();
+            RefreshCharFields();
+        }
+
         void RefreshCharFields()
         {
             // if (expressionDropdown != null)
@@ -1329,7 +1358,7 @@ namespace DialogueSystem.Editor
                 var choice = dialogueNode.choices[i];
                 var choiceContainer = new VisualElement { style = { flexDirection = FlexDirection.Row } };
 
-                var choiceField = new TextField("Choice") { value = choice.choiceText };
+                var choiceField = new TextField($"Choice {i + 1}") { value = choice.choiceText };
                 choiceField.RegisterValueChangedCallback(evt =>
                 {
                     choice.choiceText = evt.newValue;
@@ -1401,7 +1430,20 @@ namespace DialogueSystem.Editor
                 var branchElement = new VisualElement { style = { flexDirection = FlexDirection.Row } };
 
                 var nameField = new TextField("Branch Name") { value = branch.branchName };
-                nameField.RegisterValueChangedCallback(evt => { branch.branchName = evt.newValue; EditorUtility.SetDirty(dialogueNode); });
+                nameField.RegisterValueChangedCallback(evt => {
+                    branch.branchName = evt.newValue;
+                    EditorUtility.SetDirty(dialogueNode);
+                    // Update port label immediately if present
+                    int portIndex = i + dialogueNode.choices.Count;
+                    if (portIndex < outputContainer.childCount)
+                    {
+                        var port = outputContainer[portIndex] as Port;
+                        if (port != null)
+                        {
+                            port.portName = string.IsNullOrEmpty(evt.newValue) ? $"Branch {i + 1}" : evt.newValue;
+                        }
+                    }
+                });
                 branchElement.Add(nameField);
 
                 var condField = new ObjectField("Condition") { objectType = typeof(Condition), value = branch.condition };

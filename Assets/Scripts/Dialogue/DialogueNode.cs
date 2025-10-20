@@ -37,6 +37,8 @@ public class DialogueNode : ScriptableObject
     // Events for extensibility (e.g., play animation on node enter)
     public UnityEvent onEnterNode;
     public UnityEvent onExitNode;
+    // ScriptableObject-based consequences to execute when this node exits
+    public List<Consequence> exitConsequences = new List<Consequence>();
 
     // If no choices, next node is linear progression
     public DialogueNode nextNode;

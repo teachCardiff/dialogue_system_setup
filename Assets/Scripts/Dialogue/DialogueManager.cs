@@ -150,7 +150,7 @@ public class DialogueManager : MonoBehaviour
             yield break;
         }
 
-        if (currentNode.choices.Count > 0)
+            if (currentNode.choices.Count > 0)
         {
             var availableChoices = currentNode.choices.FindAll(c => c.IsAvailable(gameState));
             debugAvailableChoices = availableChoices;
@@ -165,20 +165,47 @@ public class DialogueManager : MonoBehaviour
                 consequence.Execute(gameState);
             }
 
+            var previousNode = currentNode;
             currentNode = selected.targetNode;
             dialogueUI.ClearChoices();
+            // Invoke exit logic for the node we just left
+            previousNode.onExitNode?.Invoke();
+            if (previousNode.exitConsequences != null)
+            {
+                foreach (var conseq in previousNode.exitConsequences)
+                {
+                    if (conseq != null) conseq.Execute(gameState);
+                }
+            }
         }
         else
         {
             yield return new WaitUntil(() => dialogueUI.IsNextPressed());
+            var previousNode = currentNode;
             currentNode = currentNode.nextNode;
+            // Invoke exit logic for the node we just left
+            previousNode.onExitNode?.Invoke();
+            if (previousNode.exitConsequences != null)
+            {
+                foreach (var conseq in previousNode.exitConsequences)
+                {
+                    if (conseq != null) conseq.Execute(gameState);
+                }
+            }
         }
-
-        currentNode.onExitNode?.Invoke();
-        currentDialogue.currentNode = currentNode; // Update progress
-        currentDialogue.visitedNodes[currentNode.nodeId] = true;
-
-        yield return RunNode(); // Recurse
+        // Update progress and continue
+        if (currentNode != null)
+        {
+            currentDialogue.currentNode = currentNode;
+            currentDialogue.visitedNodes[currentNode.nodeId] = true;
+            yield return RunNode(); // Recurse
+        }
+        else
+        {
+            // Reached a null node; end dialogue gracefully
+            EndDialogue();
+            yield break;
+        }
     }
 
     private void EndDialogue()

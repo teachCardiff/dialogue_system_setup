@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Node_0
   m_EditorClassIdentifier: 
   nodeId: 176ab8d0-c506-429a-8b3d-d7f382a8df3b
-  speakerName: dfg
-  speakerCharacter: {fileID: 0}
-  speakerExpression: 
-  listenerCharacter: {fileID: 0}
+  speakerName: Old Man
+  speakerCharacter: {fileID: 11400000, guid: 41ab1a86490455c46a9f5f41604bcf4f, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 11400000, guid: bfdc14890d62329429384c722e3e51d6, type: 2}
   listenerExpression: 
   listenerIsSpeaker: 0
   dialogueText: ssrthsrthsrh
@@ -28,6 +28,7 @@ MonoBehaviour:
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
+  exitConsequences: []
   nextNode: {fileID: 0}
 --- !u!114 &11400000
 MonoBehaviour:
@@ -47,6 +48,6 @@ MonoBehaviour:
   nodePositions:
   - nodeId: 176ab8d0-c506-429a-8b3d-d7f382a8df3b
     position: {x: 1256, y: 590}
-  defaultSpeaker: {fileID: 0}
-  defaultListener: {fileID: 0}
+  defaultSpeaker: {fileID: 11400000, guid: 41ab1a86490455c46a9f5f41604bcf4f, type: 2}
+  defaultListener: {fileID: 11400000, guid: bfdc14890d62329429384c722e3e51d6, type: 2}
   currentNode: {fileID: 0}

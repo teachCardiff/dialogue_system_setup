@@ -13,21 +13,36 @@ MonoBehaviour:
   m_Name: Node_0
   m_EditorClassIdentifier: 
   nodeId: 437126c2-6752-4353-a171-c4222af04543
-  speakerName: 
-  speakerCharacter: {fileID: 0}
-  speakerExpression: 
-  listenerCharacter: {fileID: 0}
-  listenerExpression: 
+  speakerName: Hero
+  speakerCharacter: {fileID: 11400000, guid: 2d90c1cea61b3d6428253b9783ae5698, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 11400000, guid: c34158a6df34d8f4895b20a978165b12, type: 2}
+  listenerExpression: Default
   listenerIsSpeaker: 0
   dialogueText: 
-  choices: []
-  conditionalBranches: []
+  choices:
+  - choiceText: New Choice
+    targetNode: {fileID: 0}
+    conditions: []
+    consequences: []
+  - choiceText: New Choice
+    targetNode: {fileID: 0}
+    conditions: []
+    consequences: []
+  conditionalBranches:
+  - branchName: In Progress
+    condition: {fileID: 0}
+    targetNode: {fileID: 0}
+  - branchName: Completed
+    condition: {fileID: 0}
+    targetNode: {fileID: 0}
   onEnterNode:
     m_PersistentCalls:
       m_Calls: []
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
+  exitConsequences: []
   nextNode: {fileID: 2061414151932271707}
 --- !u!114 &11400000
 MonoBehaviour:
@@ -47,11 +62,11 @@ MonoBehaviour:
   - {fileID: 2061414151932271707}
   nodePositions:
   - nodeId: 437126c2-6752-4353-a171-c4222af04543
-    position: {x: 2823, y: 1327}
+    position: {x: 2560, y: 1327}
   - nodeId: 60b421f6-f747-4038-af3d-97187b1ef7ec
     position: {x: 3126, y: 1327}
-  defaultSpeaker: {fileID: 0}
-  defaultListener: {fileID: 0}
+  defaultSpeaker: {fileID: 11400000, guid: 2d90c1cea61b3d6428253b9783ae5698, type: 2}
+  defaultListener: {fileID: 11400000, guid: c34158a6df34d8f4895b20a978165b12, type: 2}
   currentNode: {fileID: 0}
 --- !u!114 &2061414151932271707
 MonoBehaviour:
@@ -66,11 +81,11 @@ MonoBehaviour:
   m_Name: Node_1
   m_EditorClassIdentifier: 
   nodeId: 60b421f6-f747-4038-af3d-97187b1ef7ec
-  speakerName: 
-  speakerCharacter: {fileID: 0}
-  speakerExpression: 
-  listenerCharacter: {fileID: 0}
-  listenerExpression: 
+  speakerName: Hero
+  speakerCharacter: {fileID: 11400000, guid: 2d90c1cea61b3d6428253b9783ae5698, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 11400000, guid: c34158a6df34d8f4895b20a978165b12, type: 2}
+  listenerExpression: Default
   listenerIsSpeaker: 0
   dialogueText: 
   choices: []
@@ -81,4 +96,5 @@ MonoBehaviour:
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
+  exitConsequences: []
   nextNode: {fileID: 0}
