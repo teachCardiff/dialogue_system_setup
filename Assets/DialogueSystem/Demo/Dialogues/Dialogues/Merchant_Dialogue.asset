@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a09afc92a506d184c8c8e3fc2292ece4, type: 3}
+  m_Name: Merchant_Dialogue
+  m_EditorClassIdentifier: 
+  startNode: {fileID: 6927249070887177323}
+  nodes:
+  - {fileID: 6927249070887177323}
+  nodePositions:
+  - nodeId: db8f198a-df21-4f24-aac9-7150b1420084
+    position: {x: 92.5, y: 152.5}
+  defaultSpeaker: {fileID: 0}
+  defaultListener: {fileID: 0}
+  currentNode: {fileID: 6927249070887177323}
+--- !u!114 &6927249070887177323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_0
+  m_EditorClassIdentifier: 
+  nodeId: db8f198a-df21-4f24-aac9-7150b1420084
+  speakerName: Merchant
+  speakerCharacter: {fileID: 0}
+  speakerExpression: 
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: '[i][pulse, 5]*Sigh*[/pulse][/i] How am I supposed to feed my family
+    if I don''t have flowers to sell?'
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: 0}

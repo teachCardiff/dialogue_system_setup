@@ -1,0 +1,523 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-9100149295132089337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_11
+  m_EditorClassIdentifier: 
+  nodeId: 57f2ccb5-ff10-41f6-9f73-f34241936c92
+  speakerName: Luna
+  speakerCharacter: {fileID: 11400000, guid: 5e97a2fa9ced9d74bba85bc6978d8644, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: 
+  choices: []
+  conditionalBranches:
+  - branchName: HaveTalked
+    condition: {fileID: 11400000, guid: 08cdc2f7c7dc64d488f9c9fd1fa4a0d9, type: 2}
+    targetNode: {fileID: 2308483982455164374}
+  - branchName: In Progress
+    condition: {fileID: 11400000, guid: 1cab2079e0eb35b47bc49df84f7e7f05, type: 2}
+    targetNode: {fileID: 2769127903998570883}
+  - branchName: Completed
+    condition: {fileID: 11400000, guid: 9eed413031196464d898cc9e11755e97, type: 2}
+    targetNode: {fileID: -4618290059791301591}
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: -3520415781976627993}
+--- !u!114 &-9088405419575577821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_4
+  m_EditorClassIdentifier: 
+  nodeId: a735ce47-5742-4664-ad02-0d57cb4ebf9c
+  speakerName: Luna
+  speakerCharacter: {fileID: 11400000, guid: 5e97a2fa9ced9d74bba85bc6978d8644, type: 2}
+  speakerExpression: Smile
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: Why you are in Pleasanton, of course!
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: 2308483982455164374}
+--- !u!114 &-7110149492458854456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_6
+  m_EditorClassIdentifier: 
+  nodeId: 94afdb19-4369-46e8-bc0e-76ed9cd75757
+  speakerName: Luna
+  speakerCharacter: {fileID: 11400000, guid: 5e97a2fa9ced9d74bba85bc6978d8644, type: 2}
+  speakerExpression: Smile
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: Great! Go talk to the other's here and learn about what they need.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 81e475a4b82bdf14790182839fbbdd57, type: 2}
+        m_TargetAssemblyTypeName: QuestConsequence, Assembly-CSharp
+        m_MethodName: Execute
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: abeccb046d47fd64494cb73113a0de3d, type: 2}
+          m_ObjectArgumentAssemblyTypeName: GameState, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: 0}
+--- !u!114 &-6559002524594183355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_1
+  m_EditorClassIdentifier: 
+  nodeId: 78abd598-4321-442a-91a4-924515d1da54
+  speakerName: Player
+  speakerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
+  speakerExpression: Smile
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: Hello!
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: -2449602565557857564}
+--- !u!114 &-4618290059791301591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_13
+  m_EditorClassIdentifier: 
+  nodeId: 896e6cd8-6397-4a49-994d-aa63b0c70d0b
+  speakerName: Luna
+  speakerCharacter: {fileID: 11400000, guid: 5e97a2fa9ced9d74bba85bc6978d8644, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: Thank you for helping the townsfolk out!
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: 0}
+--- !u!114 &-4400914224224945064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_10
+  m_EditorClassIdentifier: 
+  nodeId: 67c68c67-b06c-4a6e-9645-bf6ba762e7cf
+  speakerName: Luna
+  speakerCharacter: {fileID: 11400000, guid: 5e97a2fa9ced9d74bba85bc6978d8644, type: 2}
+  speakerExpression: Smile
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: Oh no problem! Just let me know if you can.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: 0}
+--- !u!114 &-3520415781976627993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_0
+  m_EditorClassIdentifier: 
+  nodeId: f8f934ac-99f8-4bd2-904c-3d800ce8bc03
+  speakerName: Luna
+  speakerCharacter: {fileID: 11400000, guid: 5e97a2fa9ced9d74bba85bc6978d8644, type: 2}
+  speakerExpression: Smile
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: Why hello there!
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 545b36a285558ce4d99d1e469bb1bd1d, type: 2}
+        m_TargetAssemblyTypeName: SetBoolConsequenceSO, Assembly-CSharp
+        m_MethodName: Execute
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: abeccb046d47fd64494cb73113a0de3d, type: 2}
+          m_ObjectArgumentAssemblyTypeName: GameState, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: -6559002524594183355}
+--- !u!114 &-2449602565557857564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_2
+  m_EditorClassIdentifier: 
+  nodeId: e6e505ae-f8ee-4765-8f32-2cd1423c4f36
+  speakerName: Player
+  speakerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
+  speakerExpression: Talk
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: Umm...where am I?
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: -699252119067909963}
+--- !u!114 &-699252119067909963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_3
+  m_EditorClassIdentifier: 
+  nodeId: eab22764-7807-49dd-9810-8ee676cd66b9
+  speakerName: Luna
+  speakerCharacter: {fileID: 11400000, guid: 5e97a2fa9ced9d74bba85bc6978d8644, type: 2}
+  speakerExpression: Angry
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: ...
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: -9088405419575577821}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a09afc92a506d184c8c8e3fc2292ece4, type: 3}
+  m_Name: Luna_Dialogue
+  m_EditorClassIdentifier: 
+  startNode: {fileID: -3520415781976627993}
+  nodes:
+  - {fileID: -3520415781976627993}
+  - {fileID: -6559002524594183355}
+  - {fileID: -2449602565557857564}
+  - {fileID: -699252119067909963}
+  - {fileID: -9088405419575577821}
+  - {fileID: 2308483982455164374}
+  - {fileID: -7110149492458854456}
+  - {fileID: 8003583929478802044}
+  - {fileID: 1882027759992111648}
+  - {fileID: 5954068238915496916}
+  - {fileID: -4400914224224945064}
+  - {fileID: -9100149295132089337}
+  - {fileID: 2769127903998570883}
+  - {fileID: -4618290059791301591}
+  nodePositions:
+  - nodeId: f8f934ac-99f8-4bd2-904c-3d800ce8bc03
+    position: {x: 198.5, y: 205}
+  - nodeId: 78abd598-4321-442a-91a4-924515d1da54
+    position: {x: 510.5, y: 205}
+  - nodeId: e6e505ae-f8ee-4765-8f32-2cd1423c4f36
+    position: {x: 823.5, y: 205}
+  - nodeId: eab22764-7807-49dd-9810-8ee676cd66b9
+    position: {x: 1136.5, y: 205}
+  - nodeId: a735ce47-5742-4664-ad02-0d57cb4ebf9c
+    position: {x: 1448.5, y: 205}
+  - nodeId: b3804f19-a14d-498b-8a41-29ef371883c5
+    position: {x: 1840.5, y: 205}
+  - nodeId: 94afdb19-4369-46e8-bc0e-76ed9cd75757
+    position: {x: 2714.5, y: 124}
+  - nodeId: bad96483-8ae4-4dd6-b567-f0579d57a131
+    position: {x: 2809.5, y: 382}
+  - nodeId: 788f2711-e838-42e1-8618-787a0ea75fa6
+    position: {x: 2367, y: 124}
+  - nodeId: a124a581-3c57-4aa6-9f64-7d14d11988b8
+    position: {x: 2368, y: 382}
+  - nodeId: 67c68c67-b06c-4a6e-9645-bf6ba762e7cf
+    position: {x: 3203, y: 382}
+  - nodeId: 57f2ccb5-ff10-41f6-9f73-f34241936c92
+    position: {x: -724.5, y: 236.5}
+  - nodeId: cf67a8eb-e022-4462-b12a-d9971334d1e9
+    position: {x: 198.5, y: 471.5}
+  - nodeId: 896e6cd8-6397-4a49-994d-aa63b0c70d0b
+    position: {x: 198.5, y: 763.5}
+  defaultSpeaker: {fileID: 11400000, guid: 5e97a2fa9ced9d74bba85bc6978d8644, type: 2}
+  defaultListener: {fileID: 0}
+  currentNode: {fileID: -3520415781976627993}
+--- !u!114 &1882027759992111648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_8
+  m_EditorClassIdentifier: 
+  nodeId: 788f2711-e838-42e1-8618-787a0ea75fa6
+  speakerName: Player
+  speakerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
+  speakerExpression: Talk
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: Sure. I'll help if I can.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: -7110149492458854456}
+--- !u!114 &2308483982455164374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_5
+  m_EditorClassIdentifier: 
+  nodeId: b3804f19-a14d-498b-8a41-29ef371883c5
+  speakerName: Luna
+  speakerCharacter: {fileID: 11400000, guid: 5e97a2fa9ced9d74bba85bc6978d8644, type: 2}
+  speakerExpression: Talk
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: I do have a favor to ask, if you're up for it.
+  choices:
+  - choiceText: Sure.
+    targetNode: {fileID: 1882027759992111648}
+    conditions: []
+    consequences: []
+  - choiceText: I'm busy right now.
+    targetNode: {fileID: 5954068238915496916}
+    conditions: []
+    consequences: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: 0}
+--- !u!114 &2769127903998570883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_12
+  m_EditorClassIdentifier: 
+  nodeId: cf67a8eb-e022-4462-b12a-d9971334d1e9
+  speakerName: Luna
+  speakerCharacter: {fileID: 11400000, guid: 5e97a2fa9ced9d74bba85bc6978d8644, type: 2}
+  speakerExpression: Smile
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: Go talk to the townsfolk and see how you can help.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: 0}
+--- !u!114 &5954068238915496916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_9
+  m_EditorClassIdentifier: 
+  nodeId: a124a581-3c57-4aa6-9f64-7d14d11988b8
+  speakerName: Player
+  speakerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: I'm sorry... I'm actually a little busy right now.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: 8003583929478802044}
+--- !u!114 &8003583929478802044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_7
+  m_EditorClassIdentifier: 
+  nodeId: bad96483-8ae4-4dd6-b567-f0579d57a131
+  speakerName: Luna
+  speakerCharacter: {fileID: 11400000, guid: 5e97a2fa9ced9d74bba85bc6978d8644, type: 2}
+  speakerExpression: Angry
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: '[b][shake, 7.0f]WHAT!?[/b][/shake]'
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: -4400914224224945064}
