@@ -87,15 +87,15 @@ MonoBehaviour:
   - {fileID: 1923607289766883953}
   nodePositions:
   - nodeId: 9b9b8241-cfe6-4eb4-8674-7a1d3d364ab9
-    position: {x: 2307.5, y: 335.5}
+    position: {x: 2308, y: 336}
   - nodeId: db3d1808-dc21-44e0-b5af-5b023eed2e34
-    position: {x: 2632, y: 335.5}
+    position: {x: 2632, y: 336}
   - nodeId: 2960b7d6-da96-4147-9203-e814e7323048
-    position: {x: 2956.5, y: 335.5}
+    position: {x: 2957, y: 336}
   - nodeId: b587d259-8b2d-43df-8277-2c27c867b4b4
-    position: {x: 3328.5, y: 259}
+    position: {x: 3329, y: 259}
   - nodeId: 92b2bd88-040a-42dc-946e-e3318520b423
-    position: {x: 3328.5, y: 699}
+    position: {x: 3329, y: 699}
   defaultSpeaker: {fileID: 11400000, guid: c0f5165958beabc4da2ec2ee254ee18b, type: 2}
   defaultListener: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
   currentNode: {fileID: 1923607289766883953}

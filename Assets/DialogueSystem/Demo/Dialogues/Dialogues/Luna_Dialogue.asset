@@ -315,7 +315,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a09afc92a506d184c8c8e3fc2292ece4, type: 3}
   m_Name: Luna_Dialogue
   m_EditorClassIdentifier: 
-  startNode: {fileID: -3520415781976627993}
+  startNode: {fileID: -9100149295132089337}
   nodes:
   - {fileID: -3520415781976627993}
   - {fileID: -6559002524594183355}
@@ -333,21 +333,21 @@ MonoBehaviour:
   - {fileID: -4618290059791301591}
   nodePositions:
   - nodeId: f8f934ac-99f8-4bd2-904c-3d800ce8bc03
-    position: {x: 198.5, y: 205}
+    position: {x: 199, y: 205}
   - nodeId: 78abd598-4321-442a-91a4-924515d1da54
-    position: {x: 510.5, y: 205}
+    position: {x: 511, y: 205}
   - nodeId: e6e505ae-f8ee-4765-8f32-2cd1423c4f36
-    position: {x: 823.5, y: 205}
+    position: {x: 824, y: 205}
   - nodeId: eab22764-7807-49dd-9810-8ee676cd66b9
-    position: {x: 1136.5, y: 205}
+    position: {x: 1137, y: 205}
   - nodeId: a735ce47-5742-4664-ad02-0d57cb4ebf9c
-    position: {x: 1448.5, y: 205}
+    position: {x: 1449, y: 205}
   - nodeId: b3804f19-a14d-498b-8a41-29ef371883c5
-    position: {x: 1840.5, y: 205}
+    position: {x: 1841, y: 205}
   - nodeId: 94afdb19-4369-46e8-bc0e-76ed9cd75757
-    position: {x: 2714.5, y: 124}
+    position: {x: 2715, y: 124}
   - nodeId: bad96483-8ae4-4dd6-b567-f0579d57a131
-    position: {x: 2809.5, y: 382}
+    position: {x: 2810, y: 382}
   - nodeId: 788f2711-e838-42e1-8618-787a0ea75fa6
     position: {x: 2367, y: 124}
   - nodeId: a124a581-3c57-4aa6-9f64-7d14d11988b8
@@ -355,14 +355,14 @@ MonoBehaviour:
   - nodeId: 67c68c67-b06c-4a6e-9645-bf6ba762e7cf
     position: {x: 3203, y: 382}
   - nodeId: 57f2ccb5-ff10-41f6-9f73-f34241936c92
-    position: {x: -724.5, y: 236.5}
+    position: {x: -659, y: 265}
   - nodeId: cf67a8eb-e022-4462-b12a-d9971334d1e9
-    position: {x: 198.5, y: 471.5}
+    position: {x: 199, y: 472}
   - nodeId: 896e6cd8-6397-4a49-994d-aa63b0c70d0b
-    position: {x: 198.5, y: 763.5}
+    position: {x: 199, y: 764}
   defaultSpeaker: {fileID: 11400000, guid: 5e97a2fa9ced9d74bba85bc6978d8644, type: 2}
   defaultListener: {fileID: 0}
-  currentNode: {fileID: -3520415781976627993}
+  currentNode: {fileID: -7110149492458854456}
 --- !u!114 &1882027759992111648
 MonoBehaviour:
   m_ObjectHideFlags: 0

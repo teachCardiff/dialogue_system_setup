@@ -1,5 +1,327 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-9106256650717107132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_19
+  m_EditorClassIdentifier: 
+  nodeId: fc06f12d-6a77-4968-b7a1-2dd43e4ab008
+  speakerName: Player
+  speakerCharacter: {fileID: 0}
+  speakerExpression: 
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: I'll keep looking.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: -3732373236951027278}
+--- !u!114 &-9082048600485696208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_3
+  m_EditorClassIdentifier: 
+  nodeId: 41c21cf1-52ae-4a70-ac1e-e9bbe089a9c0
+  speakerName: Player
+  speakerCharacter: {fileID: 0}
+  speakerExpression: 
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: I'll come back when I've got those flowers.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: fc5b889b0026f1848be4e13c18133a9d, type: 2}
+        m_TargetAssemblyTypeName: QuestConsequence, Assembly-CSharp
+        m_MethodName: Execute
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: abeccb046d47fd64494cb73113a0de3d, type: 2}
+          m_ObjectArgumentAssemblyTypeName: GameState, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  exitConsequences: []
+  nextNode: {fileID: 0}
+--- !u!114 &-8949664710614154996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_9
+  m_EditorClassIdentifier: 
+  nodeId: cf73d6c4-b2e4-4e39-b930-5c12e6c7ee8a
+  speakerName: Player
+  speakerCharacter: {fileID: 0}
+  speakerExpression: 
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: I found 4 flowers for you!
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: 5293156138806957632}
+--- !u!114 &-8181038608668258879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_7
+  m_EditorClassIdentifier: 
+  nodeId: 5e2f32ca-fbb5-4e61-99ff-130f2c3dcae1
+  speakerName: Player
+  speakerCharacter: {fileID: 0}
+  speakerExpression: 
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: No, I'm still looking.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: 2075054157938188753}
+--- !u!114 &-7294158416961576469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_6
+  m_EditorClassIdentifier: 
+  nodeId: 460d44ea-a7f3-46e0-b0ec-a5951fc8f0b9
+  speakerName: Merchant
+  speakerCharacter: {fileID: 0}
+  speakerExpression: 
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: Did you find those 4 flowers?
+  choices: []
+  conditionalBranches:
+  - branchName: No Flowers
+    condition: {fileID: 11400000, guid: 534b70334592711478428edbdedc7dda, type: 2}
+    targetNode: {fileID: -8181038608668258879}
+  - branchName: All Flowers
+    condition: {fileID: 11400000, guid: c0a70e4fa2cb31049929e6a82ca0826a, type: 2}
+    targetNode: {fileID: -8949664710614154996}
+  - branchName: Some Flowers
+    condition: {fileID: 11400000, guid: 576c0ea96b5e8ac4db67d49c66a5a4e6, type: 2}
+    targetNode: {fileID: 4920220170874142042}
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: 0}
+--- !u!114 &-6763016470584409542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_2
+  m_EditorClassIdentifier: 
+  nodeId: e2d1eaf6-e873-4465-8f52-10b2c4335ae9
+  speakerName: Merchant
+  speakerCharacter: {fileID: 0}
+  speakerExpression: 
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: What? Oh...I mean, if you can bring me 4 flowers, you would really
+    save me.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: -9082048600485696208}
+--- !u!114 &-5593203219150723293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_13
+  m_EditorClassIdentifier: 
+  nodeId: 5c0548f8-33df-401e-88f8-2a674ddec449
+  speakerName: Player
+  speakerCharacter: {fileID: 0}
+  speakerExpression: 
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: Actually...nevermind.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: 7209791658795973225}
+--- !u!114 &-3732373236951027278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_20
+  m_EditorClassIdentifier: 
+  nodeId: 49db725b-245e-4bb8-b228-6e924b2a9be0
+  speakerName: Merchant
+  speakerCharacter: {fileID: 0}
+  speakerExpression: 
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: Thank you.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: 0}
+--- !u!114 &-3726758095415614958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_1
+  m_EditorClassIdentifier: 
+  nodeId: 2fad1264-db43-4330-bad9-1cce9395c853
+  speakerName: Player
+  speakerCharacter: {fileID: 0}
+  speakerExpression: 
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: Is there something I can do to help?
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: -6763016470584409542}
+--- !u!114 &-1071455400184411333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_11
+  m_EditorClassIdentifier: 
+  nodeId: 2a15179e-464d-403d-8a59-05eeb69b1ce0
+  speakerName: Player
+  speakerCharacter: {fileID: 0}
+  speakerExpression: 
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: '*Give the flowers*'
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: 4428323560780378697}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12,15 +334,358 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a09afc92a506d184c8c8e3fc2292ece4, type: 3}
   m_Name: Merchant_Dialogue
   m_EditorClassIdentifier: 
-  startNode: {fileID: 6927249070887177323}
+  startNode: {fileID: 7012299834521311936}
   nodes:
   - {fileID: 6927249070887177323}
+  - {fileID: -3726758095415614958}
+  - {fileID: -6763016470584409542}
+  - {fileID: -9082048600485696208}
+  - {fileID: 6764674651265088946}
+  - {fileID: 7012299834521311936}
+  - {fileID: -7294158416961576469}
+  - {fileID: -8181038608668258879}
+  - {fileID: 2075054157938188753}
+  - {fileID: -8949664710614154996}
+  - {fileID: 5293156138806957632}
+  - {fileID: -1071455400184411333}
+  - {fileID: 4428323560780378697}
+  - {fileID: -5593203219150723293}
+  - {fileID: 7209791658795973225}
+  - {fileID: 4920220170874142042}
+  - {fileID: 2958153680492259118}
+  - {fileID: 8596345372643400548}
+  - {fileID: 4892982132819798203}
+  - {fileID: -9106256650717107132}
+  - {fileID: -3732373236951027278}
+  - {fileID: 4544422311883375233}
   nodePositions:
   - nodeId: db8f198a-df21-4f24-aac9-7150b1420084
-    position: {x: 92.5, y: 152.5}
+    position: {x: 63, y: 186}
+  - nodeId: 2fad1264-db43-4330-bad9-1cce9395c853
+    position: {x: 876, y: 153}
+  - nodeId: e2d1eaf6-e873-4465-8f52-10b2c4335ae9
+    position: {x: 1258, y: 153}
+  - nodeId: 41c21cf1-52ae-4a70-ac1e-e9bbe089a9c0
+    position: {x: 1845, y: 153}
+  - nodeId: 876335a7-4e85-42f0-b8c6-c6ce35d443d8
+    position: {x: 876, y: 397}
+  - nodeId: 72fdf81c-542d-406a-9a6a-9ee33dbb8b75
+    position: {x: -1024, y: 349}
+  - nodeId: 460d44ea-a7f3-46e0-b0ec-a5951fc8f0b9
+    position: {x: -303, y: 749}
+  - nodeId: 5e2f32ca-fbb5-4e61-99ff-130f2c3dcae1
+    position: {x: 503, y: 643}
+  - nodeId: 92668989-85dd-46ad-ae8e-37aa691a995a
+    position: {x: 817, y: 643}
+  - nodeId: cf73d6c4-b2e4-4e39-b930-5c12e6c7ee8a
+    position: {x: 503, y: 887}
+  - nodeId: 5b48c1ec-3255-4d6d-9559-0a9c1f438a76
+    position: {x: 829, y: 887}
+  - nodeId: 2a15179e-464d-403d-8a59-05eeb69b1ce0
+    position: {x: 1248, y: 887}
+  - nodeId: effc96c0-efc8-4b0e-b635-516e2c399871
+    position: {x: 1551, y: 887}
+  - nodeId: 5c0548f8-33df-401e-88f8-2a674ddec449
+    position: {x: 1248, y: 1124}
+  - nodeId: 874f0e53-d7af-4282-8426-b66597af815e
+    position: {x: 1551, y: 1124}
+  - nodeId: 3c800388-71c4-450b-a06f-70db863f2141
+    position: {x: 353, y: 1369}
+  - nodeId: 98a27b87-d695-47e0-9a61-19e7be8b1bf1
+    position: {x: 717, y: 1369}
+  - nodeId: 3791a50d-817c-45c4-ab10-e03eefb4a260
+    position: {x: 1072, y: 1383}
+  - nodeId: 0585c0e9-6042-461a-92e0-a539835510ed
+    position: {x: 1442, y: 1383}
+  - nodeId: fc06f12d-6a77-4968-b7a1-2dd43e4ab008
+    position: {x: 1099, y: 1658}
+  - nodeId: 49db725b-245e-4bb8-b228-6e924b2a9be0
+    position: {x: 1453, y: 1658}
+  - nodeId: 5fef05f8-3dee-4e20-a59e-a55336bc82c2
+    position: {x: -303, y: 1534}
   defaultSpeaker: {fileID: 0}
   defaultListener: {fileID: 0}
-  currentNode: {fileID: 6927249070887177323}
+  currentNode: {fileID: 2075054157938188753}
+--- !u!114 &2075054157938188753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_8
+  m_EditorClassIdentifier: 
+  nodeId: 92668989-85dd-46ad-ae8e-37aa691a995a
+  speakerName: Merchant
+  speakerCharacter: {fileID: 0}
+  speakerExpression: 
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: Okay. Please hurry if you can.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: 0}
+--- !u!114 &2958153680492259118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_16
+  m_EditorClassIdentifier: 
+  nodeId: 98a27b87-d695-47e0-9a61-19e7be8b1bf1
+  speakerName: Merchant
+  speakerCharacter: {fileID: 0}
+  speakerExpression: 
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: I really need 4.
+  choices:
+  - choiceText: Give what you have
+    targetNode: {fileID: 8596345372643400548}
+    conditions: []
+    consequences: []
+  - choiceText: Wait
+    targetNode: {fileID: -9106256650717107132}
+    conditions: []
+    consequences: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: 0}
+--- !u!114 &4428323560780378697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_12
+  m_EditorClassIdentifier: 
+  nodeId: effc96c0-efc8-4b0e-b635-516e2c399871
+  speakerName: Merchant
+  speakerCharacter: {fileID: 0}
+  speakerExpression: 
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: You've really saved my family! Thank you!
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 7c2766711988efb438b9adcd01f85bab, type: 2}
+        m_TargetAssemblyTypeName: QuestConsequence, Assembly-CSharp
+        m_MethodName: Execute
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: abeccb046d47fd64494cb73113a0de3d, type: 2}
+          m_ObjectArgumentAssemblyTypeName: GameState, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  exitConsequences: []
+  nextNode: {fileID: 0}
+--- !u!114 &4544422311883375233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_21
+  m_EditorClassIdentifier: 
+  nodeId: 5fef05f8-3dee-4e20-a59e-a55336bc82c2
+  speakerName: Merchant
+  speakerCharacter: {fileID: 0}
+  speakerExpression: 
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: Thank you again.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: 0}
+--- !u!114 &4892982132819798203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_18
+  m_EditorClassIdentifier: 
+  nodeId: 0585c0e9-6042-461a-92e0-a539835510ed
+  speakerName: Merchant
+  speakerCharacter: {fileID: 0}
+  speakerExpression: 
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: I do appreciate this. I hope it's enough to feed my little girl.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 7c2766711988efb438b9adcd01f85bab, type: 2}
+        m_TargetAssemblyTypeName: QuestConsequence, Assembly-CSharp
+        m_MethodName: Execute
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: abeccb046d47fd64494cb73113a0de3d, type: 2}
+          m_ObjectArgumentAssemblyTypeName: GameState, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  exitConsequences: []
+  nextNode: {fileID: 0}
+--- !u!114 &4920220170874142042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_15
+  m_EditorClassIdentifier: 
+  nodeId: 3c800388-71c4-450b-a06f-70db863f2141
+  speakerName: Player
+  speakerCharacter: {fileID: 0}
+  speakerExpression: 
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: I found some. Do you want them?
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: 2958153680492259118}
+--- !u!114 &5293156138806957632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_10
+  m_EditorClassIdentifier: 
+  nodeId: 5b48c1ec-3255-4d6d-9559-0a9c1f438a76
+  speakerName: Merchant
+  speakerCharacter: {fileID: 0}
+  speakerExpression: 
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: Wow! I can't thank you enough. Thank you!
+  choices:
+  - choiceText: Give the flowers
+    targetNode: {fileID: -1071455400184411333}
+    conditions: []
+    consequences: []
+  - choiceText: Nevermind
+    targetNode: {fileID: -5593203219150723293}
+    conditions: []
+    consequences: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: 0}
+--- !u!114 &6764674651265088946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_4
+  m_EditorClassIdentifier: 
+  nodeId: 876335a7-4e85-42f0-b8c6-c6ce35d443d8
+  speakerName: Player
+  speakerCharacter: {fileID: 0}
+  speakerExpression: 
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: '[i]*I better walk away*[/i]'
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: 0}
 --- !u!114 &6927249070887177323
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42,6 +707,80 @@ MonoBehaviour:
   listenerIsSpeaker: 0
   dialogueText: '[i][pulse, 5]*Sigh*[/pulse][/i] How am I supposed to feed my family
     if I don''t have flowers to sell?'
+  choices:
+  - choiceText: Can I help?
+    targetNode: {fileID: -3726758095415614958}
+    conditions: []
+    consequences: []
+  - choiceText: '*Walk away*'
+    targetNode: {fileID: 6764674651265088946}
+    conditions: []
+    consequences: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: 0}
+--- !u!114 &7012299834521311936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_5
+  m_EditorClassIdentifier: 
+  nodeId: 72fdf81c-542d-406a-9a6a-9ee33dbb8b75
+  speakerName: 
+  speakerCharacter: {fileID: 0}
+  speakerExpression: 
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: 
+  choices: []
+  conditionalBranches:
+  - branchName: IN PROGRESS
+    condition: {fileID: 11400000, guid: 732018fc14f25d2428edffdb6c331907, type: 2}
+    targetNode: {fileID: -7294158416961576469}
+  - branchName: COMPLETED
+    condition: {fileID: 11400000, guid: b717a2542724d674cbb84f8935ff82e7, type: 2}
+    targetNode: {fileID: 4544422311883375233}
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: 6927249070887177323}
+--- !u!114 &7209791658795973225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_14
+  m_EditorClassIdentifier: 
+  nodeId: 874f0e53-d7af-4282-8426-b66597af815e
+  speakerName: Merchant
+  speakerCharacter: {fileID: 0}
+  speakerExpression: 
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: Oh...um. Okay.
   choices: []
   conditionalBranches: []
   onEnterNode:
@@ -52,3 +791,33 @@ MonoBehaviour:
       m_Calls: []
   exitConsequences: []
   nextNode: {fileID: 0}
+--- !u!114 &8596345372643400548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_17
+  m_EditorClassIdentifier: 
+  nodeId: 3791a50d-817c-45c4-ab10-e03eefb4a260
+  speakerName: Player
+  speakerCharacter: {fileID: 0}
+  speakerExpression: 
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: '*Gives the merchant the flowers*'
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: 4892982132819798203}
