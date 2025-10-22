@@ -1,0 +1,101 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-2929354141376380389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_1
+  m_EditorClassIdentifier: 
+  nodeId: 044ef571-4b1f-43a6-990c-48069a5cae34
+  speakerName: 
+  speakerCharacter: {fileID: 0}
+  speakerExpression: 
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: 
+  choices: []
+  conditionalBranches:
+  - branchName: IN PROGRESS
+    condition: {fileID: 11400000, guid: 1cab2079e0eb35b47bc49df84f7e7f05, type: 2}
+    targetNode: {fileID: 7734915223715722931}
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: 0}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a09afc92a506d184c8c8e3fc2292ece4, type: 3}
+  m_Name: CrateInteract
+  m_EditorClassIdentifier: 
+  startNode: {fileID: -2929354141376380389}
+  nodes:
+  - {fileID: 7734915223715722931}
+  - {fileID: -2929354141376380389}
+  nodePositions:
+  - nodeId: 3c2bb3cf-48ec-4bab-ba5c-1db62b938874
+    position: {x: 18, y: 170.5}
+  - nodeId: 044ef571-4b1f-43a6-990c-48069a5cae34
+    position: {x: -809, y: 174.5}
+  defaultSpeaker: {fileID: 0}
+  defaultListener: {fileID: 0}
+  currentNode: {fileID: -2929354141376380389}
+--- !u!114 &7734915223715722931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_0
+  m_EditorClassIdentifier: 
+  nodeId: 3c2bb3cf-48ec-4bab-ba5c-1db62b938874
+  speakerName: 
+  speakerCharacter: {fileID: 0}
+  speakerExpression: 
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: You found a flower in the crate.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 258ab3f7ccdaf644d9fb1b62e7c3ac9e, type: 2}
+        m_TargetAssemblyTypeName: SetIntConsequenceSO, Assembly-CSharp
+        m_MethodName: Execute
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: abeccb046d47fd64494cb73113a0de3d, type: 2}
+          m_ObjectArgumentAssemblyTypeName: GameState, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  exitConsequences: []
+  nextNode: {fileID: 0}

@@ -343,6 +343,9 @@ MonoBehaviour:
   onTriggered:
     m_PersistentCalls:
       m_Calls: []
+  onLocked:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!58 &174300658
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1214,6 +1217,7 @@ GameObject:
   - component: {fileID: 395365269}
   - component: {fileID: 395365271}
   - component: {fileID: 395365270}
+  - component: {fileID: 395365272}
   m_Layer: 0
   m_Name: Flower (2)
   m_TagString: Untagged
@@ -1327,6 +1331,48 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &395365272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 395365268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 838c544fe1c0643469481c1508aac8c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueAsset: {fileID: 11400000, guid: 3711a0921e5e36346ace1134640d028f, type: 2}
+  triggerMode: 3
+  singleUse: 1
+  triggerKey: 32
+  triggerAction: {fileID: 1781555164194001046, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  requirePlayerTag: 1
+  playerTag: Player
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  use2D: 1
+  playerTransform: {fileID: 0}
+  onTriggered:
+    m_PersistentCalls:
+      m_Calls: []
+  onLocked:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: fd4146b697cfb0547928587821c4fb48, type: 2}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &496659602
 GameObject:
   m_ObjectHideFlags: 0
@@ -1985,6 +2031,9 @@ MonoBehaviour:
   use2D: 1
   playerTransform: {fileID: 0}
   onTriggered:
+    m_PersistentCalls:
+      m_Calls: []
+  onLocked:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &1328220282
@@ -3986,6 +4035,7 @@ GameObject:
   - component: {fileID: 1495325449}
   - component: {fileID: 1495325451}
   - component: {fileID: 1495325450}
+  - component: {fileID: 1495325452}
   m_Layer: 0
   m_Name: Flower (1)
   m_TagString: Untagged
@@ -4099,6 +4149,60 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1495325452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1495325448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 838c544fe1c0643469481c1508aac8c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueAsset: {fileID: 11400000, guid: 3711a0921e5e36346ace1134640d028f, type: 2}
+  triggerMode: 3
+  singleUse: 1
+  triggerKey: 32
+  triggerAction: {fileID: 1781555164194001046, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  requirePlayerTag: 1
+  playerTag: Player
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  use2D: 1
+  playerTransform: {fileID: 0}
+  onTriggered:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1495325448}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  onLocked:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: fd4146b697cfb0547928587821c4fb48, type: 2}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1529863556
 GameObject:
   m_ObjectHideFlags: 0
@@ -5106,6 +5210,9 @@ MonoBehaviour:
   onTriggered:
     m_PersistentCalls:
       m_Calls: []
+  onLocked:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!58 &1790902950
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -5277,7 +5384,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1928559361
 Transform:
   m_ObjectHideFlags: 0
@@ -5287,7 +5394,7 @@ Transform:
   m_GameObject: {fileID: 1928559360}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6, y: 0.8, z: -0.024629448}
+  m_LocalPosition: {x: 1.82, y: 1.47, z: -0.024629448}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5443,12 +5550,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 838c544fe1c0643469481c1508aac8c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueAsset: {fileID: 0}
+  dialogueAsset: {fileID: 11400000, guid: 5152b65e8113dfd49927852bd5609cab, type: 2}
   triggerMode: 3
   singleUse: 1
   triggerKey: 32
   triggerAction: {fileID: 1781555164194001046, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  requirePlayerTag: 1
+  requirePlayerTag: 0
   playerTag: Player
   playerLayer:
     serializedVersion: 2
@@ -5458,6 +5565,21 @@ MonoBehaviour:
   onTriggered:
     m_PersistentCalls:
       m_Calls: []
+  onLocked:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: fd4146b697cfb0547928587821c4fb48, type: 2}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2090292282
 GameObject:
   m_ObjectHideFlags: 0
@@ -5469,6 +5591,7 @@ GameObject:
   - component: {fileID: 2090292283}
   - component: {fileID: 2090292285}
   - component: {fileID: 2090292284}
+  - component: {fileID: 2090292286}
   m_Layer: 0
   m_Name: Flower
   m_TagString: Untagged
@@ -5582,6 +5705,48 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2090292286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2090292282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 838c544fe1c0643469481c1508aac8c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueAsset: {fileID: 11400000, guid: 3711a0921e5e36346ace1134640d028f, type: 2}
+  triggerMode: 3
+  singleUse: 1
+  triggerKey: 32
+  triggerAction: {fileID: 1781555164194001046, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  requirePlayerTag: 1
+  playerTag: Player
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  use2D: 1
+  playerTransform: {fileID: 0}
+  onTriggered:
+    m_PersistentCalls:
+      m_Calls: []
+  onLocked:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: fd4146b697cfb0547928587821c4fb48, type: 2}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

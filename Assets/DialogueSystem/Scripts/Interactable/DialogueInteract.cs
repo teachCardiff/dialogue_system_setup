@@ -46,6 +46,8 @@ public class DialogueInteract : MonoBehaviour
 
     [Header("Events")]
     public UnityEvent onTriggered; // invoked when the interaction happens (before starting dialogue)
+    [Tooltip("Invoked when interaction is attempted but dialogue is unavailable (e.g., quest not started). Use to show tooltip/sound.")]
+    public UnityEvent onLocked;
 
     // internal
     private bool hasBeenUsed = false;
@@ -237,6 +239,9 @@ public class DialogueInteract : MonoBehaviour
 
         if (DialogueManager.Instance != null)
         {
+            // Register as pending so the manager can consume this interactable only when
+            // the dialogue actually displays content.
+            DialogueManager.Instance.RegisterPendingInteractor(this);
             DialogueManager.Instance.StartDialogue(dialogueAsset, true);
         }
         else
@@ -244,13 +249,36 @@ public class DialogueInteract : MonoBehaviour
             Debug.LogWarning("DialogueManager.Instance is null. Cannot start dialogue.");
         }
 
-        hasBeenUsed = true;
+        // Do NOT mark as used here. The DialogueManager will call Consume() when the dialogue
+        // actually shows a non-empty node.
     }
 
     // Provide a simple API to reset single-use for reuse
     public void ResetUsage()
     {
         hasBeenUsed = false;
+    }
+
+    // Called by the DialogueManager when the dialogue actually displays content and we should
+    // mark this interactable as consumed.
+    public void Consume()
+    {
+        hasBeenUsed = true;
+    }
+
+    // Called by DialogueManager when an interaction occurred but the dialogue did not display
+    // content (e.g., conditional not met). Designers can attach UI/sound to onLocked.
+    public void ShowLockedFeedback()
+    {
+        Debug.Log($"DialogueInteract: '{gameObject.name}' is locked or not ready.");
+        try
+        {
+            onLocked?.Invoke();
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogWarning($"Exception while invoking onLocked for {gameObject.name}: {ex.Message}");
+        }
     }
 
     // Expose remote trigger for designer or other scripts

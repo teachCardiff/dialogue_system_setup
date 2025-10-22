@@ -18,5 +18,10 @@ MonoBehaviour:
   onStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  activeQuests: []
+  activeQuests:
+  - questName: Help the Towns Folk
+    questJson: "{\n    \"questName\": \"Help the Towns Folk\",\n    \"description\":
+      \"Talk to the towns folk and see how you can help.\",\n    \"objectives\":
+      [\n        {\n            \"instanceID\": 45576\n        },\n        {\n           
+      \"instanceID\": 45138\n        }\n    ],\n    \"currentStatus\": 1\n}"
   completedQuests: []

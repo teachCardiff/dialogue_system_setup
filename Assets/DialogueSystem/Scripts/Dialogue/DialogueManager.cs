@@ -18,6 +18,7 @@ public class DialogueManager : MonoBehaviour
 
     private Dialogue currentDialogue;
     private DialogueNode currentNode;
+    private DialogueInteract pendingInteractor;
 
     // Events for external integration (e.g., pause game on dialogue start)
     public UnityEvent onDialogueStart;
@@ -44,6 +45,10 @@ public class DialogueManager : MonoBehaviour
             {
                 Debug.LogError("DialogueUI prefab not assigned! Create and assign 'DialogeUI.prefab'.");
             }
+
+            // Ensure debug lists are valid so CleanupAfterDialogue can't throw
+            if (debugAvailableChoices == null)
+                debugAvailableChoices = new List<DialogueChoice>();
         }
         else Destroy(gameObject);
     }
@@ -72,6 +77,15 @@ public class DialogueManager : MonoBehaviour
         StartCoroutine(RunNode());
     }
 
+    /// <summary>
+    /// Called by an interactable just before requesting StartDialogue so the manager
+    /// can mark that interactable as consumed only if the dialogue actually displays content.
+    /// </summary>
+    public void RegisterPendingInteractor(DialogueInteract interactor)
+    {
+        pendingInteractor = interactor;
+    }
+
     private IEnumerator RunNode()
     {
         // if (currentNode != null)
@@ -84,14 +98,41 @@ public class DialogueManager : MonoBehaviour
         // Auto-branch if conditions met (before showing this node)
         if (currentNode.conditionalBranches.Count > 0)
         {
+            bool branchTaken = false;
             foreach (var branch in currentNode.conditionalBranches)
             {
                 if (branch.condition != null && branch.condition.IsMet(gameState))
                 {
+                    branchTaken = true;
                     currentNode = branch.targetNode;
                     // Recurse immediately (skip showing this hub node)
                     yield return RunNode();
                     yield break; // Exit this iteration
+                }
+            }
+
+            // If there are conditional branches but none were met, treat this node as non-actionable
+            // and either advance to the nextNode (if set) or end the dialogue so the manager doesn't remain active and block other interactions.
+            if (!branchTaken)
+            {
+                if (currentNode.nextNode != null)
+                {
+                    Debug.Log($"[DialogueManager] No conditional branches met for node '{currentNode.name}'. Advancing to nextNode '{currentNode.nextNode.name}'.");
+                    currentNode = currentNode.nextNode;
+                    yield return RunNode();
+                    yield break;
+                }
+                else
+                {
+                    Debug.Log($"[DialogueManager] No conditional branches met for node '{currentNode.name}' and no nextNode. Ending dialogue.");
+                    // Notify the pending interactor that the dialogue was unavailable so it can show feedback
+                    if (pendingInteractor != null && pendingInteractor.dialogueAsset == currentDialogue)
+                    {
+                        pendingInteractor.ShowLockedFeedback();
+                        pendingInteractor = null;
+                    }
+                    EndDialogue();
+                    yield break;
                 }
             }
         }
@@ -110,6 +151,11 @@ public class DialogueManager : MonoBehaviour
             {
                 // Ensure exit callbacks and consequences run before ending
                 ExitNodeAndApplyConsequences(currentNode);
+                if (pendingInteractor != null && pendingInteractor.dialogueAsset == currentDialogue)
+                {
+                    pendingInteractor.ShowLockedFeedback();
+                    pendingInteractor = null;
+                }
                 EndDialogue();
                 yield break;
             }
@@ -131,6 +177,15 @@ public class DialogueManager : MonoBehaviour
         {
             speakerName = currentNode.listenerCharacter.npcName;
         }
+
+        // If an interactable registered itself as pending, consume it now that we are about to show
+        // a real node (prevents consuming on empty/conditional-only nodes).
+        if (pendingInteractor != null && pendingInteractor.dialogueAsset == currentDialogue)
+        {
+            pendingInteractor.Consume();
+            pendingInteractor = null;
+        }
+
         dialogueUI.ShowDialogue(speakerName, currentNode.dialogueText, speakerSprite, listenerSprite);
 
         // dialogueUI.ShowDialogue(currentNode.speakerName, currentNode.dialogueText, speakerSprite, listenerSprite);
@@ -155,6 +210,11 @@ public class DialogueManager : MonoBehaviour
             yield return new WaitUntil(() => dialogueUI.IsNextPressed()); // Wait for player to advance
             // Ensure exit callbacks and consequences run before ending
             ExitNodeAndApplyConsequences(currentNode);
+            if (pendingInteractor != null && pendingInteractor.dialogueAsset == currentDialogue)
+            {
+                pendingInteractor.ShowLockedFeedback();
+                pendingInteractor = null;
+            }
             EndDialogue();
             yield break;
         }
@@ -198,6 +258,11 @@ public class DialogueManager : MonoBehaviour
         else
         {
             // Reached a null node; end dialogue gracefully
+            if (pendingInteractor != null && pendingInteractor.dialogueAsset == currentDialogue)
+            {
+                pendingInteractor.ShowLockedFeedback();
+                pendingInteractor = null;
+            }
             EndDialogue();
             yield break;
         }
@@ -234,6 +299,10 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
+    // Fallback helpers for ensuring cleanup if the UI never fires its onHideComplete event
+    private Coroutine hideFallbackCoroutine;
+    private bool hideWaitingForComplete = false;
+
     private void EndDialogue()
     {
         Debug.Log("[DialogueManager] EndDialogue called. currentDialogue=" + (currentDialogue ? currentDialogue.name : "null") +
@@ -243,12 +312,36 @@ public class DialogueManager : MonoBehaviour
         if (dialogueUI != null)
         {
             // Subscribe to the UI hide complete event, then trigger hide.
+            // Use a fallback timeout in case the UI never invokes onHideComplete so we don't leave the manager busy.
             dialogueUI.onHideComplete.AddListener(HandleOnHideComplete);
             dialogueUI.Hide();
+
+            // Start fallback timer
+            hideWaitingForComplete = true;
+            if (hideFallbackCoroutine != null) StopCoroutine(hideFallbackCoroutine);
+            hideFallbackCoroutine = StartCoroutine(HideFallbackCoroutine());
         }
         else
         {
             // Fallback: no UI available, clean up immediately
+            CleanupAfterDialogue();
+        }
+    }
+
+    private IEnumerator HideFallbackCoroutine()
+    {
+        // Wait a short time for the UI to finish its hide animation and fire the event.
+        // If it doesn't, force cleanup so other dialogues can start.
+        yield return new WaitForSeconds(0.5f);
+        if (hideWaitingForComplete)
+        {
+            Debug.LogWarning("[DialogueManager] onHideComplete did not fire within timeout — forcing cleanup.");
+            if (dialogueUI != null)
+            {
+                dialogueUI.onHideComplete.RemoveListener(HandleOnHideComplete);
+            }
+            hideWaitingForComplete = false;
+            hideFallbackCoroutine = null;
             CleanupAfterDialogue();
         }
     }
@@ -260,16 +353,35 @@ public class DialogueManager : MonoBehaviour
             dialogueUI.onHideComplete.RemoveListener(HandleOnHideComplete);
         }
 
+        // Cancel fallback timer if running
+        hideWaitingForComplete = false;
+        if (hideFallbackCoroutine != null)
+        {
+            StopCoroutine(hideFallbackCoroutine);
+            hideFallbackCoroutine = null;
+        }
+
         CleanupAfterDialogue();
     }
 
     private void CleanupAfterDialogue()
     {
-        onDialogueEnd.Invoke();
+        // Invoke end event safely
+        try
+        {
+            onDialogueEnd?.Invoke();
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogWarning($"Exception while invoking onDialogueEnd: {ex.Message}");
+        }
+
         currentDialogue = null;
         currentNode = null;
         debugCurrentNode = null;
-        debugAvailableChoices.Clear();
+        pendingInteractor = null;
+        if (debugAvailableChoices != null)
+            debugAvailableChoices.Clear();
     }
 
     // Save/load API

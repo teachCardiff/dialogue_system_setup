@@ -405,7 +405,7 @@ MonoBehaviour:
     position: {x: -303, y: 1534}
   defaultSpeaker: {fileID: 0}
   defaultListener: {fileID: 0}
-  currentNode: {fileID: -9082048600485696208}
+  currentNode: {fileID: 4428323560780378697}
 --- !u!114 &2075054157938188753
 MonoBehaviour:
   m_ObjectHideFlags: 0
