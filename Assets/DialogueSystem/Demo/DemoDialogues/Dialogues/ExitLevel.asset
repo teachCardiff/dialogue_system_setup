@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-1343749960265166471
+--- !u!114 &-4396795665407519264
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
   m_Name: Node_0
   m_EditorClassIdentifier: 
-  nodeId: 176ab8d0-c506-429a-8b3d-d7f382a8df3b
-  speakerName: Hero
-  speakerCharacter: {fileID: 11400000, guid: 2d90c1cea61b3d6428253b9783ae5698, type: 2}
+  nodeId: 2c97ed73-b4ab-4ca0-b50c-eedc432eed74
+  speakerName: Player
+  speakerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
   speakerExpression: Default
-  listenerCharacter: {fileID: 11400000, guid: 2d90c1cea61b3d6428253b9783ae5698, type: 2}
-  listenerExpression: Default
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
   listenerIsSpeaker: 0
-  dialogueText: ssrthsrthsrh
+  dialogueText: Strange...I can't seem to leave.
   choices: []
   conditionalBranches: []
   onEnterNode:
@@ -40,14 +40,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a09afc92a506d184c8c8e3fc2292ece4, type: 3}
-  m_Name: TestDialogue
+  m_Name: ExitLevel
   m_EditorClassIdentifier: 
-  startNode: {fileID: -1343749960265166471}
+  startNode: {fileID: -4396795665407519264}
   nodes:
-  - {fileID: -1343749960265166471}
+  - {fileID: -4396795665407519264}
   nodePositions:
-  - nodeId: 176ab8d0-c506-429a-8b3d-d7f382a8df3b
-    position: {x: 1256, y: 590}
-  defaultSpeaker: {fileID: 11400000, guid: 2d90c1cea61b3d6428253b9783ae5698, type: 2}
-  defaultListener: {fileID: 11400000, guid: 2d90c1cea61b3d6428253b9783ae5698, type: 2}
-  currentNode: {fileID: 0}
+  - nodeId: 2c97ed73-b4ab-4ca0-b50c-eedc432eed74
+    position: {x: 153.5, y: 118}
+  defaultSpeaker: {fileID: 0}
+  defaultListener: {fileID: 0}
+  currentNode: {fileID: -4396795665407519264}
