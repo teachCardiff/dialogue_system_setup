@@ -1,5 +1,43 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-9008384352824171641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_21
+  m_EditorClassIdentifier: 
+  nodeId: ac10e5de-60de-4d7c-9ce3-cb996a1afba3
+  speakerName: Mourner
+  speakerCharacter: {fileID: 11400000, guid: c0f5165958beabc4da2ec2ee254ee18b, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
+  listenerExpression: Default
+  listenerIsSpeaker: 0
+  dialogueText: Oh, thank you.
+  choices:
+  - choiceText: Give them a flower.
+    targetNode: {fileID: -4204315087315250677}
+    conditions: []
+    consequences: []
+  - choiceText: Nevermind.
+    targetNode: {fileID: -3601521429814666327}
+    conditions: []
+    consequences: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: 0}
 --- !u!114 &-8256390014490707280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13,7 +51,7 @@ MonoBehaviour:
   m_Name: Node_3
   m_EditorClassIdentifier: 
   nodeId: b587d259-8b2d-43df-8277-2c27c867b4b4
-  speakerName: Morner
+  speakerName: Mourner
   speakerCharacter: {fileID: 11400000, guid: c0f5165958beabc4da2ec2ee254ee18b, type: 2}
   speakerExpression: Default
   listenerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
@@ -23,11 +61,11 @@ MonoBehaviour:
   choices: []
   conditionalBranches:
   - branchName: HasFlowers
-    condition: {fileID: 0}
-    targetNode: {fileID: 0}
+    condition: {fileID: 11400000, guid: 7777c3185cb7d5b40ad41b126475859c, type: 2}
+    targetNode: {fileID: 2887210034651914019}
   - branchName: HasNotFlowers
-    condition: {fileID: 0}
-    targetNode: {fileID: 0}
+    condition: {fileID: 11400000, guid: 534b70334592711478428edbdedc7dda, type: 2}
+    targetNode: {fileID: 1923607289766883953}
   onEnterNode:
     m_PersistentCalls:
       m_Calls: []
@@ -66,6 +104,339 @@ MonoBehaviour:
       m_Calls: []
   exitConsequences: []
   nextNode: {fileID: 4872158453147100362}
+--- !u!114 &-4745748288704103937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_15
+  m_EditorClassIdentifier: 
+  nodeId: c1ed698a-9aca-4f2a-bb48-b1b3517312cd
+  speakerName: Mourner
+  speakerCharacter: {fileID: 11400000, guid: c0f5165958beabc4da2ec2ee254ee18b, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
+  listenerExpression: Default
+  listenerIsSpeaker: 0
+  dialogueText: I wanted to bring flowers to my girl's grave, but the merchant ran
+    out of flowers.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: 1988206530104489278}
+--- !u!114 &-4204315087315250677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_22
+  m_EditorClassIdentifier: 
+  nodeId: 40c89308-e073-4301-8045-4b55591c7d08
+  speakerName: Player
+  speakerCharacter: {fileID: 11400000, guid: c0f5165958beabc4da2ec2ee254ee18b, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
+  listenerExpression: Default
+  listenerIsSpeaker: 1
+  dialogueText: '*Gives the mourner a flower*'
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 5b68487b436bd6f4a960c96d088c145a, type: 2}
+        m_TargetAssemblyTypeName: SetIntConsequenceSO, Assembly-CSharp
+        m_MethodName: Execute
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: fba666e5e122a0c49a11f09f7c588e8e, type: 2}
+          m_ObjectArgumentAssemblyTypeName: GameState, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  exitConsequences: []
+  nextNode: {fileID: -738110193118216922}
+--- !u!114 &-3601521429814666327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_24
+  m_EditorClassIdentifier: 
+  nodeId: 6fd8a0ea-2725-4e86-8bb5-582b2dcb9efc
+  speakerName: Player
+  speakerCharacter: {fileID: 11400000, guid: c0f5165958beabc4da2ec2ee254ee18b, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
+  listenerExpression: Default
+  listenerIsSpeaker: 1
+  dialogueText: On second thought...
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: -2915264302376407197}
+--- !u!114 &-3282019869129366207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_26
+  m_EditorClassIdentifier: 
+  nodeId: 8805ea3f-1144-49cd-ae73-f3052d50ed7d
+  speakerName: Mourner
+  speakerCharacter: {fileID: 11400000, guid: c0f5165958beabc4da2ec2ee254ee18b, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
+  listenerExpression: Default
+  listenerIsSpeaker: 0
+  dialogueText: Thank you again.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: 0}
+--- !u!114 &-2915264302376407197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_25
+  m_EditorClassIdentifier: 
+  nodeId: a1ee5e37-fc3f-4d65-9772-d4eff42e92e3
+  speakerName: Mourner
+  speakerCharacter: {fileID: 11400000, guid: c0f5165958beabc4da2ec2ee254ee18b, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
+  listenerExpression: Default
+  listenerIsSpeaker: 0
+  dialogueText: ...
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: 0}
+--- !u!114 &-2831469397973339450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_6
+  m_EditorClassIdentifier: 
+  nodeId: 21f174a0-d585-4827-9ac4-abc791af61fc
+  speakerName: Mourner
+  speakerCharacter: {fileID: 11400000, guid: c0f5165958beabc4da2ec2ee254ee18b, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
+  listenerExpression: Default
+  listenerIsSpeaker: 0
+  dialogueText: '*Sob* My poor little girl.'
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: 0}
+--- !u!114 &-2171724422901441953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_19
+  m_EditorClassIdentifier: 
+  nodeId: b22badbe-6a3a-4683-8252-a91db747d010
+  speakerName: Mourner
+  speakerCharacter: {fileID: 11400000, guid: c0f5165958beabc4da2ec2ee254ee18b, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
+  listenerExpression: Default
+  listenerIsSpeaker: 0
+  dialogueText: Please, keep looking.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: 0}
+--- !u!114 &-1377822871053151438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_8
+  m_EditorClassIdentifier: 
+  nodeId: 7a2ca1f8-d08c-42d7-b4a2-3855f7a80cb5
+  speakerName: Mourner
+  speakerCharacter: {fileID: 11400000, guid: c0f5165958beabc4da2ec2ee254ee18b, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
+  listenerExpression: Default
+  listenerIsSpeaker: 0
+  dialogueText: It's my little girl.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: 3319105354981451643}
+--- !u!114 &-783347871152585598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_11
+  m_EditorClassIdentifier: 
+  nodeId: 9c09af65-2716-440b-9b7b-4b8cb9345687
+  speakerName: Mourner
+  speakerCharacter: {fileID: 11400000, guid: c0f5165958beabc4da2ec2ee254ee18b, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
+  listenerExpression: Default
+  listenerIsSpeaker: 0
+  dialogueText: Please, help.
+  choices:
+  - choiceText: What can I do?
+    targetNode: {fileID: 3140271012698653144}
+    conditions: []
+    consequences: []
+  - choiceText: Maybe later.
+    targetNode: {fileID: 982885123101596447}
+    conditions: []
+    consequences: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: 0}
+--- !u!114 &-738110193118216922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_23
+  m_EditorClassIdentifier: 
+  nodeId: e3bdb69e-dd6a-4d29-bcd5-a0ac85306fd9
+  speakerName: Mourner
+  speakerCharacter: {fileID: 11400000, guid: c0f5165958beabc4da2ec2ee254ee18b, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
+  listenerExpression: Default
+  listenerIsSpeaker: 0
+  dialogueText: These were her favorite. Thank you.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 60bd4236a431d3f479b9b4db10a44a3a, type: 2}
+        m_TargetAssemblyTypeName: QuestConsequence, Assembly-CSharp
+        m_MethodName: Execute
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: abeccb046d47fd64494cb73113a0de3d, type: 2}
+          m_ObjectArgumentAssemblyTypeName: GameState, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  exitConsequences: []
+  nextNode: {fileID: 0}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,13 +449,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a09afc92a506d184c8c8e3fc2292ece4, type: 3}
   m_Name: Morner_Dialogue
   m_EditorClassIdentifier: 
-  startNode: {fileID: 8840223466166777574}
+  startNode: {fileID: 2110140916608024655}
   nodes:
   - {fileID: 8840223466166777574}
   - {fileID: -5934532340892996477}
   - {fileID: 4872158453147100362}
   - {fileID: -8256390014490707280}
   - {fileID: 1923607289766883953}
+  - {fileID: 2110140916608024655}
+  - {fileID: -2831469397973339450}
+  - {fileID: 3663038328411055511}
+  - {fileID: -1377822871053151438}
+  - {fileID: 3319105354981451643}
+  - {fileID: 1540177227601015112}
+  - {fileID: -783347871152585598}
+  - {fileID: 3140271012698653144}
+  - {fileID: 982885123101596447}
+  - {fileID: 5458713345834500824}
+  - {fileID: -4745748288704103937}
+  - {fileID: 1988206530104489278}
+  - {fileID: 7125185233407556654}
+  - {fileID: 8492249177157220587}
+  - {fileID: -2171724422901441953}
+  - {fileID: 2887210034651914019}
+  - {fileID: -9008384352824171641}
+  - {fileID: -4204315087315250677}
+  - {fileID: -738110193118216922}
+  - {fileID: -3601521429814666327}
+  - {fileID: -2915264302376407197}
+  - {fileID: -3282019869129366207}
   nodePositions:
   - nodeId: 9b9b8241-cfe6-4eb4-8674-7a1d3d364ab9
     position: {x: 2308, y: 336}
@@ -93,12 +486,116 @@ MonoBehaviour:
   - nodeId: 2960b7d6-da96-4147-9203-e814e7323048
     position: {x: 2957, y: 336}
   - nodeId: b587d259-8b2d-43df-8277-2c27c867b4b4
-    position: {x: 3329, y: 259}
+    position: {x: 2617, y: 751}
   - nodeId: 92b2bd88-040a-42dc-946e-e3318520b423
-    position: {x: 3329, y: 699}
+    position: {x: 3457, y: 1101}
+  - nodeId: 8f81e82c-1d6f-4cf3-9295-69868466f41b
+    position: {x: 1162, y: 383}
+  - nodeId: 21f174a0-d585-4827-9ac4-abc791af61fc
+    position: {x: 2308, y: 29}
+  - nodeId: 277cdcfe-ecc6-4674-9112-0d47b211b513
+    position: {x: 3315, y: 300}
+  - nodeId: 7a2ca1f8-d08c-42d7-b4a2-3855f7a80cb5
+    position: {x: 3702, y: 300}
+  - nodeId: ae827541-bb84-4c87-b5ba-3a6b344c7499
+    position: {x: 4033, y: 300}
+  - nodeId: 177e7526-f30b-489f-aaf9-e3d5cab0d8c6
+    position: {x: 4488, y: 300}
+  - nodeId: 9c09af65-2716-440b-9b7b-4b8cb9345687
+    position: {x: 4819, y: 300}
+  - nodeId: d3732d14-a400-4e3a-9b12-bbea6fdac79d
+    position: {x: 5198, y: 207}
+  - nodeId: 8cf06356-b801-45a5-a8a2-1ee5c92dedb9
+    position: {x: 5202, y: 532}
+  - nodeId: 7f74af6f-6d1f-44d8-8019-d72f3022420a
+    position: {x: 5575, y: 532}
+  - nodeId: c1ed698a-9aca-4f2a-bb48-b1b3517312cd
+    position: {x: 5533, y: 207}
+  - nodeId: 2ce3c92d-cbbb-4725-81e3-6afd9b53ae23
+    position: {x: 6144, y: 207}
+  - nodeId: 780208c3-71bc-4ea2-9492-0fa4a537e928
+    position: {x: 6499, y: 207}
+  - nodeId: 9b00bd09-8c53-4410-b217-e9d1e4aa2d46
+    position: {x: 2168, y: 658}
+  - nodeId: b22badbe-6a3a-4683-8252-a91db747d010
+    position: {x: 3789, y: 1101}
+  - nodeId: 5eca5489-dac2-438f-a665-0de5f8042b07
+    position: {x: 3474, y: 698}
+  - nodeId: ac10e5de-60de-4d7c-9ce3-cb996a1afba3
+    position: {x: 3805, y: 698}
+  - nodeId: 40c89308-e073-4301-8045-4b55591c7d08
+    position: {x: 4157, y: 616}
+  - nodeId: e3bdb69e-dd6a-4d29-bcd5-a0ac85306fd9
+    position: {x: 4506, y: 616}
+  - nodeId: 6fd8a0ea-2725-4e86-8bb5-582b2dcb9efc
+    position: {x: 4157, y: 911}
+  - nodeId: a1ee5e37-fc3f-4d65-9772-d4eff42e92e3
+    position: {x: 4488, y: 911}
+  - nodeId: 8805ea3f-1144-49cd-ae73-f3052d50ed7d
+    position: {x: 2168, y: 1005}
   defaultSpeaker: {fileID: 11400000, guid: c0f5165958beabc4da2ec2ee254ee18b, type: 2}
   defaultListener: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
-  currentNode: {fileID: 1923607289766883953}
+  currentNode: {fileID: -738110193118216922}
+--- !u!114 &982885123101596447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_13
+  m_EditorClassIdentifier: 
+  nodeId: 8cf06356-b801-45a5-a8a2-1ee5c92dedb9
+  speakerName: Player
+  speakerCharacter: {fileID: 11400000, guid: c0f5165958beabc4da2ec2ee254ee18b, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
+  listenerExpression: Default
+  listenerIsSpeaker: 1
+  dialogueText: Maybe some other time. I'm sorry.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: 5458713345834500824}
+--- !u!114 &1540177227601015112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_10
+  m_EditorClassIdentifier: 
+  nodeId: 177e7526-f30b-489f-aaf9-e3d5cab0d8c6
+  speakerName: Player
+  speakerCharacter: {fileID: 11400000, guid: c0f5165958beabc4da2ec2ee254ee18b, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
+  listenerExpression: Default
+  listenerIsSpeaker: 1
+  dialogueText: I'm so sorry...
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: -783347871152585598}
 --- !u!114 &1923607289766883953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,13 +609,13 @@ MonoBehaviour:
   m_Name: Node_4
   m_EditorClassIdentifier: 
   nodeId: 92b2bd88-040a-42dc-946e-e3318520b423
-  speakerName: Morner
+  speakerName: Player
   speakerCharacter: {fileID: 11400000, guid: c0f5165958beabc4da2ec2ee254ee18b, type: 2}
   speakerExpression: Default
   listenerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
   listenerExpression: Default
-  listenerIsSpeaker: 0
-  dialogueText: Then, please...leave me be.
+  listenerIsSpeaker: 1
+  dialogueText: Not yet. I'm still looking.
   choices: []
   conditionalBranches: []
   onEnterNode:
@@ -128,7 +625,196 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   exitConsequences: []
-  nextNode: {fileID: 0}
+  nextNode: {fileID: -2171724422901441953}
+--- !u!114 &1988206530104489278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_16
+  m_EditorClassIdentifier: 
+  nodeId: 2ce3c92d-cbbb-4725-81e3-6afd9b53ae23
+  speakerName: Mourner
+  speakerCharacter: {fileID: 11400000, guid: c0f5165958beabc4da2ec2ee254ee18b, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
+  listenerExpression: Default
+  listenerIsSpeaker: 0
+  dialogueText: Please bring me some flowers.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: 7125185233407556654}
+--- !u!114 &2110140916608024655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_5
+  m_EditorClassIdentifier: 
+  nodeId: 8f81e82c-1d6f-4cf3-9295-69868466f41b
+  speakerName: Mourner
+  speakerCharacter: {fileID: 11400000, guid: c0f5165958beabc4da2ec2ee254ee18b, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
+  listenerExpression: Default
+  listenerIsSpeaker: 0
+  dialogueText: 
+  choices: []
+  conditionalBranches:
+  - branchName: COMPLETED
+    condition: {fileID: 11400000, guid: 176b135102372144194afc8aad3b38a0, type: 2}
+    targetNode: {fileID: -3282019869129366207}
+  - branchName: Help Mourner In Progress
+    condition: {fileID: 11400000, guid: 58e4a0be1ea39564593ef7efeacf91b1, type: 2}
+    targetNode: {fileID: 8492249177157220587}
+  - branchName: Help Townsfolk In Progress
+    condition: {fileID: 11400000, guid: 1cab2079e0eb35b47bc49df84f7e7f05, type: 2}
+    targetNode: {fileID: 8840223466166777574}
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: -2831469397973339450}
+--- !u!114 &2887210034651914019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_20
+  m_EditorClassIdentifier: 
+  nodeId: 5eca5489-dac2-438f-a665-0de5f8042b07
+  speakerName: Player
+  speakerCharacter: {fileID: 11400000, guid: c0f5165958beabc4da2ec2ee254ee18b, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
+  listenerExpression: Default
+  listenerIsSpeaker: 1
+  dialogueText: I've found some.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: -9008384352824171641}
+--- !u!114 &3140271012698653144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_12
+  m_EditorClassIdentifier: 
+  nodeId: d3732d14-a400-4e3a-9b12-bbea6fdac79d
+  speakerName: Player
+  speakerCharacter: {fileID: 11400000, guid: c0f5165958beabc4da2ec2ee254ee18b, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
+  listenerExpression: Default
+  listenerIsSpeaker: 1
+  dialogueText: What can I do to help you?
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: -4745748288704103937}
+--- !u!114 &3319105354981451643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_9
+  m_EditorClassIdentifier: 
+  nodeId: ae827541-bb84-4c87-b5ba-3a6b344c7499
+  speakerName: Mourner
+  speakerCharacter: {fileID: 11400000, guid: c0f5165958beabc4da2ec2ee254ee18b, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
+  listenerExpression: Default
+  listenerIsSpeaker: 0
+  dialogueText: This is the one year anniversary since we lost her.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: 1540177227601015112}
+--- !u!114 &3663038328411055511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_7
+  m_EditorClassIdentifier: 
+  nodeId: 277cdcfe-ecc6-4674-9112-0d47b211b513
+  speakerName: Player
+  speakerCharacter: {fileID: 11400000, guid: c0f5165958beabc4da2ec2ee254ee18b, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
+  listenerExpression: Default
+  listenerIsSpeaker: 1
+  dialogueText: No. Why are you crying, if I may ask?
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: -1377822871053151438}
 --- !u!114 &4872158453147100362
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,22 +828,44 @@ MonoBehaviour:
   m_Name: Node_2
   m_EditorClassIdentifier: 
   nodeId: 2960b7d6-da96-4147-9203-e814e7323048
-  speakerName: Morner
+  speakerName: Mourner
   speakerCharacter: {fileID: 11400000, guid: c0f5165958beabc4da2ec2ee254ee18b, type: 2}
   speakerExpression: Default
   listenerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
   listenerExpression: Default
   listenerIsSpeaker: 0
   dialogueText: Do you have any flowers?
-  choices:
-  - choiceText: Yes
-    targetNode: {fileID: -8256390014490707280}
-    conditions: []
-    consequences: []
-  - choiceText: No
-    targetNode: {fileID: 1923607289766883953}
-    conditions: []
-    consequences: []
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: 3663038328411055511}
+--- !u!114 &5458713345834500824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_14
+  m_EditorClassIdentifier: 
+  nodeId: 7f74af6f-6d1f-44d8-8019-d72f3022420a
+  speakerName: Mourner
+  speakerCharacter: {fileID: 11400000, guid: c0f5165958beabc4da2ec2ee254ee18b, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
+  listenerExpression: Default
+  listenerIsSpeaker: 0
+  dialogueText: I understand.
+  choices: []
   conditionalBranches: []
   onEnterNode:
     m_PersistentCalls:
@@ -167,6 +875,78 @@ MonoBehaviour:
       m_Calls: []
   exitConsequences: []
   nextNode: {fileID: 0}
+--- !u!114 &7125185233407556654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_17
+  m_EditorClassIdentifier: 
+  nodeId: 780208c3-71bc-4ea2-9492-0fa4a537e928
+  speakerName: Player
+  speakerCharacter: {fileID: 11400000, guid: c0f5165958beabc4da2ec2ee254ee18b, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
+  listenerExpression: Default
+  listenerIsSpeaker: 1
+  dialogueText: I'll see what I can do.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: fc7850144c060404d96de87dcaeedc96, type: 2}
+        m_TargetAssemblyTypeName: QuestConsequence, Assembly-CSharp
+        m_MethodName: Execute
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: abeccb046d47fd64494cb73113a0de3d, type: 2}
+          m_ObjectArgumentAssemblyTypeName: GameState, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  exitConsequences: []
+  nextNode: {fileID: 0}
+--- !u!114 &8492249177157220587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_18
+  m_EditorClassIdentifier: 
+  nodeId: 9b00bd09-8c53-4410-b217-e9d1e4aa2d46
+  speakerName: Mourner
+  speakerCharacter: {fileID: 11400000, guid: c0f5165958beabc4da2ec2ee254ee18b, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
+  listenerExpression: Default
+  listenerIsSpeaker: 0
+  dialogueText: Did you find any flowers?
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: -8256390014490707280}
 --- !u!114 &8840223466166777574
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,7 +960,7 @@ MonoBehaviour:
   m_Name: Node_0
   m_EditorClassIdentifier: 
   nodeId: 9b9b8241-cfe6-4eb4-8674-7a1d3d364ab9
-  speakerName: Morner
+  speakerName: Mourner
   speakerCharacter: {fileID: 11400000, guid: c0f5165958beabc4da2ec2ee254ee18b, type: 2}
   speakerExpression: Default
   listenerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}

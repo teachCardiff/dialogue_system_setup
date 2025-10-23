@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bc8c6c05c7529040939f6610c71c48e, type: 3}
-  m_Name: Morner
+  m_Script: {fileID: 11500000, guid: 3dba787d424e7e9468604f8783a4f96a, type: 3}
+  m_Name: HelpTheMourner_START
   m_EditorClassIdentifier: 
-  npcName: Morner
-  defaultSprite: {fileID: 21300000, guid: e15a0aaf619d8aa429bd091186fb29a2, type: 3}
-  expressions: []
+  quest: {fileID: 11400000, guid: 210b3210890301944a80731b99c6a5be, type: 2}
+  consequenceType: 0
+  objectiveIndex: 0
+  progressDelta: 0

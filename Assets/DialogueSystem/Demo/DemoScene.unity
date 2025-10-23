@@ -187,6 +187,8 @@ MonoBehaviour:
   moveAction: {fileID: -1680190386980627800, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   rb: {fileID: 105451315}
   animator: {fileID: 1010658138}
+  gameState: {fileID: 11400000, guid: abeccb046d47fd64494cb73113a0de3d, type: 2}
+  resetAction: {fileID: -8614181013348740716, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
 --- !u!58 &105451314
 CircleCollider2D:
   m_ObjectHideFlags: 0

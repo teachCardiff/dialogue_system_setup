@@ -151,7 +151,7 @@ MonoBehaviour:
   listenerCharacter: {fileID: 0}
   listenerExpression: 
   listenerIsSpeaker: 0
-  dialogueText: Did you find those 4 flowers?
+  dialogueText: 
   choices: []
   conditionalBranches:
   - branchName: No Flowers
@@ -292,6 +292,39 @@ MonoBehaviour:
       m_Calls: []
   exitConsequences: []
   nextNode: {fileID: -6763016470584409542}
+--- !u!114 &-2738029060375608619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_22
+  m_EditorClassIdentifier: 
+  nodeId: a53b4def-2686-480b-aa5a-da9dbfefc86f
+  speakerName: 
+  speakerCharacter: {fileID: 0}
+  speakerExpression: 
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: 
+  choices: []
+  conditionalBranches:
+  - branchName: Help Townsfolk Progress
+    condition: {fileID: 11400000, guid: 1cab2079e0eb35b47bc49df84f7e7f05, type: 2}
+    targetNode: {fileID: 7012299834521311936}
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: 1058269340062801190}
 --- !u!114 &-1071455400184411333
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -334,7 +367,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a09afc92a506d184c8c8e3fc2292ece4, type: 3}
   m_Name: Merchant_Dialogue
   m_EditorClassIdentifier: 
-  startNode: {fileID: 7012299834521311936}
+  startNode: {fileID: -2738029060375608619}
   nodes:
   - {fileID: 6927249070887177323}
   - {fileID: -3726758095415614958}
@@ -358,6 +391,9 @@ MonoBehaviour:
   - {fileID: -9106256650717107132}
   - {fileID: -3732373236951027278}
   - {fileID: 4544422311883375233}
+  - {fileID: -2738029060375608619}
+  - {fileID: 1058269340062801190}
+  - {fileID: 420727449347315468}
   nodePositions:
   - nodeId: db8f198a-df21-4f24-aac9-7150b1420084
     position: {x: 63, y: 186}
@@ -370,9 +406,9 @@ MonoBehaviour:
   - nodeId: 876335a7-4e85-42f0-b8c6-c6ce35d443d8
     position: {x: 876, y: 397}
   - nodeId: 72fdf81c-542d-406a-9a6a-9ee33dbb8b75
-    position: {x: -1024, y: 349}
+    position: {x: -1299, y: 346}
   - nodeId: 460d44ea-a7f3-46e0-b0ec-a5951fc8f0b9
-    position: {x: -303, y: 749}
+    position: {x: -408, y: 732}
   - nodeId: 5e2f32ca-fbb5-4e61-99ff-130f2c3dcae1
     position: {x: 503, y: 643}
   - nodeId: 92668989-85dd-46ad-ae8e-37aa691a995a
@@ -403,9 +439,75 @@ MonoBehaviour:
     position: {x: 1453, y: 1658}
   - nodeId: 5fef05f8-3dee-4e20-a59e-a55336bc82c2
     position: {x: -303, y: 1534}
+  - nodeId: a53b4def-2686-480b-aa5a-da9dbfefc86f
+    position: {x: -2299, y: 419}
+  - nodeId: feb8c151-6231-4d41-bc13-20f4a545220f
+    position: {x: -1299, y: 21}
+  - nodeId: 09f26e8a-1536-4b1c-9f59-44cf3870ea17
+    position: {x: -809, y: 519}
   defaultSpeaker: {fileID: 0}
   defaultListener: {fileID: 0}
-  currentNode: {fileID: 4428323560780378697}
+  currentNode: {fileID: -9082048600485696208}
+--- !u!114 &420727449347315468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_24
+  m_EditorClassIdentifier: 
+  nodeId: 09f26e8a-1536-4b1c-9f59-44cf3870ea17
+  speakerName: Merchant
+  speakerCharacter: {fileID: 0}
+  speakerExpression: 
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: Did you find those 4 flowers?
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: -7294158416961576469}
+--- !u!114 &1058269340062801190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_23
+  m_EditorClassIdentifier: 
+  nodeId: feb8c151-6231-4d41-bc13-20f4a545220f
+  speakerName: Merchant
+  speakerCharacter: {fileID: 0}
+  speakerExpression: 
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: '[i][pulse, 5]*Sigh*[/pulse][/i] What am I going to do?'
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: 0}
 --- !u!114 &2075054157938188753
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -514,6 +616,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 11400000, guid: 06a3975872b4a974497963225c3e8a34, type: 2}
+        m_TargetAssemblyTypeName: QuestConsequence, Assembly-CSharp
+        m_MethodName: Execute
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: abeccb046d47fd64494cb73113a0de3d, type: 2}
+          m_ObjectArgumentAssemblyTypeName: GameState, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   exitConsequences: []
   nextNode: {fileID: 0}
 --- !u!114 &4544422311883375233
@@ -575,6 +689,18 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11400000, guid: 7c2766711988efb438b9adcd01f85bab, type: 2}
+        m_TargetAssemblyTypeName: QuestConsequence, Assembly-CSharp
+        m_MethodName: Execute
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: abeccb046d47fd64494cb73113a0de3d, type: 2}
+          m_ObjectArgumentAssemblyTypeName: GameState, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 11400000, guid: 06a3975872b4a974497963225c3e8a34, type: 2}
         m_TargetAssemblyTypeName: QuestConsequence, Assembly-CSharp
         m_MethodName: Execute
         m_Mode: 2
@@ -749,7 +875,7 @@ MonoBehaviour:
   conditionalBranches:
   - branchName: IN PROGRESS
     condition: {fileID: 11400000, guid: 732018fc14f25d2428edffdb6c331907, type: 2}
-    targetNode: {fileID: -7294158416961576469}
+    targetNode: {fileID: 420727449347315468}
   - branchName: COMPLETED
     condition: {fileID: 11400000, guid: b717a2542724d674cbb84f8935ff82e7, type: 2}
     targetNode: {fileID: 4544422311883375233}

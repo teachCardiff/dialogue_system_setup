@@ -14,6 +14,14 @@ public class PlayerController : MonoBehaviour
     public Rigidbody2D rb;
     public Animator animator;
 
+    [Header("Game State")]
+    [Tooltip("Optional GameState ScriptableObject to reset via input (clears variables and quests)")]
+    public GameState gameState;
+
+    [Header("Debug / Inputs")]
+    [Tooltip("Input action reference to trigger a full game state reset")]
+    public InputActionReference resetAction;
+
     // cached PlayerInput if present (to decide whether to rely on OnMove callbacks)
     PlayerInput playerInput;
 
@@ -26,12 +34,16 @@ public class PlayerController : MonoBehaviour
     {
         if (moveAction != null && moveAction.action != null)
             moveAction.action.Enable();
+        if (resetAction != null && resetAction.action != null)
+            resetAction.action.Enable();
     }
 
     void OnDisable()
     {
         if (moveAction != null && moveAction.action != null)
             moveAction.action.Disable();
+        if (resetAction != null && resetAction.action != null)
+            resetAction.action.Disable();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -107,6 +119,31 @@ public class PlayerController : MonoBehaviour
     {
         if (input == null) return;
         currentInput = input.Get<Vector2>();
+    }
+
+    // Optional InputSystem callback or direct hook for reset input
+    public void OnReset(InputValue input)
+    {
+        if (input == null) return;
+        if (input.isPressed)
+        {
+            ResetGameState();
+        }
+    }
+
+    // Programmatic reset (also called by input action if wired via C#)
+    public void ResetGameState()
+    {
+        if (gameState == null) return;
+
+        gameState.intVariables.Clear();
+        gameState.boolVariables.Clear();
+        gameState.stringVariables.Clear();
+        gameState.activeQuests.Clear();
+        gameState.completedQuests.Clear();
+        gameState.onStateChanged?.Invoke();
+
+        Debug.Log("GameState reset by PlayerController input.");
     }
 
     void FixedUpdate()

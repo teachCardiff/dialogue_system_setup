@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a0e5bae4e27eab40aa6514fd13eeb1c, type: 3}
-  m_Name: GetFlowersForMorner
+  m_Script: {fileID: 11500000, guid: 2bc8c6c05c7529040939f6610c71c48e, type: 3}
+  m_Name: Mourner
   m_EditorClassIdentifier: 
-  description: Get flowers for the morner.
-  targetValue: 1
-  currentProgress: 0
+  npcName: Mourner
+  defaultSprite: {fileID: 21300000, guid: e15a0aaf619d8aa429bd091186fb29a2, type: 3}
+  expressions: []

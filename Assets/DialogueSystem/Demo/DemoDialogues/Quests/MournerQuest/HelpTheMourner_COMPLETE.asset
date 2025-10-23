@@ -9,14 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b397b86e69017d4eb35538964144725, type: 3}
-  m_Name: Demo_Dialogue_Gamestate
+  m_Script: {fileID: 11500000, guid: 3dba787d424e7e9468604f8783a4f96a, type: 3}
+  m_Name: HelpTheMourner_COMPLETE
   m_EditorClassIdentifier: 
-  intVariables: []
-  boolVariables: []
-  stringVariables: []
-  onStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  activeQuests: []
-  completedQuests: []
+  quest: {fileID: 11400000, guid: 210b3210890301944a80731b99c6a5be, type: 2}
+  consequenceType: 2
+  objectiveIndex: 0
+  progressDelta: 0
