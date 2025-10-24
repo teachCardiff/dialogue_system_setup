@@ -7,6 +7,7 @@ using UnityEngine.UIElements;
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace DialogueSystem.Editor
 {
@@ -579,11 +580,38 @@ namespace DialogueSystem.Editor
 
 
 
-    private void RebuildGraph()
+        private void RebuildGraph()
         {
             graphView.DeleteElements(graphView.graphElements.ToList()); // Clear all
 
             if (selectedDialogue == null) return;
+
+            // If this dialogue has no nodes (newly created asset), create a default start node
+            if (selectedDialogue.nodes == null || selectedDialogue.nodes.Count == 0)
+            {
+                var newNode = ScriptableObject.CreateInstance<DialogueNode>();
+                newNode.nodeId = Guid.NewGuid().ToString();
+                newNode.name = "Node_0";
+
+                // Initialize from dialogue defaults if available
+                if (selectedDialogue.defaultSpeaker != null)
+                {
+                    newNode.speakerCharacter = selectedDialogue.defaultSpeaker;
+                    newNode.speakerName = selectedDialogue.defaultSpeaker.npcName;
+                    if (string.IsNullOrEmpty(newNode.speakerExpression)) newNode.speakerExpression = "Default";
+                }
+                if (selectedDialogue.defaultListener != null)
+                {
+                    newNode.listenerCharacter = selectedDialogue.defaultListener;
+                }
+
+                AssetDatabase.AddObjectToAsset(newNode, selectedDialogue);
+                selectedDialogue.nodes.Add(newNode);
+                selectedDialogue.SetNodePosition(newNode.nodeId, new Rect(0, 0, 250, 300));
+                selectedDialogue.startNode = newNode;
+                EditorUtility.SetDirty(selectedDialogue);
+                AssetDatabase.SaveAssets();
+            }
 
             // Defensive cleanup: remove any null/destroyed nodes from the SO to avoid exceptions
             var removed = selectedDialogue.nodes.Where(n => n == null).ToList();
@@ -638,8 +666,50 @@ namespace DialogueSystem.Editor
                     portIndex++;
                 }
             }
+
+            // After rebuilding, frame the start node (or the first node found)
+            FrameStartNode();
         }
-        
+
+        // New: Frame (focus) the start node (or first node when multiple/no explicit start)
+        public void FrameStartNode()
+        {
+            if (selectedDialogue == null || graphView == null) return;
+            DialogueNode target = selectedDialogue.startNode ?? selectedDialogue.nodes.FirstOrDefault();
+            if (target == null) return;
+
+            var nodeView = graphView.nodes.OfType<DialogueNodeView>().FirstOrDefault(nv => nv.dialogueNode == target);
+            if (nodeView != null)
+            {
+                // Try to use GraphView.FrameElements via reflection when available to center on the specific node.
+                try
+                {
+                    var gvType = typeof(GraphView);
+                    var mi = gvType.GetMethod("FrameElements", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                    if (mi != null)
+                    {
+                        var listType = typeof(List<GraphElement>);
+                        var elements = Activator.CreateInstance(listType) as System.Collections.IList;
+                        elements.Add(nodeView);
+                        mi.Invoke(graphView, new object[] { elements, true });
+                        return;
+                    }
+                }
+                catch (Exception)
+                {
+                    // ignore and fallback
+                }
+
+                // Fallback: frame all nodes (less precise but always available)
+                graphView.FrameAll();
+            }
+            else
+            {
+                // If we couldn't find the view, fallback to framing all nodes
+                graphView.FrameAll();
+            }
+        }
+
         private void ConnectPorts(Port output, Port input)
         {
             if (output == null || input == null) return;
