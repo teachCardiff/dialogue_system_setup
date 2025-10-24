@@ -315,6 +315,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   componentsToToggle:
   - {fileID: 105451313}
+  - {fileID: 1010658138}
   playerInput: {fileID: 105451316}
   disableGameObjectInstead: 0
   autoFindCommon: 1
@@ -361,7 +362,7 @@ MonoBehaviour:
   singleUse: 0
   triggerKey: 32
   triggerAction: {fileID: 1781555164194001046, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  requirePlayerTag: 0
+  requirePlayerTag: 1
   playerTag: Player
   playerLayer:
     serializedVersion: 2
@@ -2161,7 +2162,7 @@ MonoBehaviour:
   singleUse: 0
   triggerKey: 32
   triggerAction: {fileID: 1781555164194001046, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  requirePlayerTag: 0
+  requirePlayerTag: 1
   playerTag: Player
   playerLayer:
     serializedVersion: 2
@@ -5492,7 +5493,7 @@ MonoBehaviour:
   singleUse: 0
   triggerKey: 32
   triggerAction: {fileID: 1781555164194001046, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  requirePlayerTag: 0
+  requirePlayerTag: 1
   playerTag: Player
   playerLayer:
     serializedVersion: 2
