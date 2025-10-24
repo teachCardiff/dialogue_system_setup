@@ -141,8 +141,6 @@ namespace DialogueSystem.Editor
             var imguiToolbar = new IMGUIContainer(() =>
             {
                 GUILayout.BeginHorizontal(EditorStyles.toolbar);
-                if (GUILayout.Button("Load Dialogue", EditorStyles.toolbarButton)) LoadDialogue();
-                if (GUILayout.Button("Save", EditorStyles.toolbarButton)) SaveDialogue();
                 if (GUILayout.Button("Preview", EditorStyles.toolbarButton)) PreviewDialogue();
                 // Rebuild Graph button removed per user request
 
@@ -267,17 +265,11 @@ namespace DialogueSystem.Editor
                 }
             };
 
-            var loadButton = new Button(LoadDialogue) { text = "Load Dialogue" }; // Implement LoadDialogue() to load SO, clear/add nodes
-            var saveButton = new Button(SaveDialogue) { text = "Save" }; // AssetDatabase.SaveAssets();
             var previewButton = new Button(PreviewDialogue) { text = "Preview" }; // Runtime test
 
             // Add with flex for spacing
-            loadButton.style.flexGrow = 1;
-            saveButton.style.flexGrow = 1;
             previewButton.style.flexGrow = 1;
 
-            toolbar.Add(loadButton);
-            toolbar.Add(saveButton);
             toolbar.Add(previewButton);
 
             // Create a stacked toolbar area: top row for buttons, bottom row for defaults/foldout

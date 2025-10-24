@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-4396795665407519264
+--- !u!114 &-346314190104446169
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
   m_Name: Node_0
   m_EditorClassIdentifier: 
-  nodeId: 2c97ed73-b4ab-4ca0-b50c-eedc432eed74
-  speakerName: Player
-  speakerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
-  speakerExpression: Default
+  nodeId: 06b7b054-5acd-4235-ae68-3084e9086b7a
+  speakerName: 
+  speakerCharacter: {fileID: 0}
+  speakerExpression: 
   listenerCharacter: {fileID: 0}
   listenerExpression: 
   listenerIsSpeaker: 0
-  dialogueText: Strange...I can't seem to leave.
+  dialogueText: 
   choices: []
   conditionalBranches: []
   onEnterNode:
@@ -40,14 +40,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a09afc92a506d184c8c8e3fc2292ece4, type: 3}
-  m_Name: ExitLevel
+  m_Name: ExampleDialogue
   m_EditorClassIdentifier: 
-  startNode: {fileID: -4396795665407519264}
+  startNode: {fileID: 0}
   nodes:
-  - {fileID: -4396795665407519264}
+  - {fileID: -346314190104446169}
   nodePositions:
-  - nodeId: 2c97ed73-b4ab-4ca0-b50c-eedc432eed74
-    position: {x: -962.5, y: 164}
+  - nodeId: 06b7b054-5acd-4235-ae68-3084e9086b7a
+    position: {x: 191.5215, y: 708.8954}
   defaultSpeaker: {fileID: 0}
   defaultListener: {fileID: 0}
-  currentNode: {fileID: -4396795665407519264}
+  currentNode: {fileID: 0}
