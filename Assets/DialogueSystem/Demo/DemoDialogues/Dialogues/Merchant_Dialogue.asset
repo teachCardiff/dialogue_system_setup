@@ -447,7 +447,7 @@ MonoBehaviour:
     position: {x: -809, y: 519}
   defaultSpeaker: {fileID: 0}
   defaultListener: {fileID: 0}
-  currentNode: {fileID: -2738029060375608619}
+  currentNode: {fileID: 4428323560780378697}
 --- !u!114 &420727449347315468
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -563,10 +563,14 @@ MonoBehaviour:
     targetNode: {fileID: 8596345372643400548}
     conditions: []
     consequences: []
+    operationConditions: []
+    operationConsequences: []
   - choiceText: Wait
     targetNode: {fileID: -9106256650717107132}
     conditions: []
     consequences: []
+    operationConditions: []
+    operationConsequences: []
   conditionalBranches: []
   onEnterNode:
     m_PersistentCalls:
@@ -769,10 +773,14 @@ MonoBehaviour:
     targetNode: {fileID: -1071455400184411333}
     conditions: []
     consequences: []
+    operationConditions: []
+    operationConsequences: []
   - choiceText: Nevermind
     targetNode: {fileID: -5593203219150723293}
     conditions: []
     consequences: []
+    operationConditions: []
+    operationConsequences: []
   conditionalBranches: []
   onEnterNode:
     m_PersistentCalls:
@@ -838,10 +846,14 @@ MonoBehaviour:
     targetNode: {fileID: -3726758095415614958}
     conditions: []
     consequences: []
+    operationConditions: []
+    operationConsequences: []
   - choiceText: '*Walk away*'
     targetNode: {fileID: 6764674651265088946}
     conditions: []
     consequences: []
+    operationConditions: []
+    operationConsequences: []
   conditionalBranches: []
   onEnterNode:
     m_PersistentCalls:

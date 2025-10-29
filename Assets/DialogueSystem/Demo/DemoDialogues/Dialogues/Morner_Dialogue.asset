@@ -25,10 +25,14 @@ MonoBehaviour:
     targetNode: {fileID: -4204315087315250677}
     conditions: []
     consequences: []
+    operationConditions: []
+    operationConsequences: []
   - choiceText: Nevermind.
     targetNode: {fileID: -3601521429814666327}
     conditions: []
     consequences: []
+    operationConditions: []
+    operationConsequences: []
   conditionalBranches: []
   onEnterNode:
     m_PersistentCalls:
@@ -382,10 +386,14 @@ MonoBehaviour:
     targetNode: {fileID: 3140271012698653144}
     conditions: []
     consequences: []
+    operationConditions: []
+    operationConsequences: []
   - choiceText: Maybe later.
     targetNode: {fileID: 982885123101596447}
     conditions: []
     consequences: []
+    operationConditions: []
+    operationConsequences: []
   conditionalBranches: []
   onEnterNode:
     m_PersistentCalls:
@@ -490,7 +498,7 @@ MonoBehaviour:
   - nodeId: 92b2bd88-040a-42dc-946e-e3318520b423
     position: {x: 3457, y: 1101}
   - nodeId: 8f81e82c-1d6f-4cf3-9295-69868466f41b
-    position: {x: 1162, y: 383}
+    position: {x: 927.5, y: 380.5}
   - nodeId: 21f174a0-d585-4827-9ac4-abc791af61fc
     position: {x: 2308, y: 29}
   - nodeId: 277cdcfe-ecc6-4674-9112-0d47b211b513

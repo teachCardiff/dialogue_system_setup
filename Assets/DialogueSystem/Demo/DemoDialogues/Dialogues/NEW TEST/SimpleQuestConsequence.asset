@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52c5dba302dc84247aaa6f35e7e23107, type: 3}
+  m_Name: SimpleQuestConsequence
+  m_EditorClassIdentifier: 
+  operations:
+  - operationType: 2
+    quest: {fileID: 11400000, guid: 971d8ad7e48d2424784f6ec6bea2291e, type: 2}
+    objectiveIndex: 1
+    progressDelta: 0
+    variableName: 
+    intValue: 0
+    boolValue: 0
+    comparison: 0
+    requiredQuestStatus: 0

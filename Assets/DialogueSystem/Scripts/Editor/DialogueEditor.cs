@@ -982,6 +982,7 @@ namespace DialogueSystem.Editor
         private Toggle showListenerToggle;
     // NEW: single reusable IsSpeaker toggle instance — prevents duplicates on repeated RefreshCharFields calls
     private Toggle isSpeakerToggle;
+        private VisualElement opBadgeRow;
 
         public DialogueNodeView(DialogueNode node, Dialogue dialogue)
         {
@@ -1083,6 +1084,15 @@ namespace DialogueSystem.Editor
             var addBranchButton = new Button(AddBranch) { text = "Add Conditional Branch" };
             extensionContainer.Add(addBranchButton); // Place below choices
 
+            // Create an operation badges row under mainContainer
+            opBadgeRow = new VisualElement { style = { flexDirection = FlexDirection.Row } };
+            mainContainer.Add(opBadgeRow);
+            RefreshOperationBadges();
+
+            // Enable drag-and-drop of QuestOperation from Blackboard
+            RegisterCallback<DragUpdatedEvent>(OnDragUpdated);
+            RegisterCallback<DragPerformEvent>(OnDragPerform);
+
             RefreshBranches(); // Initial call
             
         }
@@ -1103,6 +1113,7 @@ namespace DialogueSystem.Editor
             RefreshChoices();
             RefreshBranches();
             RefreshCharFields();
+            RefreshOperationBadges();
         }
 
         void RefreshCharFields()
@@ -1442,6 +1453,10 @@ namespace DialogueSystem.Editor
                 var deleteButton = new Button(() => DeleteChoice(currentIndex)) { text = "X" };
                 choiceContainer.Add(deleteButton);
 
+                // Add inline operation badges for each choice
+                var badge = BuildChoiceBadges(choice);
+                choiceContainer.Add(badge);
+
                 mainContainer.Add(choiceContainer);
                 choiceElements.Add(choiceContainer);
 
@@ -1452,6 +1467,171 @@ namespace DialogueSystem.Editor
             }
             
             RefreshCharFields();
+        }
+
+        private VisualElement BuildChoiceBadges(DialogueChoice choice)
+        {
+            var row = new VisualElement { style = { flexDirection = FlexDirection.Row, marginLeft = 6 } };
+            if (choice != null)
+            {
+                if (choice.operationConditions != null && choice.operationConditions.Count > 0)
+                {
+                    var cond = new Label($"[Cond:{choice.operationConditions.Count}]");
+                    cond.style.color = new Color(1f, 0.85f, 0.2f); // yellow-ish
+                    cond.style.unityFontStyleAndWeight = FontStyle.Bold;
+                    row.Add(cond);
+                }
+                if (choice.operationConsequences != null && choice.operationConsequences.Count > 0)
+                {
+                    var cons = new Label($"[Cons:{choice.operationConsequences.Count}]");
+                    cons.style.color = new Color(0.2f, 1f, 0.5f); // green-ish
+                    cons.style.marginLeft = 4;
+                    cons.style.unityFontStyleAndWeight = FontStyle.Bold;
+                    row.Add(cons);
+                }
+            }
+            return row;
+        }
+
+        private void RefreshOperationBadges()
+        {
+            if (opBadgeRow == null || dialogueNode == null) return;
+            opBadgeRow.Clear();
+            int enter = dialogueNode.enterOperations != null ? dialogueNode.enterOperations.Count : 0;
+            int exit = dialogueNode.exitOperations != null ? dialogueNode.exitOperations.Count : 0;
+            if (enter > 0)
+            {
+                var l = new Label($"Enter Ops: {enter}");
+                l.style.color = new Color(0.4f, 0.9f, 1f); // cyan-ish
+                l.style.unityFontStyleAndWeight = FontStyle.Bold;
+                opBadgeRow.Add(l);
+            }
+            if (exit > 0)
+            {
+                var l = new Label($"Exit Ops: {exit}");
+                l.style.color = new Color(0.9f, 0.6f, 1f); // magenta-ish
+                l.style.marginLeft = 6;
+                l.style.unityFontStyleAndWeight = FontStyle.Bold;
+                opBadgeRow.Add(l);
+            }
+        }
+
+        private static bool TryGetDraggedQuestOperationJson(out string json)
+        {
+            json = null;
+            try
+            {
+                var generic = DragAndDrop.GetGenericData("QuestOperationJson") as string;
+                if (!string.IsNullOrEmpty(generic)) { json = generic; return true; }
+
+                // Fallback: try objectReferences for a ScriptableObject that contains the json
+                foreach (var obj in DragAndDrop.objectReferences)
+                {
+                    var so = obj as ScriptableObject;
+                    if (so == null) continue;
+                    var soType = so.GetType();
+                    var field = soType.GetField("operationJson", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                    if (field != null && field.FieldType == typeof(string))
+                    {
+                        var val = field.GetValue(so) as string;
+                        if (!string.IsNullOrEmpty(val)) { json = val; return true; }
+                    }
+                }
+            }
+            catch { }
+            return false;
+        }
+
+        private void OnDragUpdated(DragUpdatedEvent evt)
+        {
+            if (TryGetDraggedQuestOperationJson(out _))
+            {
+                DragAndDrop.visualMode = DragAndDropVisualMode.Copy;
+                evt.StopPropagation();
+            }
+        }
+
+        private void OnDragPerform(DragPerformEvent evt)
+        {
+            if (!TryGetDraggedQuestOperationJson(out var json)) return;
+            DragAndDrop.AcceptDrag();
+            evt.StopPropagation();
+
+            QuestOperation op = null;
+            try { op = JsonUtility.FromJson<QuestOperation>(json); }
+            catch { }
+            if (op == null) return;
+
+            // Show a small menu to pick where to apply
+            var menu = new GenericMenu();
+            menu.AddItem(new GUIContent("Add to Node/Enter"), false, () => { AddOpToNodeEnter(op); });
+            menu.AddItem(new GUIContent("Add to Node/Exit"), false, () => { AddOpToNodeExit(op); });
+
+            if (dialogueNode.choices != null && dialogueNode.choices.Count > 0)
+            {
+                for (int i = 0; i < dialogueNode.choices.Count; i++)
+                {
+                    int idx = i;
+                    var label = string.IsNullOrEmpty(dialogueNode.choices[i].choiceText) ? $"Choice {i}" : dialogueNode.choices[i].choiceText;
+                    menu.AddItem(new GUIContent($"Add to Choice/{idx}: {label}/Condition"), false, () => { AddOpToChoiceCondition(idx, op); });
+                    menu.AddItem(new GUIContent($"Add to Choice/{idx}: {label}/Consequence"), false, () => { AddOpToChoiceConsequence(idx, op); });
+                }
+            }
+            else
+            {
+                menu.AddDisabledItem(new GUIContent("Add to Choice (no choices)"));
+            }
+
+            // Show near mouse position
+            var mousePos = GUIUtility.GUIToScreenPoint(Event.current.mousePosition);
+            menu.DropDown(new Rect(mousePos, Vector2.one));
+        }
+
+        private void AddOpToNodeEnter(QuestOperation op)
+        {
+            if (dialogueNode == null || op == null) return;
+            Undo.RecordObject(dialogueNode, "Add Enter Operation");
+            dialogueNode.enterOperations.Add(DeepCopy(op));
+            EditorUtility.SetDirty(dialogueNode);
+            AssetDatabase.SaveAssets();
+            RefreshOperationBadges();
+        }
+
+        private void AddOpToNodeExit(QuestOperation op)
+        {
+            if (dialogueNode == null || op == null) return;
+            Undo.RecordObject(dialogueNode, "Add Exit Operation");
+            dialogueNode.exitOperations.Add(DeepCopy(op));
+            EditorUtility.SetDirty(dialogueNode);
+            AssetDatabase.SaveAssets();
+            RefreshOperationBadges();
+        }
+
+        private void AddOpToChoiceCondition(int index, QuestOperation op)
+        {
+            if (dialogueNode == null || op == null) return;
+            if (index < 0 || index >= dialogueNode.choices.Count) return;
+            Undo.RecordObject(dialogueNode, "Add Choice Condition Operation");
+            dialogueNode.choices[index].operationConditions.Add(DeepCopy(op));
+            EditorUtility.SetDirty(dialogueNode);
+            AssetDatabase.SaveAssets();
+            RefreshChoices();
+        }
+
+        private void AddOpToChoiceConsequence(int index, QuestOperation op)
+        {
+            if (dialogueNode == null || op == null) return;
+            if (index < 0 || index >= dialogueNode.choices.Count) return;
+            Undo.RecordObject(dialogueNode, "Add Choice Consequence Operation");
+            dialogueNode.choices[index].operationConsequences.Add(DeepCopy(op));
+            EditorUtility.SetDirty(dialogueNode);
+            AssetDatabase.SaveAssets();
+            RefreshChoices();
+        }
+
+        private static QuestOperation DeepCopy(QuestOperation src)
+        {
+            try { return JsonUtility.FromJson<QuestOperation>(JsonUtility.ToJson(src)); } catch { return src; }
         }
 
         private void DeleteChoice(int index)

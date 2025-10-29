@@ -18,5 +18,9 @@ MonoBehaviour:
   onStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  activeQuests: []
+  activeQuests:
+  - questName: Talk to me Again Again Again
+    questJson: "{\n    \"questName\": \"Talk to me Again Again Again\",\n    \"description\":
+      \"Talk to me 3 times.\",\n    \"objectives\": [\n        {\n            \"instanceID\":
+      -10218\n        }\n    ],\n    \"currentStatus\": 1\n}"
   completedQuests: []

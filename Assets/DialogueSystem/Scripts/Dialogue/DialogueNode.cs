@@ -40,6 +40,11 @@ public class DialogueNode : ScriptableObject
     // ScriptableObject-based consequences to execute when this node exits
     public List<Consequence> exitConsequences = new List<Consequence>();
 
+    // Node-level inline quest operations
+    [Header("Node Operations")]
+    public List<QuestOperation> enterOperations = new List<QuestOperation>();
+    public List<QuestOperation> exitOperations = new List<QuestOperation>();
+
     // If no choices, next node is linear progression
     public DialogueNode nextNode;
 

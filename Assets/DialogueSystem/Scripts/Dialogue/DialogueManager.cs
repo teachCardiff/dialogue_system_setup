@@ -95,6 +95,24 @@ public class DialogueManager : MonoBehaviour
         
         debugCurrentNode = currentNode;
         currentNode.onEnterNode?.Invoke();
+
+        // Execute inline node enter operations (if any)
+        if (currentNode.enterOperations != null)
+        {
+            foreach (var op in currentNode.enterOperations)
+            {
+                if (op == null) continue;
+                try
+                {
+                    op.Execute(gameState);
+                    Debug.Log($"[DialogueManager] Executed node enter operation: {op.Summary()} on node {currentNode.name}");
+                }
+                catch (System.Exception ex)
+                {
+                    Debug.LogWarning($"Exception executing node enter operation on node '{currentNode.name}': {ex.Message}");
+                }
+            }
+        }
         // Auto-branch if conditions met (before showing this node)
         if (currentNode.conditionalBranches.Count > 0)
         {
@@ -234,6 +252,24 @@ public class DialogueManager : MonoBehaviour
                 consequence.Execute(gameState);
             }
 
+            // Invoke inline QuestOperation consequences (if any)
+            if (selected.operationConsequences != null)
+            {
+                foreach (var op in selected.operationConsequences)
+                {
+                    if (op == null) continue;
+                    try
+                    {
+                        op.Execute(gameState);
+                        Debug.Log($"[DialogueManager] Executed inline QuestOperation: {op.Summary()}");
+                    }
+                    catch (System.Exception ex)
+                    {
+                        Debug.LogWarning($"Exception executing inline QuestOperation on choice '{selected.choiceText}': {ex.Message}");
+                    }
+                }
+            }
+
             var previousNode = currentNode;
             currentNode = selected.targetNode;
             dialogueUI.ClearChoices();
@@ -280,6 +316,23 @@ public class DialogueManager : MonoBehaviour
         catch (System.Exception ex)
         {
             Debug.LogWarning($"Exception while invoking onExitNode for {node.name}: {ex.Message}");
+        }
+
+        if (node.exitOperations != null)
+        {
+            foreach (var op in node.exitOperations)
+            {
+                if (op == null) continue;
+                try
+                {
+                    op.Execute(gameState);
+                    Debug.Log($"[DialogueManager] Executed node exit operation: {op.Summary()} on node {node.name}");
+                }
+                catch (System.Exception ex)
+                {
+                    Debug.LogWarning($"Exception executing node exit operation on node '{node.name}': {ex.Message}");
+                }
+            }
         }
 
         if (node.exitConsequences != null)

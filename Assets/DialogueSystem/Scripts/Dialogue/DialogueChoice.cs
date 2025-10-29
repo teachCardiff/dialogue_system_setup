@@ -18,6 +18,13 @@ public class DialogueChoice
     // Consequence A(now SO-abased for reusability)
     public List<Consequence> consequences = new List<Consequence>();
 
+    // NEW: Inline quest operations (author directly on the choice without creating separate SOs)
+    [Header("Inline Quest Operations (Conditions)")]
+    public List<QuestOperation> operationConditions = new List<QuestOperation>();
+
+    [Header("Inline Quest Operations (Consequences)")]
+    public List<QuestOperation> operationConsequences = new List<QuestOperation>();
+
 
     public bool IsAvailable(GameState gameState)
     {
@@ -25,6 +32,14 @@ public class DialogueChoice
         {
             if (!cond.IsMet(gameState)) return false;
         }
+
+        // Also evaluate inline operation-based conditions (all must be true)
+        foreach (var op in operationConditions)
+        {
+            if (op == null) continue;
+            if (!op.Evaluate(gameState)) return false;
+        }
+
         return true;
     }
 }
