@@ -159,9 +159,12 @@ public class DialogueUI : MonoBehaviour
         IsReady = true;
     }
 
-    public void ShowChoices(List<DialogueChoice> choices)
+    public void ShowChoices(List<DialogueChoice> choices, List<bool> enabledFlags = null, bool allowContinue = false)
     {
-        nextButton.gameObject.SetActive(false);
+        // ensure selection state is fresh for this set of choices
+        selectedChoice = null;
+
+        nextButton.gameObject.SetActive(allowContinue);
         choicesPanel.gameObject.SetActive(true);
         foreach (Transform child in choicesPanel) Destroy(child.gameObject);
 
@@ -170,7 +173,23 @@ public class DialogueUI : MonoBehaviour
             var choice = choices[i];
             var btn = Instantiate(choiceButtonPrefab, choicesPanel);
             btn.GetComponentInChildren<TextMeshProUGUI>().text = choice.choiceText;
+            bool interactable = true;
+            if (enabledFlags != null && i < enabledFlags.Count)
+            {
+                interactable = enabledFlags[i];
+            }
+            btn.interactable = interactable;
             btn.onClick.AddListener(() => SelectChoice(choice));
+
+            // Optional: dim disabled choices for clarity (no extra assets required)
+            if (!interactable)
+            {
+                var label = btn.GetComponentInChildren<TextMeshProUGUI>();
+                if (label != null)
+                {
+                    var c = label.color; c.a = 0.6f; label.color = c;
+                }
+            }
         }
     }
 

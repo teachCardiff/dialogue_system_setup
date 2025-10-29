@@ -20,16 +20,21 @@ MonoBehaviour:
   listenerExpression: 
   listenerIsSpeaker: 0
   dialogueText: 
-  choices: []
+  choices:
+  - choiceText: 
+    targetNode: {fileID: 0}
+    criteria: []
+    showIfCriteriaNotMet: 0
+    consequences: []
   conditionalBranches:
   - branchName: Completed
-    condition: {fileID: 11400000, guid: 9eed413031196464d898cc9e11755e97, type: 2}
+    operations: []
     targetNode: {fileID: -4618290059791301591}
   - branchName: In Progress
-    condition: {fileID: 11400000, guid: 1cab2079e0eb35b47bc49df84f7e7f05, type: 2}
+    operations: []
     targetNode: {fileID: 2769127903998570883}
   - branchName: HaveTalked
-    condition: {fileID: 11400000, guid: 08cdc2f7c7dc64d488f9c9fd1fa4a0d9, type: 2}
+    operations: []
     targetNode: {fileID: 2308483982455164374}
   onEnterNode:
     m_PersistentCalls:
@@ -37,7 +42,7 @@ MonoBehaviour:
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
-  exitConsequences: []
+  exitActions: []
   nextNode: {fileID: -3520415781976627993}
 --- !u!114 &-9088405419575577821
 MonoBehaviour:
@@ -67,7 +72,7 @@ MonoBehaviour:
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
-  exitConsequences: []
+  exitActions: []
   nextNode: {fileID: 2308483982455164374}
 --- !u!114 &-7110149492458854456
 MonoBehaviour:
@@ -109,7 +114,7 @@ MonoBehaviour:
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
-  exitConsequences: []
+  exitActions: []
   nextNode: {fileID: 0}
 --- !u!114 &-6559002524594183355
 MonoBehaviour:
@@ -139,7 +144,7 @@ MonoBehaviour:
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
-  exitConsequences: []
+  exitActions: []
   nextNode: {fileID: -2449602565557857564}
 --- !u!114 &-4618290059791301591
 MonoBehaviour:
@@ -169,7 +174,7 @@ MonoBehaviour:
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
-  exitConsequences: []
+  exitActions: []
   nextNode: {fileID: 0}
 --- !u!114 &-4400914224224945064
 MonoBehaviour:
@@ -199,7 +204,7 @@ MonoBehaviour:
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
-  exitConsequences: []
+  exitActions: []
   nextNode: {fileID: 0}
 --- !u!114 &-3520415781976627993
 MonoBehaviour:
@@ -222,7 +227,10 @@ MonoBehaviour:
   listenerIsSpeaker: 0
   dialogueText: Why hello there!
   choices: []
-  conditionalBranches: []
+  conditionalBranches:
+  - branchName: 
+    operations: []
+    targetNode: {fileID: 0}
   onEnterNode:
     m_PersistentCalls:
       m_Calls:
@@ -241,7 +249,7 @@ MonoBehaviour:
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
-  exitConsequences: []
+  exitActions: []
   nextNode: {fileID: -6559002524594183355}
 --- !u!114 &-2449602565557857564
 MonoBehaviour:
@@ -271,7 +279,7 @@ MonoBehaviour:
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
-  exitConsequences: []
+  exitActions: []
   nextNode: {fileID: -699252119067909963}
 --- !u!114 &-699252119067909963
 MonoBehaviour:
@@ -301,7 +309,7 @@ MonoBehaviour:
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
-  exitConsequences: []
+  exitActions: []
   nextNode: {fileID: -9088405419575577821}
 --- !u!114 &11400000
 MonoBehaviour:
@@ -355,14 +363,14 @@ MonoBehaviour:
   - nodeId: 67c68c67-b06c-4a6e-9645-bf6ba762e7cf
     position: {x: 3203, y: 382}
   - nodeId: 57f2ccb5-ff10-41f6-9f73-f34241936c92
-    position: {x: -918.5, y: 253.5}
+    position: {x: -1224, y: 14}
   - nodeId: cf67a8eb-e022-4462-b12a-d9971334d1e9
     position: {x: 199, y: 472}
   - nodeId: 896e6cd8-6397-4a49-994d-aa63b0c70d0b
     position: {x: 199, y: 764}
   defaultSpeaker: {fileID: 11400000, guid: 5e97a2fa9ced9d74bba85bc6978d8644, type: 2}
   defaultListener: {fileID: 0}
-  currentNode: {fileID: -7110149492458854456}
+  currentNode: {fileID: -9100149295132089337}
 --- !u!114 &1882027759992111648
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -387,11 +395,23 @@ MonoBehaviour:
   conditionalBranches: []
   onEnterNode:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
-  exitConsequences: []
+  exitActions: []
   nextNode: {fileID: -7110149492458854456}
 --- !u!114 &2308483982455164374
 MonoBehaviour:
@@ -416,11 +436,13 @@ MonoBehaviour:
   choices:
   - choiceText: Sure.
     targetNode: {fileID: 1882027759992111648}
-    conditions: []
+    criteria: []
+    showIfCriteriaNotMet: 0
     consequences: []
   - choiceText: I'm busy right now.
     targetNode: {fileID: 5954068238915496916}
-    conditions: []
+    criteria: []
+    showIfCriteriaNotMet: 0
     consequences: []
   conditionalBranches: []
   onEnterNode:
@@ -429,7 +451,7 @@ MonoBehaviour:
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
-  exitConsequences: []
+  exitActions: []
   nextNode: {fileID: 0}
 --- !u!114 &2769127903998570883
 MonoBehaviour:
@@ -459,7 +481,7 @@ MonoBehaviour:
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
-  exitConsequences: []
+  exitActions: []
   nextNode: {fileID: 0}
 --- !u!114 &5954068238915496916
 MonoBehaviour:
@@ -489,7 +511,7 @@ MonoBehaviour:
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
-  exitConsequences: []
+  exitActions: []
   nextNode: {fileID: 8003583929478802044}
 --- !u!114 &8003583929478802044
 MonoBehaviour:
@@ -519,5 +541,5 @@ MonoBehaviour:
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
-  exitConsequences: []
+  exitActions: []
   nextNode: {fileID: -4400914224224945064}

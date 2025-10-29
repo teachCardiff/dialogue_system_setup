@@ -40,7 +40,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  exitConsequences: []
+  exitActions: []
   nextNode: {fileID: 0}
 --- !u!114 &11400000
 MonoBehaviour:
@@ -89,7 +89,7 @@ MonoBehaviour:
   choices: []
   conditionalBranches:
   - branchName: IN PROGRESS
-    condition: {fileID: 11400000, guid: 1cab2079e0eb35b47bc49df84f7e7f05, type: 2}
+    operations: []
     targetNode: {fileID: -6823167699405620933}
   onEnterNode:
     m_PersistentCalls:
@@ -97,5 +97,5 @@ MonoBehaviour:
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
-  exitConsequences: []
+  exitActions: []
   nextNode: {fileID: 0}

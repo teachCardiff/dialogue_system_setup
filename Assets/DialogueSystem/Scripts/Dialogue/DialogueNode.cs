@@ -27,7 +27,7 @@ public class DialogueNode : ScriptableObject
     public class ConditionalBranch
     {
         public string branchName = "New Branch";
-        public Condition condition; // The check (e.g., CheckQuestCondition)
+        public List<VariableOperation> operations = new List<VariableOperation>(); // AND logic
         public DialogueNode targetNode; // Branch to here if met
     }
 
@@ -37,8 +37,8 @@ public class DialogueNode : ScriptableObject
     // Events for extensibility (e.g., play animation on node enter)
     public UnityEvent onEnterNode;
     public UnityEvent onExitNode;
-    // ScriptableObject-based consequences to execute when this node exits
-    public List<Consequence> exitConsequences = new List<Consequence>();
+    // New: variable-driven actions to execute when this node exits
+    public List<VariableAction> exitActions = new List<VariableAction>();
 
     // If no choices, next node is linear progression
     public DialogueNode nextNode;

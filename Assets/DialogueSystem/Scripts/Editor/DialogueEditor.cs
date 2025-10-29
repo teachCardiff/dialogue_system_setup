@@ -1518,9 +1518,21 @@ namespace DialogueSystem.Editor
                 });
                 branchElement.Add(nameField);
 
-                var condField = new ObjectField("Condition") { objectType = typeof(Condition), value = branch.condition };
-                condField.RegisterValueChangedCallback(evt => { branch.condition = evt.newValue as Condition; EditorUtility.SetDirty(dialogueNode); });
-                branchElement.Add(condField);
+                // New: inline list of operations (uses default drawer for arrays)
+                // We cannot directly draw SerializedProperty here; so add a mini inspector using IMGUIContainer
+                var opsIMGUI = new IMGUIContainer(() =>
+                {
+                    var so = new SerializedObject(dialogueNode);
+                    var branchesProp = so.FindProperty("conditionalBranches");
+                    if (i < branchesProp.arraySize)
+                    {
+                        var el = branchesProp.GetArrayElementAtIndex(i);
+                        var ops = el.FindPropertyRelative("operations");
+                        EditorGUILayout.PropertyField(ops, new GUIContent("Operations"), true);
+                        so.ApplyModifiedProperties();
+                    }
+                });
+                branchElement.Add(opsIMGUI);
 
                 int index = i;
                 var deleteButton = new Button(() => DeleteBranch(index)) { text = "X" };

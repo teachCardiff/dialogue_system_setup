@@ -1,10 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 /// <summary>
 /// Represents a player choice in a dialogue node.
-/// Includes text, condition to show, consequence on select, and target node.
+/// Includes text, criteria to show/enable, actions on select, and target node.
 /// </summary>
 [System.Serializable]
 public class DialogueChoice
@@ -12,19 +11,17 @@ public class DialogueChoice
     public string choiceText;
     public DialogueNode targetNode; // Branch to this node on select
 
-    // Conditions to unlock this choice (AND logic if multiple)
-    public List<Condition> conditions = new List<Condition>();
+    // Criteria to unlock this choice (AND logic)
+    public List<VariableOperation> criteria = new List<VariableOperation>();
 
-    // Consequence A(now SO-abased for reusability)
-    public List<Consequence> consequences = new List<Consequence>();
+    // If true, show the choice even when criteria not met (but disabled). If false, hide it.
+    public bool showIfCriteriaNotMet = false;
 
+    // Actions applied when this choice is selected
+    public List<VariableAction> consequences = new List<VariableAction>();
 
     public bool IsAvailable(GameState gameState)
     {
-        foreach (var cond in conditions)
-        {
-            if (!cond.IsMet(gameState)) return false;
-        }
-        return true;
+        return gameState != null && gameState.EvaluateOperations(criteria);
     }
 }
