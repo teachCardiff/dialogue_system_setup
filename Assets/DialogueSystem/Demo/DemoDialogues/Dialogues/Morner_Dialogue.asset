@@ -295,7 +295,8 @@ MonoBehaviour:
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
-  exitConsequences: []
+  exitConsequences:
+  - {fileID: 11400000, guid: 6018dd87188b1f14895591ee8546ccf9, type: 2}
   nextNode: {fileID: 0}
 --- !u!114 &-2171724422901441953
 MonoBehaviour:
@@ -535,7 +536,7 @@ MonoBehaviour:
     position: {x: 2168, y: 1005}
   defaultSpeaker: {fileID: 11400000, guid: c0f5165958beabc4da2ec2ee254ee18b, type: 2}
   defaultListener: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
-  currentNode: {fileID: -2915264302376407197}
+  currentNode: {fileID: 2110140916608024655}
 --- !u!114 &982885123101596447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -693,7 +694,8 @@ MonoBehaviour:
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
-  exitConsequences: []
+  exitConsequences:
+  - {fileID: 11400000, guid: 6018dd87188b1f14895591ee8546ccf9, type: 2}
   nextNode: {fileID: -2831469397973339450}
 --- !u!114 &2887210034651914019
 MonoBehaviour:

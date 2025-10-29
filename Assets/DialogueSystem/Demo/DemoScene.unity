@@ -1448,6 +1448,7 @@ GameObject:
   - component: {fileID: 832734740}
   - component: {fileID: 832734739}
   - component: {fileID: 832734738}
+  - component: {fileID: 832734741}
   m_Layer: 0
   m_Name: Desk
   m_TagString: Untagged
@@ -1617,6 +1618,36 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &832734741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 832734736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 838c544fe1c0643469481c1508aac8c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueAsset: {fileID: 11400000, guid: 6e747ecae57b0c944a28c535fad2f544, type: 2}
+  triggerMode: 3
+  singleUse: 0
+  triggerKey: 32
+  triggerAction: {fileID: 1781555164194001046, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  requirePlayerTag: 1
+  playerTag: Player
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  use2D: 1
+  playerTransform: {fileID: 0}
+  onTriggered:
+    m_PersistentCalls:
+      m_Calls: []
+  onLocked:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1010658137
 GameObject:
   m_ObjectHideFlags: 0
@@ -6048,6 +6079,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2419165209200422319, guid: 659b5f93910062b428164b32be1d7a8a, type: 3}
+      propertyPath: gameState
+      value: 
+      objectReference: {fileID: 11400000, guid: abeccb046d47fd64494cb73113a0de3d, type: 2}
     - target: {fileID: 3858291575613480866, guid: 659b5f93910062b428164b32be1d7a8a, type: 3}
       propertyPath: m_Name
       value: DialogueManager

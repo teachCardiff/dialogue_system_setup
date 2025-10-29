@@ -1,0 +1,565 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-9151501085812385315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_10
+  m_EditorClassIdentifier: 
+  nodeId: a6c65c29-6135-40de-95db-51f179e34380
+  speakerName: Player
+  speakerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: No.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: -5339202204312136373}
+--- !u!114 &-8372666439750342645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_14
+  m_EditorClassIdentifier: 
+  nodeId: d67cc51c-304e-479d-88c3-79955e85c82b
+  speakerName: Sign
+  speakerCharacter: {fileID: 11400000, guid: 64a2031693776514e972a589b41890bb, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: Fine then. But you'll regret this.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: 0}
+--- !u!114 &-5428471434688125252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_3
+  m_EditorClassIdentifier: 
+  nodeId: 4767b24b-a5b6-4ec3-b8b2-794dbb2f38eb
+  speakerName: Player
+  speakerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: Sorry. I'm just not use to objects talking to me.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: 6658139829414784366}
+--- !u!114 &-5339202204312136373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_11
+  m_EditorClassIdentifier: 
+  nodeId: fd3fd5ea-8e13-4b70-8c70-22c16a77faf0
+  speakerName: Sign
+  speakerCharacter: {fileID: 11400000, guid: 64a2031693776514e972a589b41890bb, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: Then chop, chop.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences:
+  - {fileID: 11400000, guid: 1ee7a0bd66464834eadb29ce8da23fac, type: 2}
+  nextNode: {fileID: 0}
+--- !u!114 &-5139650302362749202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_6
+  m_EditorClassIdentifier: 
+  nodeId: 855b00a6-48ac-4aae-88e6-32ba92bb3009
+  speakerName: Player
+  speakerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: Watcha need?
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: -2146409884782844530}
+--- !u!114 &-2993859334531177086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_1
+  m_EditorClassIdentifier: 
+  nodeId: a725a6b0-d0b5-4722-be0b-641a9df39884
+  speakerName: Player
+  speakerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: Did the sign just talk to me?
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: 1841379354596437419}
+--- !u!114 &-2789686566791761796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_13
+  m_EditorClassIdentifier: 
+  nodeId: a13fea6a-d247-413a-a3ee-3e16c3b318cf
+  speakerName: Sign
+  speakerCharacter: {fileID: 11400000, guid: 64a2031693776514e972a589b41890bb, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: Oh! So you're too good for me, huh?
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: -8372666439750342645}
+--- !u!114 &-2146409884782844530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_7
+  m_EditorClassIdentifier: 
+  nodeId: bc22b4ed-eaf6-4995-b0b1-c1db1072efcd
+  speakerName: Sign
+  speakerCharacter: {fileID: 11400000, guid: 64a2031693776514e972a589b41890bb, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: Go talk to that sad sob over there.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: 3753240210979566739}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a09afc92a506d184c8c8e3fc2292ece4, type: 3}
+  m_Name: SignDialogue
+  m_EditorClassIdentifier: 
+  startNode: {fileID: 5795883801724282159}
+  nodes:
+  - {fileID: 5795883801724282159}
+  - {fileID: -2993859334531177086}
+  - {fileID: 1841379354596437419}
+  - {fileID: -5428471434688125252}
+  - {fileID: 6658139829414784366}
+  - {fileID: 8653428055743087634}
+  - {fileID: -5139650302362749202}
+  - {fileID: -2146409884782844530}
+  - {fileID: 3753240210979566739}
+  - {fileID: 8720048327632161807}
+  - {fileID: -9151501085812385315}
+  - {fileID: -5339202204312136373}
+  - {fileID: 8725236755113922179}
+  - {fileID: -2789686566791761796}
+  - {fileID: -8372666439750342645}
+  - {fileID: 1006546880530632579}
+  nodePositions:
+  - nodeId: 0adad419-1d6c-49ab-84bd-d316f68445b9
+    position: {x: 0, y: 0}
+  - nodeId: a725a6b0-d0b5-4722-be0b-641a9df39884
+    position: {x: 442, y: 0}
+  - nodeId: 7fece85d-8a4f-4e5e-8536-4e77eba6b46f
+    position: {x: 782, y: 0}
+  - nodeId: 4767b24b-a5b6-4ec3-b8b2-794dbb2f38eb
+    position: {x: 1354, y: -87.5}
+  - nodeId: 3ec5652d-33b0-45b4-a884-f57f3dcfae05
+    position: {x: 1791, y: -87.5}
+  - nodeId: 42022bb3-46e0-46c6-92d7-be53086ed764
+    position: {x: 2126, y: -87.5}
+  - nodeId: 855b00a6-48ac-4aae-88e6-32ba92bb3009
+    position: {x: 2512, y: -193}
+  - nodeId: bc22b4ed-eaf6-4995-b0b1-c1db1072efcd
+    position: {x: 2839.5, y: -192}
+  - nodeId: 299e0e03-4a7b-4f15-832d-815b7014c244
+    position: {x: 3213.5, y: -192}
+  - nodeId: 7dac537b-4898-4913-8e18-9add42270443
+    position: {x: 3526.5, y: -192}
+  - nodeId: a6c65c29-6135-40de-95db-51f179e34380
+    position: {x: 3887, y: -192}
+  - nodeId: fd3fd5ea-8e13-4b70-8c70-22c16a77faf0
+    position: {x: 4200, y: -192}
+  - nodeId: 3253f621-7e68-4a2e-beb7-9363e094a0ac
+    position: {x: 2522.5, y: 78.5}
+  - nodeId: a13fea6a-d247-413a-a3ee-3e16c3b318cf
+    position: {x: 2835.5, y: 78.5}
+  - nodeId: d67cc51c-304e-479d-88c3-79955e85c82b
+    position: {x: 3219, y: 78.5}
+  - nodeId: f7d54849-d120-4a6e-a659-134132704c61
+    position: {x: 1354, y: 177.5}
+  defaultSpeaker: {fileID: 0}
+  defaultListener: {fileID: 0}
+  currentNode: {fileID: -5339202204312136373}
+--- !u!114 &1006546880530632579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_15
+  m_EditorClassIdentifier: 
+  nodeId: f7d54849-d120-4a6e-a659-134132704c61
+  speakerName: Player
+  speakerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: '*Runs away*'
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: 0}
+--- !u!114 &1841379354596437419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_2
+  m_EditorClassIdentifier: 
+  nodeId: 7fece85d-8a4f-4e5e-8536-4e77eba6b46f
+  speakerName: Sign
+  speakerCharacter: {fileID: 11400000, guid: 64a2031693776514e972a589b41890bb, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: What's it to you?
+  choices:
+  - choiceText: I'm just not used to inanimate objects talking to me.
+    targetNode: {fileID: -5428471434688125252}
+    conditions: []
+    consequences: []
+  - choiceText: '*Run away*'
+    targetNode: {fileID: 1006546880530632579}
+    conditions: []
+    consequences: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: 0}
+--- !u!114 &3753240210979566739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_8
+  m_EditorClassIdentifier: 
+  nodeId: 299e0e03-4a7b-4f15-832d-815b7014c244
+  speakerName: Player
+  speakerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: That's it.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: 8720048327632161807}
+--- !u!114 &5795883801724282159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_0
+  m_EditorClassIdentifier: 
+  nodeId: 0adad419-1d6c-49ab-84bd-d316f68445b9
+  speakerName: Sign
+  speakerCharacter: {fileID: 11400000, guid: 64a2031693776514e972a589b41890bb, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: Population 4 and decreasing. No thanks to you.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: -2993859334531177086}
+--- !u!114 &6658139829414784366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_4
+  m_EditorClassIdentifier: 
+  nodeId: 3ec5652d-33b0-45b4-a884-f57f3dcfae05
+  speakerName: Sign
+  speakerCharacter: {fileID: 11400000, guid: 64a2031693776514e972a589b41890bb, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: Well get used to used to it.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: 8653428055743087634}
+--- !u!114 &8653428055743087634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_5
+  m_EditorClassIdentifier: 
+  nodeId: 42022bb3-46e0-46c6-92d7-be53086ed764
+  speakerName: Sign
+  speakerCharacter: {fileID: 11400000, guid: 64a2031693776514e972a589b41890bb, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: Anyways. I gotta job for you.
+  choices:
+  - choiceText: Sure.
+    targetNode: {fileID: -5139650302362749202}
+    conditions: []
+    consequences: []
+  - choiceText: Pass.
+    targetNode: {fileID: 8725236755113922179}
+    conditions: []
+    consequences: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: 0}
+--- !u!114 &8720048327632161807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_9
+  m_EditorClassIdentifier: 
+  nodeId: 7dac537b-4898-4913-8e18-9add42270443
+  speakerName: Sign
+  speakerCharacter: {fileID: 11400000, guid: 64a2031693776514e972a589b41890bb, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: You've got a problem with that?
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: -9151501085812385315}
+--- !u!114 &8725236755113922179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_12
+  m_EditorClassIdentifier: 
+  nodeId: 3253f621-7e68-4a2e-beb7-9363e094a0ac
+  speakerName: Player
+  speakerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: I'll pass.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitConsequences: []
+  nextNode: {fileID: -2789686566791761796}
