@@ -11,6 +11,9 @@ public class ObjectiveVariable : Variable
     [SerializeField] private string display;
     public string Display => string.IsNullOrEmpty(display) ? DisplayName : display;
 
+    // New: objective display name variable
+    public StringVar name = new StringVar { Key = "name", DisplayName = "Obj Name", value = "Objective" };
+
     public IntVar target = new IntVar { Key = "target", DisplayName = "Target", value = 1 };
     public IntVar progress = new IntVar { Key = "progress", DisplayName = "Progress", value = 0 };
 
@@ -22,6 +25,7 @@ public class ObjectiveVariable : Variable
 
     public override IEnumerable<Variable> GetChildren()
     {
+        if (name != null) yield return name;
         if (target != null) yield return target;
         if (progress != null) yield return progress;
     }
@@ -53,7 +57,9 @@ public class QuestVariable : Variable
         if (objectives == null) objectives = new System.Collections.Generic.List<ObjectiveVariable>();
         if (objectives.Count == 0)
         {
-            objectives.Add(new ObjectiveVariable { Key = "Objective 1", DisplayName = "Objective 1" });
+            var obj = new ObjectiveVariable { Key = "Objective 1", DisplayName = "Objective 1" };
+            obj.name.value = obj.DisplayName;
+            objectives.Add(obj);
         }
     }
 

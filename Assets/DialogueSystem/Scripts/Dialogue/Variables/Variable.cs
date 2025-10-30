@@ -96,6 +96,21 @@ public class VariableGroup : Variable
         if (child.Parent == this) child.Parent = null;
     }
 
+    // New: helpers for reordering
+    public int IndexOf(Variable child) => child == null ? -1 : children.IndexOf(child);
+    public bool MoveChild(Variable child, int newIndex)
+    {
+        if (child == null) return false;
+        int current = children.IndexOf(child);
+        if (current < 0) return false;
+        newIndex = Mathf.Clamp(newIndex, 0, Math.Max(0, children.Count - 1));
+        if (newIndex == current) return false;
+        children.RemoveAt(current);
+        if (newIndex > children.Count) newIndex = children.Count;
+        children.Insert(newIndex, child);
+        return true;
+    }
+
     public Variable FindByGuid(string guid)
     {
         foreach (var v in Traverse(this))

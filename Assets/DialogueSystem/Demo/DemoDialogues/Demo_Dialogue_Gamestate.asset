@@ -49,6 +49,7 @@ MonoBehaviour:
         children:
         - rid: 16810002207998037
         - rid: 16810002207998040
+        - rid: 16810025717858372
     - rid: 16810002207998023
       type: {class: VariableGroup, ns: , asm: Assembly-CSharp}
       data:
@@ -56,16 +57,17 @@ MonoBehaviour:
         key: Player
         displayName: Player
         children:
-        - rid: 16810002207998042
         - rid: 16810002207998043
+        - rid: 16810025717858376
+        - rid: 16810002207998042
+        - rid: 16810025717858378
     - rid: 16810002207998024
       type: {class: VariableGroup, ns: , asm: Assembly-CSharp}
       data:
         id: 027b2aaf-40fb-4206-92a7-4258528d9bdf
         key: Flags
         displayName: Flags
-        children:
-        - rid: 16810002207998044
+        children: []
     - rid: 16810002207998025
       type: {class: VariableGroup, ns: , asm: Assembly-CSharp}
       data:
@@ -82,7 +84,8 @@ MonoBehaviour:
         id: 6efe31eb-fb32-4b40-9ab4-5a794005f3b8
         key: Ints
         displayName: Ints
-        children: []
+        children:
+        - rid: 16810025717858382
     - rid: 16810002207998027
       type: {class: VariableGroup, ns: , asm: Assembly-CSharp}
       data:
@@ -101,13 +104,13 @@ MonoBehaviour:
       type: {class: QuestVariable, ns: , asm: Assembly-CSharp}
       data:
         id: 39578c89-c730-4acf-ab56-8dd7cf749db2
-        key: NewQuest
-        displayName: Get Me Flowers!
+        key: GetMeFlowers
+        displayName: Get Me Flowers
         name:
           id: 54e31feb-7c59-4dc3-af90-f59bc5940d1c
           key: name
           displayName: Name
-          value: Get Me Flowers!
+          value: Get Me Flowers
         status:
           id: b4230211-1ef2-4c4e-a40d-651bd9e58774
           key: status
@@ -115,13 +118,19 @@ MonoBehaviour:
           value: 0
         objectives:
         - rid: 16810002207998038
+        - rid: 16810025717858383
     - rid: 16810002207998038
       type: {class: ObjectiveVariable, ns: , asm: Assembly-CSharp}
       data:
         id: 5bc59639-ee96-4077-9698-b1ad43964a32
-        key: Objective 1
+        key: Get4Flowers
         displayName: Get 4 Flowers
         display: 
+        name:
+          id: 
+          key: name
+          displayName: Obj Name
+          value: Get 4 Flowers
         target:
           id: 8d762435-dd79-4c6f-adc8-13aa5d0d84e6
           key: target
@@ -155,8 +164,13 @@ MonoBehaviour:
       data:
         id: 284e8fc1-c37a-4360-aa60-9ac006db92e0
         key: Objective 1
-        displayName: Objective 1
+        displayName: Go talk with the girl named Luna
         display: 
+        name:
+          id: 
+          key: name
+          displayName: Obj Name
+          value: Objective
         target:
           id: c56e8061-5aad-4d72-a150-90054629e141
           key: target
@@ -170,21 +184,97 @@ MonoBehaviour:
     - rid: 16810002207998042
       type: {class: IntVar, ns: , asm: Assembly-CSharp}
       data:
-        id: 
+        id: 58477434-0680-4dc4-8952-5bf8a3317d1d
         key: NewInt
-        displayName: New Int
-        value: 0
+        displayName: MaxHealth
+        value: 10
     - rid: 16810002207998043
+      type: {class: IntVar, ns: , asm: Assembly-CSharp}
+      data:
+        id: 2adb67fb-7d7f-490c-b721-6e7a87ae43db
+        key: NewInt
+        displayName: Defense
+        value: 0
+    - rid: 16810025717858372
+      type: {class: QuestVariable, ns: , asm: Assembly-CSharp}
+      data:
+        id: 834fd9a2-a30b-4f0d-856e-f0d041a5eca7
+        key: ExploreTown
+        displayName: Explore Town
+        name:
+          id: dd7dc3af-f369-4d9b-892d-d69d94718606
+          key: name
+          displayName: Name
+          value: Explore Town
+        status:
+          id: c2738caa-b908-4c48-ad78-4fb3b711829c
+          key: status
+          displayName: Status
+          value: 0
+        objectives:
+        - rid: 16810025717858373
+    - rid: 16810025717858373
+      type: {class: ObjectiveVariable, ns: , asm: Assembly-CSharp}
+      data:
+        id: 0da1f2f0-39fb-49d9-929b-7d6d7a35dc7f
+        key: Objective 1
+        displayName: Objective 1
+        display: 
+        name:
+          id: 
+          key: name
+          displayName: Obj Name
+          value: Objective
+        target:
+          id: 70a61964-ec14-4fa5-b4c8-0df50bdbe86b
+          key: target
+          displayName: Target
+          value: 1
+        progress:
+          id: e10c92e3-4d00-4577-b06c-78d8c4c78c08
+          key: progress
+          displayName: Progress
+          value: 0
+    - rid: 16810025717858376
+      type: {class: BoolVar, ns: , asm: Assembly-CSharp}
+      data:
+        id: 
+        key: NewBool
+        displayName: IsAwakened
+        value: 0
+    - rid: 16810025717858378
+      type: {class: StringVar, ns: , asm: Assembly-CSharp}
+      data:
+        id: 
+        key: NewString
+        displayName: PlayerName
+        value: 
+    - rid: 16810025717858382
       type: {class: IntVar, ns: , asm: Assembly-CSharp}
       data:
         id: 
         key: NewInt
         displayName: New Int
         value: 0
-    - rid: 16810002207998044
-      type: {class: BoolVar, ns: , asm: Assembly-CSharp}
+    - rid: 16810025717858383
+      type: {class: ObjectiveVariable, ns: , asm: Assembly-CSharp}
       data:
-        id: 
-        key: NewBool
-        displayName: New Bool
-        value: 0
+        id: be72f449-1301-4f74-a5bf-8c4eecfc5aeb
+        key: TalktoOma
+        displayName: Talk to Oma
+        display: 
+        name:
+          id: 
+          key: name
+          displayName: Obj Name
+          value: Talk to Oma
+        target:
+          id: 
+          key: target
+          displayName: Target
+          value: 1
+        progress:
+          id: 
+          key: progress
+          displayName: Progress
+          value: 0
