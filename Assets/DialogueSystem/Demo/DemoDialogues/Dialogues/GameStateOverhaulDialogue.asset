@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8253299042486143984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_6
+  m_EditorClassIdentifier: 
+  nodeId: d88a81a7-01d5-4a33-a371-0b2bb5d361db
+  speakerName: Luna
+  speakerCharacter: {fileID: 11400000, guid: 5e97a2fa9ced9d74bba85bc6978d8644, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: Thank you so much!
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitActions: []
+  nextNode: {fileID: 0}
 --- !u!114 &-7734298086480148405
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28,7 +58,15 @@ MonoBehaviour:
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
-  exitActions: []
+  exitActions:
+  - kind: 6
+    variable:
+      id: 0d24f930-33ba-4df0-a321-de8ad77d6b70
+    intValue: 0
+    boolValue: 0
+    stringValue: 
+    enumString: InProgress
+    objectiveIndex: 0
   nextNode: {fileID: 0}
 --- !u!114 &-7038801307625094460
 MonoBehaviour:
@@ -70,6 +108,106 @@ MonoBehaviour:
       m_Calls: []
   exitActions: []
   nextNode: {fileID: 0}
+--- !u!114 &-5478290007893483344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_8
+  m_EditorClassIdentifier: 
+  nodeId: 24488f8f-ea80-42b3-b8b4-0b936b9d6446
+  speakerName: Player
+  speakerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: Well get to it! Chop, chop!
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitActions: []
+  nextNode: {fileID: 0}
+--- !u!114 &-4625227167155770187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_4
+  m_EditorClassIdentifier: 
+  nodeId: c2dde9a3-43a2-4094-b019-3692de59891a
+  speakerName: Luna
+  speakerCharacter: {fileID: 11400000, guid: 5e97a2fa9ced9d74bba85bc6978d8644, type: 2}
+  speakerExpression: Smile
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: Do you have a flower for me?
+  choices:
+  - choiceText: I do!
+    targetNode: {fileID: 7354318939710126531}
+    criteria: []
+    showIfCriteriaNotMet: 0
+    consequences: []
+  - choiceText: Not Yet.
+    targetNode: {fileID: 7726138900940244414}
+    criteria: []
+    showIfCriteriaNotMet: 0
+    consequences: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitActions: []
+  nextNode: {fileID: 0}
+--- !u!114 &-977019167031255378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_9
+  m_EditorClassIdentifier: 
+  nodeId: df7adeab-fe28-48f4-82ba-7f09ff0f4e85
+  speakerName: Luna
+  speakerCharacter: {fileID: 11400000, guid: 5e97a2fa9ced9d74bba85bc6978d8644, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: Thank you again for getting me a flower!
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitActions: []
+  nextNode: {fileID: 0}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88,18 +226,36 @@ MonoBehaviour:
   - {fileID: -7734298086480148405}
   - {fileID: 5852986684297212024}
   - {fileID: 853615666387597429}
+  - {fileID: -4625227167155770187}
+  - {fileID: 7354318939710126531}
+  - {fileID: -8253299042486143984}
+  - {fileID: 7726138900940244414}
+  - {fileID: -5478290007893483344}
+  - {fileID: -977019167031255378}
   nodePositions:
   - nodeId: 7107c25f-092c-4be4-bb2d-5502a15dc216
-    position: {x: -224, y: 14}
+    position: {x: -416.5, y: -268.5}
   - nodeId: 92d6ad17-4079-4a38-99ed-25357b4ff723
-    position: {x: 64, y: -91.5}
+    position: {x: -102, y: -448.5}
   - nodeId: d90fff11-935b-49ab-ad5c-511c6fd6caf8
-    position: {x: 64, y: 152}
+    position: {x: -102, y: -171}
   - nodeId: d3eabdd6-cbb9-4705-ab4b-99c0e4a4ba61
-    position: {x: -721, y: 103}
+    position: {x: -764, y: 56.5}
+  - nodeId: c2dde9a3-43a2-4094-b019-3692de59891a
+    position: {x: -399.5, y: 105}
+  - nodeId: 9ec04a6e-840a-4906-9358-b5a2c119a0df
+    position: {x: 23.5, y: 105}
+  - nodeId: d88a81a7-01d5-4a33-a371-0b2bb5d361db
+    position: {x: 336.5, y: 105}
+  - nodeId: ace3612f-c67d-4591-b1a8-b1b900960539
+    position: {x: 23.5, y: 370.5}
+  - nodeId: 24488f8f-ea80-42b3-b8b4-0b936b9d6446
+    position: {x: 326, y: 370.5}
+  - nodeId: df7adeab-fe28-48f4-82ba-7f09ff0f4e85
+    position: {x: -416.5, y: 485.5}
   defaultSpeaker: {fileID: 0}
   defaultListener: {fileID: 0}
-  currentNode: {fileID: 0}
+  currentNode: {fileID: -7734298086480148405}
 --- !u!114 &853615666387597429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,8 +289,21 @@ MonoBehaviour:
       stringOp: 0
       stringValue: 
       enumOp: 0
-      enumString: In Progress
-    targetNode: {fileID: 0}
+      enumString: InProgress
+    targetNode: {fileID: -4625227167155770187}
+  - branchName: Completed
+    operations:
+    - variable:
+        id: b4230211-1ef2-4c4e-a40d-651bd9e58774
+      numericOp: 0
+      intValue: 0
+      boolOp: 0
+      boolValue: 0
+      stringOp: 0
+      stringValue: 
+      enumOp: 0
+      enumString: Completed
+    targetNode: {fileID: -977019167031255378}
   onEnterNode:
     m_PersistentCalls:
       m_Calls: []
@@ -142,7 +311,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   exitActions: []
-  nextNode: {fileID: 0}
+  nextNode: {fileID: -7038801307625094460}
 --- !u!114 &5852986684297212024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,3 +342,71 @@ MonoBehaviour:
       m_Calls: []
   exitActions: []
   nextNode: {fileID: 0}
+--- !u!114 &7354318939710126531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_5
+  m_EditorClassIdentifier: 
+  nodeId: 9ec04a6e-840a-4906-9358-b5a2c119a0df
+  speakerName: Player
+  speakerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: I do! Here you go.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitActions:
+  - kind: 6
+    variable:
+      id: 
+    intValue: 0
+    boolValue: 0
+    stringValue: 
+    enumString: Completed
+    objectiveIndex: 0
+  nextNode: {fileID: -8253299042486143984}
+--- !u!114 &7726138900940244414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_7
+  m_EditorClassIdentifier: 
+  nodeId: ace3612f-c67d-4591-b1a8-b1b900960539
+  speakerName: Player
+  speakerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: Not yet.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitActions: []
+  nextNode: {fileID: -5478290007893483344}

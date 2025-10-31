@@ -69,9 +69,26 @@ public class VariableActionDrawer : PropertyDrawer
                 EditorGUI.PropertyField(line, property.FindPropertyRelative("stringValue"), GUIContent.none);
                 break;
             case ActionKind.SetEnum:
-            case ActionKind.SetQuestStatus:
-                EditorGUI.PropertyField(line, property.FindPropertyRelative("enumString"), GUIContent.none);
+            {
+                // Determine enum type from selected variable id
+                var id = idProp.stringValue;
+                System.Type enumType = null;
+                if (!string.IsNullOrEmpty(id))
+                {
+                    var v = gs.TryResolveById(id);
+                    enumType = v?.ValueType;
+                }
+                var enumStringProp = property.FindPropertyRelative("enumString");
+                DrawEnumStringDropdown(line, enumStringProp, enumType);
                 break;
+            }
+            case ActionKind.SetQuestStatus:
+            {
+                // Always use QuestStatus enum list
+                var enumStringProp = property.FindPropertyRelative("enumString");
+                DrawEnumStringDropdown(line, enumStringProp, typeof(QuestStatus));
+                break;
+            }
             case ActionKind.SetObjectiveProgress:
                 EditorGUI.PropertyField(line, property.FindPropertyRelative("objectiveIndex"), new GUIContent("Objective Index"));
                 line.y += EditorGUIUtility.singleLineHeight + 2;
@@ -222,6 +239,23 @@ public class VariableActionDrawer : PropertyDrawer
 
     private static GameState FindGameState()
     {
+        // Prefer the GameState referenced by a DialogueManager in the open scene
+        DialogueManager mgr = null;
+        #if UNITY_2023_1_OR_NEWER
+        mgr = Object.FindFirstObjectByType<DialogueManager>();
+        #else
+        mgr = Object.FindObjectOfType<DialogueManager>();
+        #endif
+        if (mgr != null)
+        {
+            var fi = typeof(DialogueManager).GetField("gameState", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            if (fi != null)
+            {
+                var gsFromMgr = fi.GetValue(mgr) as GameState;
+                if (gsFromMgr != null) return gsFromMgr;
+            }
+        }
+        // Fallback to first GameState asset
         var guids = AssetDatabase.FindAssets("t:GameState");
         foreach (var guid in guids)
         {
@@ -230,5 +264,52 @@ public class VariableActionDrawer : PropertyDrawer
             if (gs != null) return gs;
         }
         return null;
+    }
+
+    private static void DrawEnumStringDropdown(Rect line, SerializedProperty enumStringProp, System.Type enumType)
+    {
+        if (enumType == null || !enumType.IsEnum)
+        {
+            EditorGUI.PropertyField(line, enumStringProp, GUIContent.none);
+            return;
+        }
+        var names = System.Enum.GetNames(enumType);
+        if (names == null || names.Length == 0)
+        {
+            EditorGUI.PropertyField(line, enumStringProp, GUIContent.none);
+            return;
+        }
+        int current = 0;
+        if (!string.IsNullOrEmpty(enumStringProp.stringValue))
+        {
+            for (int i = 0; i < names.Length; i++)
+            {
+                if (string.Equals(names[i], enumStringProp.stringValue, System.StringComparison.OrdinalIgnoreCase))
+                {
+                    current = i; break;
+                }
+            }
+        }
+        string[] labels2 = new string[names.Length];
+        for (int i = 0; i < names.Length; i++) labels2[i] = PrettyEnumName(names[i]);
+        int newIndex = EditorGUI.Popup(line, current, labels2);
+        if (newIndex != current)
+        {
+            enumStringProp.stringValue = names[newIndex];
+            enumStringProp.serializedObject.ApplyModifiedProperties();
+        }
+    }
+
+    private static string PrettyEnumName(string raw)
+    {
+        if (string.IsNullOrEmpty(raw)) return raw;
+        System.Text.StringBuilder sb = new System.Text.StringBuilder();
+        for (int i = 0; i < raw.Length; i++)
+        {
+            char c = raw[i];
+            if (i > 0 && char.IsUpper(c) && !char.IsWhiteSpace(raw[i - 1])) sb.Append(' ');
+            sb.Append(c);
+        }
+        return sb.ToString();
     }
 }

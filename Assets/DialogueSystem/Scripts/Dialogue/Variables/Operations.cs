@@ -1,5 +1,6 @@
 // filepath: Assets/DialogueSystem/Scripts/Dialogue/Variables/Operations.cs
 using System;
+using System.Linq;
 using UnityEngine;
 
 [Serializable]
@@ -14,6 +15,36 @@ public enum NumericOperator { Equal, NotEqual, Greater, GreaterOrEqual, Less, Le
 public enum BoolOperator { Equal, NotEqual, IsTrue, IsFalse }
 public enum StringOperator { Equal, NotEqual, Contains, StartsWith, EndsWith }
 public enum EnumOperator { Equal, NotEqual }
+
+internal static class EnumUtil
+{
+    public static bool TryParseFlexible(Type enumType, string raw, out object value)
+    {
+        value = null;
+        if (enumType == null || !enumType.IsEnum) return false;
+        if (string.IsNullOrEmpty(raw)) return false;
+
+        // First try standard parsing (case-insensitive)
+        try
+        {
+            value = Enum.Parse(enumType, raw, true);
+            return true;
+        }
+        catch { }
+
+        // Fallback: compare names ignoring whitespace/underscores/dashes
+        string norm(string s) => new string((s ?? string.Empty).Where(c => !char.IsWhiteSpace(c) && c != '_' && c != '-').ToArray()).ToLowerInvariant();
+        var target = norm(raw);
+        foreach (var name in Enum.GetNames(enumType))
+        {
+            if (norm(name) == target)
+            {
+                try { value = Enum.Parse(enumType, name, true); return true; } catch { }
+            }
+        }
+        return false;
+    }
+}
 
 [Serializable]
 public class VariableOperation
@@ -80,9 +111,8 @@ public class VariableOperation
         // Enum (QuestStatus etc.)
         if (v.ValueType != null && v.ValueType.IsEnum)
         {
-            try
+            if (EnumUtil.TryParseFlexible(v.ValueType, enumString, out var parsed))
             {
-                var parsed = Enum.Parse(v.ValueType, enumString, true);
                 var current = v.GetBoxed();
                 switch (enumOp)
                 {
@@ -90,10 +120,7 @@ public class VariableOperation
                     case EnumOperator.NotEqual: return !Equals(current, parsed);
                 }
             }
-            catch (Exception)
-            {
-                return false;
-            }
+            return false;
         }
 
         // Unsupported types return false by default
@@ -134,7 +161,11 @@ public class VariableAction
     {
         if (gameState == null || variable == null || string.IsNullOrEmpty(variable.id)) return;
         var v = gameState.TryResolveById(variable.id);
-        if (v == null) return;
+        if (v == null)
+        {
+            Debug.LogWarning($"[VariableAction] {kind}: variable id '{variable?.id}' not found in GameState. Ensure the action references the same GameState used at runtime.");
+            return;
+        }
 
         switch (kind)
         {
@@ -156,20 +187,25 @@ public class VariableAction
             case ActionKind.SetEnum:
                 if (v.ValueType != null && v.ValueType.IsEnum)
                 {
-                    try
+                    if (EnumUtil.TryParseFlexible(v.ValueType, enumString, out var parsed))
                     {
-                        var parsed = Enum.Parse(v.ValueType, enumString, true);
                         v.SetBoxed(parsed);
                     }
-                    catch (Exception) { }
                 }
                 break;
             case ActionKind.SetQuestStatus:
                 if (v is QuestVariable qv)
                 {
-                    if (Enum.TryParse<QuestStatus>(enumString, true, out var status))
+                    if (EnumUtil.TryParseFlexible(typeof(QuestStatus), enumString, out var parsedQS))
                     {
-                        qv.status.value = status;
+                        qv.status.value = (QuestStatus)parsedQS;
+                    }
+                }
+                else if (v is VariableValue<QuestStatus> svq)
+                {
+                    if (EnumUtil.TryParseFlexible(typeof(QuestStatus), enumString, out var parsedQS2))
+                    {
+                        svq.value = (QuestStatus)parsedQS2;
                     }
                 }
                 break;

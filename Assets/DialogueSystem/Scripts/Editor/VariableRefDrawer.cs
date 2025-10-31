@@ -122,6 +122,23 @@ public class VariableRefDrawer : PropertyDrawer
 
     private static GameState FindGameState()
     {
+        // Prefer the GameState referenced by a DialogueManager in the open scene
+        DialogueManager mgr = null;
+        #if UNITY_2023_1_OR_NEWER
+        mgr = Object.FindFirstObjectByType<DialogueManager>();
+        #else
+        mgr = Object.FindObjectOfType<DialogueManager>();
+        #endif
+        if (mgr != null)
+        {
+            var fi = typeof(DialogueManager).GetField("gameState", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            if (fi != null)
+            {
+                var gsFromMgr = fi.GetValue(mgr) as GameState;
+                if (gsFromMgr != null) return gsFromMgr;
+            }
+        }
+        // Fallback to first GameState asset
         var guids = AssetDatabase.FindAssets("t:GameState");
         foreach (var guid in guids)
         {

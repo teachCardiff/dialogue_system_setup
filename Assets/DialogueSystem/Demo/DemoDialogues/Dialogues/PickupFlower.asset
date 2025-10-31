@@ -40,7 +40,15 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  exitActions: []
+  exitActions:
+  - kind: 7
+    variable:
+      id: 
+    intValue: 1
+    boolValue: 0
+    stringValue: 
+    enumString: 
+    objectiveIndex: 0
   nextNode: {fileID: 0}
 --- !u!114 &11400000
 MonoBehaviour:
@@ -60,7 +68,7 @@ MonoBehaviour:
   - {fileID: 3255878680335231412}
   nodePositions:
   - nodeId: 65b3e37d-0140-4097-b397-e6c26245b4f9
-    position: {x: 181, y: 104}
+    position: {x: 189, y: 104}
   - nodeId: 0d011833-fe58-4413-b5fb-51930df3e463
     position: {x: -563.5, y: 104}
   defaultSpeaker: {fileID: 0}
@@ -89,7 +97,17 @@ MonoBehaviour:
   choices: []
   conditionalBranches:
   - branchName: IN PROGRESS
-    operations: []
+    operations:
+    - variable:
+        id: b4230211-1ef2-4c4e-a40d-651bd9e58774
+      numericOp: 0
+      intValue: 0
+      boolOp: 0
+      boolValue: 0
+      stringOp: 0
+      stringValue: 
+      enumOp: 0
+      enumString: InProgress
     targetNode: {fileID: -6823167699405620933}
   onEnterNode:
     m_PersistentCalls:

@@ -117,7 +117,6 @@ MonoBehaviour:
           value: 0
         objectives:
         - rid: 16810002207998038
-        - rid: 16810025717858383
     - rid: 16810002207998038
       type: {class: ObjectiveVariable, ns: , asm: Assembly-CSharp}
       data:
@@ -215,25 +214,3 @@ MonoBehaviour:
         key: NewInt
         displayName: New Int
         value: 0
-    - rid: 16810025717858383
-      type: {class: ObjectiveVariable, ns: , asm: Assembly-CSharp}
-      data:
-        id: be72f449-1301-4f74-a5bf-8c4eecfc5aeb
-        key: TalktoOma
-        displayName: Talk to Oma
-        display: 
-        name:
-          id: 8f7bfff4-7d2e-46f0-8e62-ab8cbc440feb
-          key: name
-          displayName: Obj Name
-          value: Talk to Oma
-        target:
-          id: 8ad5e07e-3c30-40ca-b59e-80dbe5fd0d84
-          key: target
-          displayName: Target
-          value: 1
-        progress:
-          id: 4064d9c9-00df-4556-be9d-dba38ccaa71d
-          key: progress
-          displayName: Progress
-          value: 0
