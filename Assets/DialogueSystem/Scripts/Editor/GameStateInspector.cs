@@ -260,10 +260,15 @@ public class GameStateInspector : Editor
         // Prepare a single row rect
         Rect rowRect = EditorGUILayout.GetControlRect(false, EditorGUIUtility.singleLineHeight);
 
-        // Reserve a small area on the right for row actions (Up/Down/Delete)
-        float actionsWidth = 72f; // three small buttons
+        // Determine if this row will show actions (affects reserved width)
+        var parentGroupForRow = v.Parent as VariableGroup;
+        bool isObjectiveWithActions = (v is ObjectiveVariable) && (v.Parent is QuestVariable);
+        bool hasRowActions = isObjectiveWithActions || (parentGroupForRow != null);
+
+        // Reserve a small area on the right for row actions (only when needed)
+        float actionsWidth = hasRowActions ? 72f : 0f;
         var contentRect = new Rect(rowRect.x, rowRect.y, Mathf.Max(0, rowRect.width - actionsWidth), rowRect.height);
-        var actionsRect = new Rect(contentRect.xMax + 4f, rowRect.y, actionsWidth - 4f, rowRect.height);
+        var actionsRect = new Rect(contentRect.xMax + (hasRowActions ? 4f : 0f), rowRect.y, Mathf.Max(0, actionsWidth - (hasRowActions ? 4f : 0f)), rowRect.height);
 
         // Group-like variables: draw foldout and recurse
         bool isGroupLike = v is VariableGroup || HasChildren(v);
@@ -482,30 +487,107 @@ public class GameStateInspector : Editor
             if (isPrimitive)
             {
                 var indented = EditorGUI.IndentedRect(contentRect);
-                float split = Mathf.Clamp(indented.width * 0.5f, 140f, indented.width - 100f);
-                var nameRect = new Rect(indented.x, indented.y, split, indented.height);
-                var valueRect = new Rect(indented.x + split + 6f, indented.y, indented.width - split - 6f, indented.height);
+
+                // Compact, labeled-in-one control for Objective children
+                bool isObjectiveChild = v.Parent is ObjectiveVariable;
+                if (isObjectiveChild)
+                {
+                    string fixedLeftLabel = null;
+                    if (v is StringVar osv && string.Equals(osv.Key, "name", System.StringComparison.OrdinalIgnoreCase)) fixedLeftLabel = "Obj Name";
+                    else if (v is IntVar ivA && string.Equals(ivA.Key, "target", System.StringComparison.OrdinalIgnoreCase)) fixedLeftLabel = "Target";
+                    else if (v is IntVar ivB && string.Equals(ivB.Key, "progress", System.StringComparison.OrdinalIgnoreCase)) fixedLeftLabel = "Progress";
+
+                    if (!string.IsNullOrEmpty(fixedLeftLabel))
+                    {
+                        // Explicit label + value rects so the field never overlaps the label
+                        float minFieldWidth = 60f;
+                        float measured = EditorStyles.label.CalcSize(new GUIContent(fixedLeftLabel)).x + 6f;
+                        float desiredLabel = Mathf.Clamp(measured, 70f, 160f);
+                        float maxLabel = Mathf.Max(40f, indented.width - minFieldWidth);
+                        float labelW = Mathf.Min(desiredLabel, maxLabel);
+                        var labelRect = new Rect(indented.x, indented.y, 120, indented.height); // was labelW instead of 120 // 120 does show the full label, but the gap is still large
+                        var valueRectObj = new Rect(labelRect.xMax + 6f, indented.y, Mathf.Max(minFieldWidth, indented.width - labelW - 6f), indented.height);
+
+                        bool changedObj = false;
+                        Undo.RecordObject(gs, "Edit Objective Variable");
+
+                        // Draw fixed label
+                        EditorGUI.LabelField(labelRect, fixedLeftLabel);
+
+                        // Draw value field without a label so it doesn't collide with the label area
+                        if (v is StringVar osv2)
+                        {
+                            EditorGUI.BeginChangeCheck();
+                            string nv = EditorGUI.TextField(valueRectObj, osv2.value);
+                            if (EditorGUI.EndChangeCheck())
+                            {
+                                osv2.value = nv; changedObj = true;
+                                var parentObj = osv2.Parent as ObjectiveVariable;
+                                if (parentObj != null && string.Equals(osv2.Key, "name", System.StringComparison.OrdinalIgnoreCase))
+                                {
+                                    parentObj.DisplayName = nv;
+                                    parentObj.Key = SanitizeKey(nv);
+                                }
+                            }
+                        }
+                        else if (v is IntVar iv)
+                        {
+                            EditorGUI.BeginChangeCheck();
+                            int nv = EditorGUI.IntField(valueRectObj, iv.value);
+                            if (EditorGUI.EndChangeCheck()) { iv.value = nv; changedObj = true; }
+                        }
+                        else if (v is FloatVar fv)
+                        {
+                            EditorGUI.BeginChangeCheck();
+                            float nv = EditorGUI.FloatField(valueRectObj, fv.value);
+                            if (EditorGUI.EndChangeCheck()) { fv.value = nv; changedObj = true; }
+                        }
+                        else if (v is BoolVar bv)
+                        {
+                            EditorGUI.BeginChangeCheck();
+                            bool nv = EditorGUI.Toggle(valueRectObj, bv.value);
+                            if (EditorGUI.EndChangeCheck()) { bv.value = nv; changedObj = true; }
+                        }
+
+                        if (changedObj)
+                        {
+                            gs.onStateChanged?.Invoke();
+                            EditorUtility.SetDirty(gs);
+                            AssetDatabase.SaveAssets();
+                        }
+
+                        HandleDragSource(contentRect, v);
+                        DrawRowActions(actionsRect, v);
+                        return; // already fully drawn for objective children
+                    }
+                }
+
+                // Default split layout for non-objective primitives
+                Rect nameRect, valueRect;
+                float defaultSplit = Mathf.Clamp(indented.width * 0.5f, 140f, indented.width - 100f);
+                nameRect = new Rect(indented.x, indented.y, defaultSplit, indented.height);
+                valueRect = new Rect(indented.x + defaultSplit + 6f, indented.y, Mathf.Max(40f, indented.width - defaultSplit - 6f), indented.height);
 
                 bool changed = false;
                 Undo.RecordObject(gs, "Edit Variable");
 
                 // Left: editable display name, with special cases
                 bool showEditableName = true;
-                string fixedLeftLabel = null;
+                string fixedLeft = null;
 
                 if (v is StringVar sv && sv.Parent is QuestVariable && string.Equals(sv.Key, "name", System.StringComparison.OrdinalIgnoreCase))
                 {
-                    showEditableName = false; fixedLeftLabel = "Name";
+                    showEditableName = false; fixedLeft = "Name";
                 }
-                else if (v is StringVar osv && osv.Parent is ObjectiveVariable && string.Equals(osv.Key, "name", System.StringComparison.OrdinalIgnoreCase))
+                else if (v is StringVar osv3 && osv3.Parent is ObjectiveVariable && string.Equals(osv3.Key, "name", System.StringComparison.OrdinalIgnoreCase))
                 {
-                    showEditableName = false; fixedLeftLabel = "Obj Name";
+                    showEditableName = false; fixedLeft = "Obj Name";
                 }
-                else if (v is IntVar ivA && ivA.Parent is ObjectiveVariable &&
-                         (string.Equals(ivA.Key, "target", System.StringComparison.OrdinalIgnoreCase) ||
-                          string.Equals(ivA.Key, "progress", System.StringComparison.OrdinalIgnoreCase)))
+                else if (v is IntVar ivA2 && ivA2.Parent is ObjectiveVariable &&
+                         (string.Equals(ivA2.Key, "target", System.StringComparison.OrdinalIgnoreCase) ||
+                          string.Equals(ivA2.Key, "progress", System.StringComparison.OrdinalIgnoreCase)))
                 {
-                    showEditableName = false; fixedLeftLabel = char.ToUpper(ivA.Key[0]) + ivA.Key.Substring(1);
+                    showEditableName = false; fixedLeft = char.ToUpper(ivA2.Key[0]) + ivA2.Key.Substring(1);
                 }
 
                 if (showEditableName)
@@ -516,26 +598,26 @@ public class GameStateInspector : Editor
                 }
                 else
                 {
-                    EditorGUI.LabelField(nameRect, fixedLeftLabel);
+                    EditorGUI.LabelField(nameRect, fixedLeft);
                 }
 
-                if (v is IntVar iv)
+                if (v is IntVar iv2)
                 {
                     EditorGUI.BeginChangeCheck();
-                    int nv = EditorGUI.IntField(valueRect, iv.value);
-                    if (EditorGUI.EndChangeCheck()) { iv.value = nv; changed = true; }
+                    int nv = EditorGUI.IntField(valueRect, iv2.value);
+                    if (EditorGUI.EndChangeCheck()) { iv2.value = nv; changed = true; }
                 }
-                else if (v is FloatVar fv)
+                else if (v is FloatVar fv2)
                 {
                     EditorGUI.BeginChangeCheck();
-                    float nv = EditorGUI.FloatField(valueRect, fv.value);
-                    if (EditorGUI.EndChangeCheck()) { fv.value = nv; changed = true; }
+                    float nv = EditorGUI.FloatField(valueRect, fv2.value);
+                    if (EditorGUI.EndChangeCheck()) { fv2.value = nv; changed = true; }
                 }
-                else if (v is BoolVar bv)
+                else if (v is BoolVar bv2)
                 {
                     EditorGUI.BeginChangeCheck();
-                    bool nv = EditorGUI.Toggle(valueRect, bv.value);
-                    if (EditorGUI.EndChangeCheck()) { bv.value = nv; changed = true; }
+                    bool nv = EditorGUI.Toggle(valueRect, bv2.value);
+                    if (EditorGUI.EndChangeCheck()) { bv2.value = nv; changed = true; }
                 }
                 else if (v is StringVar sv2)
                 {
@@ -587,7 +669,6 @@ public class GameStateInspector : Editor
                 {
                     gs.onStateChanged?.Invoke();
                     EditorUtility.SetDirty(gs);
-                    AssetDatabase.SaveAssets();
                 }
 
                 DrawMetadataEditor(v, indent + 1);

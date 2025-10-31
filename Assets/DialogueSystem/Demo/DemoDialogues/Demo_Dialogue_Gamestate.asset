@@ -42,6 +42,7 @@ MonoBehaviour:
         displayName: Quests
         children:
         - rid: 16810047478956105
+        - rid: 16810047478956108
     - rid: 16810047478956103
       type: {class: VariableGroup, ns: , asm: Assembly-CSharp}
       data:
@@ -56,7 +57,8 @@ MonoBehaviour:
         id: e856817c-24fc-4bc9-99db-9c442b3c8a69
         key: Flags
         displayName: Flags
-        children: []
+        children:
+        - rid: 16810047478956115
     - rid: 16810047478956105
       type: {class: QuestVariable, ns: , asm: Assembly-CSharp}
       data:
@@ -104,3 +106,73 @@ MonoBehaviour:
         key: NewInt
         displayName: Strength
         value: 0
+    - rid: 16810047478956108
+      type: {class: QuestVariable, ns: , asm: Assembly-CSharp}
+      data:
+        id: b94ed326-e9c9-455e-9e5f-6b48d8b92eae
+        key: HelptheTownsfolk
+        displayName: Help the Townsfolk
+        name:
+          id: f9bd34f8-421d-4fce-b84b-ea3d246c99f7
+          key: name
+          displayName: Name
+          value: Help the Townsfolk
+        status:
+          id: 9325d07c-71c6-48c1-9e5a-92d977adda50
+          key: status
+          displayName: Status
+          value: 0
+        objectives:
+        - rid: 16810047478956109
+        - rid: 16810047478956116
+    - rid: 16810047478956109
+      type: {class: ObjectiveVariable, ns: , asm: Assembly-CSharp}
+      data:
+        id: 53ae9acb-3c11-4ec0-94f8-34829e846d49
+        key: HelptheMourner
+        displayName: Help the Mourner
+        display: 
+        name:
+          id: e575ea6d-7066-47a2-b398-f82b7af8fab2
+          key: name
+          displayName: Obj Name
+          value: Help the Mourner
+        target:
+          id: 55525de4-187e-421c-bf2f-ad168655167f
+          key: target
+          displayName: Target
+          value: 1
+        progress:
+          id: 3a9a05fe-b359-4695-a6b9-ff5af9a2c764
+          key: progress
+          displayName: Progress
+          value: 0
+    - rid: 16810047478956115
+      type: {class: BoolVar, ns: , asm: Assembly-CSharp}
+      data:
+        id: f67df446-a2bd-45cb-96c0-39f44d7f83e2
+        key: NewBool
+        displayName: haveTalkedToLuna
+        value: 0
+    - rid: 16810047478956116
+      type: {class: ObjectiveVariable, ns: , asm: Assembly-CSharp}
+      data:
+        id: 1cd8a4e4-2ef0-4dea-8a2c-cf4e5570ccb4
+        key: HelptheMerchant
+        displayName: Help the Merchant
+        display: 
+        name:
+          id: f601d613-aded-4924-bdd7-b11a2b02f227
+          key: name
+          displayName: Obj Name
+          value: Help the Merchant
+        target:
+          id: 8f33bc1a-d88d-4bf7-ad7d-0a534f343209
+          key: target
+          displayName: Target
+          value: 1
+        progress:
+          id: 2ee8cb51-24e1-4fa8-af51-d25609f4d398
+          key: progress
+          displayName: Progress
+          value: 0

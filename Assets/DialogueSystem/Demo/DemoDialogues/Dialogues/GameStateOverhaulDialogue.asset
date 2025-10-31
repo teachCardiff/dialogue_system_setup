@@ -248,15 +248,15 @@ MonoBehaviour:
   - {fileID: -977019167031255378}
   nodePositions:
   - nodeId: 7107c25f-092c-4be4-bb2d-5502a15dc216
-    position: {x: -416.5, y: -268.5}
+    position: {x: -489, y: -266}
   - nodeId: 92d6ad17-4079-4a38-99ed-25357b4ff723
     position: {x: -102, y: -468.5}
   - nodeId: d90fff11-935b-49ab-ad5c-511c6fd6caf8
-    position: {x: -102, y: -171}
+    position: {x: -108, y: -204.5}
   - nodeId: d3eabdd6-cbb9-4705-ab4b-99c0e4a4ba61
-    position: {x: -883.5, y: 100}
+    position: {x: -925, y: 105}
   - nodeId: c2dde9a3-43a2-4094-b019-3692de59891a
-    position: {x: -399.5, y: 105}
+    position: {x: -416.5, y: 105}
   - nodeId: 9ec04a6e-840a-4906-9358-b5a2c119a0df
     position: {x: 23.5, y: 105}
   - nodeId: d88a81a7-01d5-4a33-a371-0b2bb5d361db
@@ -269,7 +269,7 @@ MonoBehaviour:
     position: {x: -416.5, y: 485.5}
   defaultSpeaker: {fileID: 0}
   defaultListener: {fileID: 0}
-  currentNode: {fileID: 853615666387597429}
+  currentNode: {fileID: -8253299042486143984}
 --- !u!114 &853615666387597429
 MonoBehaviour:
   m_ObjectHideFlags: 0

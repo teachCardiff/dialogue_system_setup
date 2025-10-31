@@ -1411,14 +1411,28 @@ namespace DialogueSystem.Editor
 
         public void RefreshChoices()
         {
+            if (dialogueNode == null) return;
+
+            // Remove any existing edges originating from this node (Next, Choices, Branches)
+            var gv = this.GetFirstAncestorOfType<GraphView>();
+            if (gv != null)
+            {
+                var edgesToRemove = gv.edges.ToList().Where(e => e != null && e.output != null && e.output.node == this).ToList();
+                foreach (var edge in edgesToRemove)
+                {
+                    gv.RemoveElement(edge);
+                }
+            }
+
             // Remove old choice elements and ports
             foreach (var element in choiceElements)
             {
-                mainContainer.Remove(element);
+                if (mainContainer.Contains(element))
+                    mainContainer.Remove(element);
             }
             choiceElements.Clear();
 
-            // Remove existing choice ports (keep the "Next" port at index 0)
+            // Remove ALL dynamic ports beyond the first "Next" port
             while (outputContainer.childCount > 1)
             {
                 outputContainer.RemoveAt(outputContainer.childCount - 1);
@@ -1438,7 +1452,7 @@ namespace DialogueSystem.Editor
                 });
                 choiceContainer.Add(choiceField);
 
-                int currentIndex = i; // Local variable to capture the correct index in the lambda
+                int currentIndex = i; // capture index
                 var deleteButton = new Button(() => DeleteChoice(currentIndex)) { text = "X" };
                 choiceContainer.Add(deleteButton);
 
@@ -1450,8 +1464,145 @@ namespace DialogueSystem.Editor
                 choicePort.userData = i; // Store choice index
                 outputContainer.Add(choicePort);
             }
-            
+
+            // Reconnect Next edge if present
+            if (gv != null && dialogueNode.nextNode != null)
+            {
+                var targetView = gv.nodes.OfType<DialogueNodeView>().FirstOrDefault(nv => nv.dialogueNode == dialogueNode.nextNode);
+                var outPort = outputContainer[0] as Port; // Next
+                var inPort = targetView != null ? targetView.inputContainer[0].Q<Port>() : null;
+                if (outPort != null && inPort != null)
+                {
+                    var edge = outPort.ConnectTo(inPort);
+                    gv.AddElement(edge);
+                }
+            }
+
+            // Reconnect choice edges based on data model
+            if (gv != null)
+            {
+                for (int i = 0; i < dialogueNode.choices.Count; i++)
+                {
+                    var targetNode = dialogueNode.choices[i].targetNode;
+                    if (targetNode == null) continue;
+                    var targetView = gv.nodes.OfType<DialogueNodeView>().FirstOrDefault(nv => nv.dialogueNode == targetNode);
+                    if (targetView == null) continue;
+                    var outPort = outputContainer[i + 1] as Port; // +1 to skip "Next"
+                    var inPort = targetView.inputContainer[0].Q<Port>();
+                    if (outPort != null && inPort != null)
+                    {
+                        var edge = outPort.ConnectTo(inPort);
+                        gv.AddElement(edge);
+                    }
+                }
+            }
+
+            // Rebuild and reconnect branch ports/edges
+            RefreshBranches();
+
+            // Keep character UI consistent
             RefreshCharFields();
+        }
+
+        public void RefreshBranches()
+        {
+            branchContainer.Clear();
+            branchElements.Clear();
+
+            // Get GraphView once
+            var gv = this.GetFirstAncestorOfType<GraphView>();
+
+            // Remove existing branch edges (keep Next and Choice edges intact)
+            if (gv != null)
+            {
+                var edgesToRemove = gv.edges.ToList().Where(e =>
+                    e != null && e.output != null && e.output.node == this &&
+                    e.output.userData is int u && u >= dialogueNode.choices.Count // branch ports only
+                ).ToList();
+                foreach (var edge in edgesToRemove)
+                {
+                    gv.RemoveElement(edge);
+                }
+            }
+
+            // Remove existing branch ports (assume branches append after choices, so remove from end)
+            while (outputContainer.childCount > dialogueNode.choices.Count + 1) // +1 for Next
+            {
+                outputContainer.RemoveAt(outputContainer.childCount - 1);
+            }
+            branchPorts.Clear();
+
+            for (int i = 0; i < dialogueNode.conditionalBranches.Count; i++)
+            {
+                var branch = dialogueNode.conditionalBranches[i];
+                var branchElement = new VisualElement { style = { flexDirection = FlexDirection.Row } };
+
+                var nameField = new TextField("Branch Name") { value = branch.branchName };
+                nameField.RegisterValueChangedCallback(evt => {
+                    branch.branchName = evt.newValue;
+                    EditorUtility.SetDirty(dialogueNode);
+                    // Update port label immediately if present
+                    int portIndex = i + dialogueNode.choices.Count;
+                    if (portIndex < outputContainer.childCount)
+                    {
+                        var port = outputContainer[portIndex] as Port;
+                        if (port != null)
+                        {
+                            port.portName = string.IsNullOrEmpty(evt.newValue) ? $"Branch {i + 1}" : evt.newValue;
+                        }
+                    }
+                });
+                branchElement.Add(nameField);
+
+                // Inline operations inspector
+                var opsIMGUI = new IMGUIContainer(() =>
+                {
+                    var so = new SerializedObject(dialogueNode);
+                    var branchesProp = so.FindProperty("conditionalBranches");
+                    if (i < branchesProp.arraySize)
+                    {
+                        var el = branchesProp.GetArrayElementAtIndex(i);
+                        var ops = el.FindPropertyRelative("operations");
+                        EditorGUILayout.PropertyField(ops, new GUIContent("Operations"), true);
+                        so.ApplyModifiedProperties();
+                    }
+                });
+                branchElement.Add(opsIMGUI);
+
+                int index = i;
+                var deleteButton = new Button(() => DeleteBranch(index)) { text = "X" };
+                branchElement.Add(deleteButton);
+
+                branchContainer.Add(branchElement);
+                branchElements.Add(branchElement);
+
+                // Create and add port
+                var branchPort = Port.Create<Edge>(Orientation.Horizontal, Direction.Output, Port.Capacity.Single, typeof(DialogueNode));
+                branchPort.portName = string.IsNullOrEmpty(branch.branchName) ? $"Branch {i + 1}" : branch.branchName;
+                branchPort.userData = i + dialogueNode.choices.Count; // Offset index by choice count
+                outputContainer.Add(branchPort); // Append after choices
+                branchPorts.Add(branchPort);
+            }
+
+            // Reconnect branch edges
+            if (gv != null)
+            {
+                for (int i = 0; i < dialogueNode.conditionalBranches.Count; i++)
+                {
+                    var targetNode = dialogueNode.conditionalBranches[i].targetNode;
+                    if (targetNode == null) continue;
+                    var targetView = gv.nodes.OfType<DialogueNodeView>().FirstOrDefault(nv => nv.dialogueNode == targetNode);
+                    if (targetView == null) continue;
+                    int portIndex = 1 + dialogueNode.choices.Count + i; // Next + choices + branch offset
+                    var outPort = outputContainer[portIndex] as Port;
+                    var inPort = targetView.inputContainer[0].Q<Port>();
+                    if (outPort != null && inPort != null)
+                    {
+                        var edge = outPort.ConnectTo(inPort);
+                        gv.AddElement(edge);
+                    }
+                }
+            }
         }
 
         private void DeleteChoice(int index)
@@ -1482,74 +1633,6 @@ namespace DialogueSystem.Editor
             EditorUtility.SetDirty(dialogueNode);
             EditorUtility.SetDirty(selectedDialogue);
             AssetDatabase.SaveAssets();
-        }
-
-        public void RefreshBranches()
-        {
-            branchContainer.Clear();
-            branchElements.Clear();
-
-            // NEW: Remove existing branch ports (assume branches append after choices, so remove from end)
-            while (outputContainer.childCount > dialogueNode.choices.Count + 1) // +1 for nextNode if present
-            {
-                outputContainer.RemoveAt(outputContainer.childCount - 1);
-            }
-            branchPorts.Clear();
-
-            for (int i = 0; i < dialogueNode.conditionalBranches.Count; i++)
-            {
-                var branch = dialogueNode.conditionalBranches[i];
-                var branchElement = new VisualElement { style = { flexDirection = FlexDirection.Row } };
-
-                var nameField = new TextField("Branch Name") { value = branch.branchName };
-                nameField.RegisterValueChangedCallback(evt => {
-                    branch.branchName = evt.newValue;
-                    EditorUtility.SetDirty(dialogueNode);
-                    // Update port label immediately if present
-                    int portIndex = i + dialogueNode.choices.Count;
-                    if (portIndex < outputContainer.childCount)
-                    {
-                        var port = outputContainer[portIndex] as Port;
-                        if (port != null)
-                        {
-                            port.portName = string.IsNullOrEmpty(evt.newValue) ? $"Branch {i + 1}" : evt.newValue;
-                        }
-                    }
-                });
-                branchElement.Add(nameField);
-
-                // New: inline list of operations (uses default drawer for arrays)
-                // We cannot directly draw SerializedProperty here; so add a mini inspector using IMGUIContainer
-                var opsIMGUI = new IMGUIContainer(() =>
-                {
-                    var so = new SerializedObject(dialogueNode);
-                    var branchesProp = so.FindProperty("conditionalBranches");
-                    if (i < branchesProp.arraySize)
-                    {
-                        var el = branchesProp.GetArrayElementAtIndex(i);
-                        var ops = el.FindPropertyRelative("operations");
-                        EditorGUILayout.PropertyField(ops, new GUIContent("Operations"), true);
-                        so.ApplyModifiedProperties();
-                    }
-                });
-                branchElement.Add(opsIMGUI);
-
-                int index = i;
-                var deleteButton = new Button(() => DeleteBranch(index)) { text = "X" };
-                branchElement.Add(deleteButton);
-
-                branchContainer.Add(branchElement);
-                branchElements.Add(branchElement);
-
-                // Create and add port
-                var branchPort = Port.Create<Edge>(Orientation.Horizontal, Direction.Output, Port.Capacity.Single, typeof(DialogueNode));
-                branchPort.portName = branch.branchName ?? $"Branch {i + 1}";
-                branchPort.userData = i + dialogueNode.choices.Count; // Offset index by choice count
-                outputContainer.Add(branchPort); // Append after choices
-                branchPorts.Add(branchPort);
-            }
-
-            RefreshCharFields();
         }
 
         private void AddBranch()

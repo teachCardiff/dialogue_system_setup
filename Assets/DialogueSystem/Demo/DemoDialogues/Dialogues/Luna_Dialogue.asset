@@ -20,12 +20,7 @@ MonoBehaviour:
   listenerExpression: 
   listenerIsSpeaker: 0
   dialogueText: 
-  choices:
-  - choiceText: 
-    targetNode: {fileID: 0}
-    criteria: []
-    showIfCriteriaNotMet: 0
-    consequences: []
+  choices: []
   conditionalBranches:
   - branchName: Completed
     operations: []
@@ -34,7 +29,18 @@ MonoBehaviour:
     operations: []
     targetNode: {fileID: 2769127903998570883}
   - branchName: HaveTalked
-    operations: []
+    operations:
+    - variable:
+        id: f67df446-a2bd-45cb-96c0-39f44d7f83e2
+        path: Root/Flags/NewBool
+      numericOp: 0
+      intValue: 0
+      boolOp: 2
+      boolValue: 0
+      stringOp: 0
+      stringValue: 
+      enumOp: 0
+      enumString: NotStarted
     targetNode: {fileID: 2308483982455164374}
   onEnterNode:
     m_PersistentCalls:
@@ -43,7 +49,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   exitActions: []
-  nextNode: {fileID: 0}
+  nextNode: {fileID: -3520415781976627993}
 --- !u!114 &-9088405419575577821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98,23 +104,22 @@ MonoBehaviour:
   conditionalBranches: []
   onEnterNode:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: 81e475a4b82bdf14790182839fbbdd57, type: 2}
-        m_TargetAssemblyTypeName: QuestConsequence, Assembly-CSharp
-        m_MethodName: Execute
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: abeccb046d47fd64494cb73113a0de3d, type: 2}
-          m_ObjectArgumentAssemblyTypeName: GameState, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
-  exitActions: []
+  exitActions:
+  - kind: 0
+    variable:
+      id: 
+      path: 
+    intValue: 0
+    boolValue: 0
+    stringValue: 
+    enumString: 
+    objectiveIndex: 0
+    arithmeticOp: 0
+    clampToTargetRange: 0
   nextNode: {fileID: 0}
 --- !u!114 &-6559002524594183355
 MonoBehaviour:
@@ -227,29 +232,25 @@ MonoBehaviour:
   listenerIsSpeaker: 0
   dialogueText: Why hello there!
   choices: []
-  conditionalBranches:
-  - branchName: 
-    operations: []
-    targetNode: {fileID: 0}
+  conditionalBranches: []
   onEnterNode:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: 545b36a285558ce4d99d1e469bb1bd1d, type: 2}
-        m_TargetAssemblyTypeName: SetBoolConsequenceSO, Assembly-CSharp
-        m_MethodName: Execute
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: abeccb046d47fd64494cb73113a0de3d, type: 2}
-          m_ObjectArgumentAssemblyTypeName: GameState, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
-  exitActions: []
+  exitActions:
+  - kind: 2
+    variable:
+      id: f67df446-a2bd-45cb-96c0-39f44d7f83e2
+      path: Root/Flags/NewBool
+    intValue: 0
+    boolValue: 1
+    stringValue: 
+    enumString: 
+    objectiveIndex: 0
+    arithmeticOp: 0
+    clampToTargetRange: 0
   nextNode: {fileID: -6559002524594183355}
 --- !u!114 &-2449602565557857564
 MonoBehaviour:
@@ -351,7 +352,7 @@ MonoBehaviour:
   - nodeId: a735ce47-5742-4664-ad02-0d57cb4ebf9c
     position: {x: 1449, y: 205}
   - nodeId: b3804f19-a14d-498b-8a41-29ef371883c5
-    position: {x: 1841, y: 205}
+    position: {x: 1844.5, y: 191.5}
   - nodeId: 94afdb19-4369-46e8-bc0e-76ed9cd75757
     position: {x: 2715, y: 124}
   - nodeId: bad96483-8ae4-4dd6-b567-f0579d57a131
@@ -395,19 +396,7 @@ MonoBehaviour:
   conditionalBranches: []
   onEnterNode:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
