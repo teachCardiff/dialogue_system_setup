@@ -7,11 +7,12 @@ using UnityEngine;
 [CustomPropertyDrawer(typeof(VariableRef))]
 public class VariableRefDrawer : PropertyDrawer
 {
-    private class Entry { public string id; public string display; }
+    private class Entry { public string id; public string display; public string path; }
 
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
         var idProp = property.FindPropertyRelative("id");
+        var pathProp = property.FindPropertyRelative("path");
         EditorGUI.BeginProperty(position, label, property);
 
         var line = new Rect(position.x, position.y, position.width, EditorGUIUtility.singleLineHeight);
@@ -23,9 +24,16 @@ public class VariableRefDrawer : PropertyDrawer
             return;
         }
 
+        // Ensure IDs persist
+        if (gs.root.EnsureAllIdsAssigned())
+        {
+            EditorUtility.SetDirty(gs);
+            AssetDatabase.SaveAssets();
+        }
+
         var entries = new List<Entry>();
-        var path = new List<string>();
-        BuildEntriesFriendly(gs.root, entries, path, isRoot:true);
+        var pathParts = new List<string>();
+        BuildEntriesFriendly(gs.root, entries, pathParts, isRoot:true);
         if (entries.Count == 0)
         {
             EditorGUI.HelpBox(line, "No variables in GameState.", MessageType.Info);
@@ -33,15 +41,22 @@ public class VariableRefDrawer : PropertyDrawer
             return;
         }
 
-        // Preserve authoring order (no sort) so it matches GameState tree
-        // entries.Sort((a, b) => string.Compare(a.display, b.display, System.StringComparison.OrdinalIgnoreCase));
+        // Auto-correct invalid id
+        int currentIndex = entries.FindIndex(e => e.id == idProp.stringValue);
+        if (currentIndex < 0)
+        {
+            idProp.stringValue = entries[0].id;
+            pathProp.stringValue = entries[0].path;
+            property.serializedObject.ApplyModifiedProperties();
+            currentIndex = 0;
+        }
 
-        int currentIndex = Mathf.Max(0, entries.FindIndex(e => e.id == idProp.stringValue));
         var labels = entries.Select(e => e.display).ToArray();
         int newIndex = EditorGUI.Popup(line, currentIndex, labels);
         if (newIndex != currentIndex && newIndex >= 0 && newIndex < entries.Count)
         {
             idProp.stringValue = entries[newIndex].id;
+            pathProp.stringValue = entries[newIndex].path;
             property.serializedObject.ApplyModifiedProperties();
         }
 
@@ -50,7 +65,6 @@ public class VariableRefDrawer : PropertyDrawer
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
     {
-        // Default to 1 line. Drawer callers must respect GetPropertyHeight
         return EditorGUIUtility.singleLineHeight;
     }
 
@@ -58,12 +72,10 @@ public class VariableRefDrawer : PropertyDrawer
     {
         if (node == null) return;
 
-        // Skip adding the root itself to the path
         if (!isRoot)
         {
             string label = GetDisplayLabel(node);
 
-            // Insert a virtual "Objectives" group name between a Quest and its Objective children for readability
             bool isObjective = node is ObjectiveVariable;
             bool lastIsQuest = node.Parent is QuestVariable;
             if (isObjective && lastIsQuest)
@@ -76,21 +88,13 @@ public class VariableRefDrawer : PropertyDrawer
 
             path.Add(label);
 
-            // Add selectable entries only for typed leaves (and enums), skip composite-only nodes
             if (node.ValueType != null)
             {
-                // Skip quest.name and objective.name internal fields
-                if (node is StringVar s && s.Parent is QuestVariable && string.Equals(s.Key, "name", System.StringComparison.OrdinalIgnoreCase))
-                {
-                    // do nothing
-                }
-                else if (node is StringVar so && so.Parent is ObjectiveVariable && string.Equals(so.Key, "name", System.StringComparison.OrdinalIgnoreCase))
-                {
-                    // do nothing
-                }
+                if (node is StringVar s && s.Parent is QuestVariable && string.Equals(s.Key, "name", System.StringComparison.OrdinalIgnoreCase)) { }
+                else if (node is StringVar so && so.Parent is ObjectiveVariable && string.Equals(so.Key, "name", System.StringComparison.OrdinalIgnoreCase)) { }
                 else
                 {
-                    list.Add(new Entry { id = node.Id, display = string.Join("/", path) });
+                    list.Add(new Entry { id = node.Id, display = string.Join("/", path), path = node.GetPath() });
                 }
             }
         }
@@ -122,7 +126,6 @@ public class VariableRefDrawer : PropertyDrawer
 
     private static GameState FindGameState()
     {
-        // Prefer the GameState referenced by a DialogueManager in the open scene
         DialogueManager mgr = null;
         #if UNITY_2023_1_OR_NEWER
         mgr = Object.FindFirstObjectByType<DialogueManager>();
@@ -138,7 +141,6 @@ public class VariableRefDrawer : PropertyDrawer
                 if (gsFromMgr != null) return gsFromMgr;
             }
         }
-        // Fallback to first GameState asset
         var guids = AssetDatabase.FindAssets("t:GameState");
         foreach (var guid in guids)
         {

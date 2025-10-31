@@ -21,8 +21,28 @@ public class VariableOperationDrawer : PropertyDrawer
         var gs = FindGameState();
         if (gs != null)
         {
+            // Ensure IDs and attempt to auto-correct invalid ones for authoring safety
+            if (gs.root != null && gs.root.EnsureAllIdsAssigned())
+            {
+                EditorUtility.SetDirty(gs);
+                AssetDatabase.SaveAssets();
+            }
             var id = varProp.FindPropertyRelative("id").stringValue;
             var v = gs.TryResolveById(id);
+            if (v == null && gs.root != null)
+            {
+                // pick first typed variable if available
+                foreach (var node in VariableGroup.Traverse(gs.root))
+                {
+                    if (node != null && node.ValueType != null)
+                    {
+                        varProp.FindPropertyRelative("id").stringValue = node.Id;
+                        property.serializedObject.ApplyModifiedProperties();
+                        v = node;
+                        break;
+                    }
+                }
+            }
             valueType = v?.ValueType;
         }
         else
@@ -119,15 +139,22 @@ public class VariableOperationDrawer : PropertyDrawer
             return;
         }
         int current = 0;
+        bool matched = false;
         if (!string.IsNullOrEmpty(enumStringProp.stringValue))
         {
             for (int i = 0; i < names.Length; i++)
             {
                 if (string.Equals(names[i], enumStringProp.stringValue, StringComparison.OrdinalIgnoreCase))
                 {
-                    current = i; break;
+                    current = i; matched = true; break;
                 }
             }
+        }
+        // If nothing set or invalid, persist default selection to ensure Evaluate has a value
+        if (!matched)
+        {
+            enumStringProp.stringValue = names[current];
+            enumStringProp.serializedObject.ApplyModifiedProperties();
         }
         // Friendly labels (insert spaces before capitals)
         string[] labels = new string[names.Length];

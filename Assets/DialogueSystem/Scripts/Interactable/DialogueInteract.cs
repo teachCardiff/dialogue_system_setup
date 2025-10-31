@@ -11,8 +11,8 @@ public class DialogueInteract : MonoBehaviour
 {
     public enum TriggerMode
     {
-        KeyPress,           // legacy KeyCode check in Update
-        InputAction,        // use Input System InputActionReference
+        KeyPress,           // legacy KeyCode check in Update (deprecated)
+        InputAction,        // preferred
         OnTriggerEnter,     // requires a trigger collider on this object
         ProximityAndPress,  // requires player to be in trigger and press key/action
         Automatic,          // auto start when conditions met (e.g., OnEnable)

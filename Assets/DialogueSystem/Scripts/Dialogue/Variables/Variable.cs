@@ -22,6 +22,17 @@ public abstract class Variable
         }
     }
 
+    // New: helper to ensure an ID exists; returns true if a new ID was assigned
+    public bool EnsureIdAssigned()
+    {
+        if (string.IsNullOrEmpty(id))
+        {
+            id = Guid.NewGuid().ToString();
+            return true;
+        }
+        return false;
+    }
+
     public string Key { get => string.IsNullOrEmpty(key) ? displayName : key; set => key = value; }
     public string DisplayName { get => string.IsNullOrEmpty(displayName) ? key : displayName; set => displayName = value; }
     public Variable Parent { get => parent; internal set => parent = value; }
@@ -205,6 +216,18 @@ public class VariableGroup : Variable
             child.Parent = parent;
             AssignParentsRecursive(child);
         }
+    }
+
+    // New: ensure every variable in this subtree has a stable GUID assigned
+    public bool EnsureAllIdsAssigned()
+    {
+        bool changed = false;
+        foreach (var v in Traverse(this))
+        {
+            if (v == null) continue;
+            if (v.EnsureIdAssigned()) changed = true;
+        }
+        return changed;
     }
 }
 

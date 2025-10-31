@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum QuestStatus { NotStarted, InProgress, Completed }
+public enum QuestStatus { NotStarted, InProgress, ReadyToTurnIn, Completed }
 
 [Serializable]
 public class ObjectiveVariable : Variable

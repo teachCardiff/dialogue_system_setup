@@ -58,15 +58,7 @@ MonoBehaviour:
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
-  exitActions:
-  - kind: 6
-    variable:
-      id: 0d24f930-33ba-4df0-a321-de8ad77d6b70
-    intValue: 0
-    boolValue: 0
-    stringValue: 
-    enumString: InProgress
-    objectiveIndex: 0
+  exitActions: []
   nextNode: {fileID: 0}
 --- !u!114 &-7038801307625094460
 MonoBehaviour:
@@ -93,7 +85,18 @@ MonoBehaviour:
     targetNode: {fileID: -7734298086480148405}
     criteria: []
     showIfCriteriaNotMet: 0
-    consequences: []
+    consequences:
+    - kind: 6
+      variable:
+        id: 1f9ddeb8-a530-4556-b1a5-a0a02ca8bb04
+        path: Root/Quests/GetFlowersforLuna
+      intValue: 0
+      boolValue: 0
+      stringValue: 
+      enumString: InProgress
+      objectiveIndex: 0
+      arithmeticOp: 0
+      clampToTargetRange: 1
   - choiceText: No
     targetNode: {fileID: 5852986684297212024}
     criteria: []
@@ -161,7 +164,18 @@ MonoBehaviour:
   choices:
   - choiceText: I do!
     targetNode: {fileID: 7354318939710126531}
-    criteria: []
+    criteria:
+    - variable:
+        id: f260f162-5990-4051-a8f4-c8bfb919e344
+        path: Root/Quests/GetFlowersforLuna/Getfourflowers/progress
+      numericOp: 0
+      intValue: 4
+      boolOp: 0
+      boolValue: 0
+      stringOp: 0
+      stringValue: 
+      enumOp: 0
+      enumString: 
     showIfCriteriaNotMet: 0
     consequences: []
   - choiceText: Not Yet.
@@ -220,7 +234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a09afc92a506d184c8c8e3fc2292ece4, type: 3}
   m_Name: GameStateOverhaulDialogue
   m_EditorClassIdentifier: 
-  startNode: {fileID: -7038801307625094460}
+  startNode: {fileID: 853615666387597429}
   nodes:
   - {fileID: -7038801307625094460}
   - {fileID: -7734298086480148405}
@@ -236,11 +250,11 @@ MonoBehaviour:
   - nodeId: 7107c25f-092c-4be4-bb2d-5502a15dc216
     position: {x: -416.5, y: -268.5}
   - nodeId: 92d6ad17-4079-4a38-99ed-25357b4ff723
-    position: {x: -102, y: -448.5}
+    position: {x: -102, y: -468.5}
   - nodeId: d90fff11-935b-49ab-ad5c-511c6fd6caf8
     position: {x: -102, y: -171}
   - nodeId: d3eabdd6-cbb9-4705-ab4b-99c0e4a4ba61
-    position: {x: -764, y: 56.5}
+    position: {x: -883.5, y: 100}
   - nodeId: c2dde9a3-43a2-4094-b019-3692de59891a
     position: {x: -399.5, y: 105}
   - nodeId: 9ec04a6e-840a-4906-9358-b5a2c119a0df
@@ -255,7 +269,7 @@ MonoBehaviour:
     position: {x: -416.5, y: 485.5}
   defaultSpeaker: {fileID: 0}
   defaultListener: {fileID: 0}
-  currentNode: {fileID: -7734298086480148405}
+  currentNode: {fileID: 853615666387597429}
 --- !u!114 &853615666387597429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -281,7 +295,8 @@ MonoBehaviour:
   - branchName: In Progress
     operations:
     - variable:
-        id: b4230211-1ef2-4c4e-a40d-651bd9e58774
+        id: f3948afc-4df5-411b-858c-f475e8675317
+        path: Root/Quests/GetFlowersforLuna/status
       numericOp: 0
       intValue: 0
       boolOp: 0
@@ -291,10 +306,25 @@ MonoBehaviour:
       enumOp: 0
       enumString: InProgress
     targetNode: {fileID: -4625227167155770187}
+  - branchName: Ready to Turn In
+    operations:
+    - variable:
+        id: f3948afc-4df5-411b-858c-f475e8675317
+        path: Root/Quests/GetFlowersforLuna/status
+      numericOp: 0
+      intValue: 0
+      boolOp: 0
+      boolValue: 0
+      stringOp: 0
+      stringValue: 
+      enumOp: 0
+      enumString: ReadyToTurnIn
+    targetNode: {fileID: -4625227167155770187}
   - branchName: Completed
     operations:
     - variable:
-        id: b4230211-1ef2-4c4e-a40d-651bd9e58774
+        id: f3948afc-4df5-411b-858c-f475e8675317
+        path: Root/Quests/GetFlowersforLuna/status
       numericOp: 0
       intValue: 0
       boolOp: 0
@@ -304,6 +334,20 @@ MonoBehaviour:
       enumOp: 0
       enumString: Completed
     targetNode: {fileID: -977019167031255378}
+  - branchName: Not Started
+    operations:
+    - variable:
+        id: f3948afc-4df5-411b-858c-f475e8675317
+        path: Root/Quests/GetFlowersforLuna/status
+      numericOp: 0
+      intValue: 0
+      boolOp: 0
+      boolValue: 0
+      stringOp: 0
+      stringValue: 
+      enumOp: 0
+      enumString: NotStarted
+    targetNode: {fileID: -7038801307625094460}
   onEnterNode:
     m_PersistentCalls:
       m_Calls: []
@@ -311,7 +355,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   exitActions: []
-  nextNode: {fileID: -7038801307625094460}
+  nextNode: {fileID: 0}
 --- !u!114 &5852986684297212024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -373,12 +417,15 @@ MonoBehaviour:
   exitActions:
   - kind: 6
     variable:
-      id: 
+      id: 1f9ddeb8-a530-4556-b1a5-a0a02ca8bb04
+      path: Root/Quests/GetFlowersforLuna
     intValue: 0
     boolValue: 0
     stringValue: 
     enumString: Completed
     objectiveIndex: 0
+    arithmeticOp: 0
+    clampToTargetRange: 1
   nextNode: {fileID: -8253299042486143984}
 --- !u!114 &7726138900940244414
 MonoBehaviour:

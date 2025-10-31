@@ -136,14 +136,8 @@ public class PlayerController : MonoBehaviour
     {
         if (gameState == null) return;
 
-        gameState.intVariables.Clear();
-        gameState.boolVariables.Clear();
-        gameState.stringVariables.Clear();
-        gameState.activeQuests.Clear();
-        gameState.completedQuests.Clear();
-        gameState.onStateChanged?.Invoke();
-
-        Debug.Log("GameState reset by PlayerController input.");
+        gameState.ResetV2();
+        Debug.Log("GameState reset (V2) by PlayerController input.");
     }
 
     void FixedUpdate()

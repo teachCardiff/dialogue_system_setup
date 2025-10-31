@@ -43,7 +43,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   exitActions: []
-  nextNode: {fileID: -3520415781976627993}
+  nextNode: {fileID: 0}
 --- !u!114 &-9088405419575577821
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -12,205 +12,95 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b397b86e69017d4eb35538964144725, type: 3}
   m_Name: Demo_Dialogue_Gamestate
   m_EditorClassIdentifier: 
-  intVariables: []
-  boolVariables: []
-  stringVariables: []
   onStateChanged:
     m_PersistentCalls:
       m_Calls: []
   root:
-    rid: 16810002207998021
+    rid: 16810047478956101
   characters:
   - {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
   - {fileID: 11400000, guid: 5e97a2fa9ced9d74bba85bc6978d8644, type: 2}
   - {fileID: 11400000, guid: c0f5165958beabc4da2ec2ee254ee18b, type: 2}
-  activeQuests: []
-  completedQuests: []
   references:
     version: 2
     RefIds:
-    - rid: 16810002207998021
+    - rid: 16810047478956101
       type: {class: VariableGroup, ns: , asm: Assembly-CSharp}
       data:
-        id: 39852626-bdf3-4b6a-aed5-19b47c4ff556
+        id: db3540bc-1cdb-4189-9ba1-59b0fa9b6155
         key: Root
         displayName: Root
         children:
-        - rid: 16810002207998022
-        - rid: 16810002207998023
-        - rid: 16810002207998024
-        - rid: 16810002207998025
-    - rid: 16810002207998022
+        - rid: 16810047478956102
+        - rid: 16810047478956103
+        - rid: 16810047478956104
+    - rid: 16810047478956102
       type: {class: VariableGroup, ns: , asm: Assembly-CSharp}
       data:
-        id: 217465e0-1f0b-4369-8db1-c65b6e9fd220
+        id: 5c43c8d7-ae2c-488a-b68a-c89f72989b22
         key: Quests
         displayName: Quests
         children:
-        - rid: 16810002207998037
-        - rid: 16810002207998040
-    - rid: 16810002207998023
+        - rid: 16810047478956105
+    - rid: 16810047478956103
       type: {class: VariableGroup, ns: , asm: Assembly-CSharp}
       data:
-        id: 8ccbd1e6-3a49-42a9-ae50-fa78746bd1a0
+        id: a78ebf2c-74e0-4b27-8984-da6e8f9a3256
         key: Player
         displayName: Player
         children:
-        - rid: 16810002207998043
-        - rid: 16810025717858376
-        - rid: 16810002207998042
-        - rid: 16810025717858378
-    - rid: 16810002207998024
+        - rid: 16810047478956107
+    - rid: 16810047478956104
       type: {class: VariableGroup, ns: , asm: Assembly-CSharp}
       data:
-        id: 027b2aaf-40fb-4206-92a7-4258528d9bdf
+        id: e856817c-24fc-4bc9-99db-9c442b3c8a69
         key: Flags
         displayName: Flags
         children: []
-    - rid: 16810002207998025
-      type: {class: VariableGroup, ns: , asm: Assembly-CSharp}
-      data:
-        id: c29bc895-a538-4d8b-bae5-15493a6defc1
-        key: Legacy
-        displayName: Legacy
-        children:
-        - rid: 16810002207998026
-        - rid: 16810002207998027
-        - rid: 16810002207998028
-    - rid: 16810002207998026
-      type: {class: VariableGroup, ns: , asm: Assembly-CSharp}
-      data:
-        id: 6efe31eb-fb32-4b40-9ab4-5a794005f3b8
-        key: Ints
-        displayName: Ints
-        children:
-        - rid: 16810025717858382
-    - rid: 16810002207998027
-      type: {class: VariableGroup, ns: , asm: Assembly-CSharp}
-      data:
-        id: f1ab92cd-1008-441d-a0d6-3393c9cb24d0
-        key: Bools
-        displayName: Bools
-        children: []
-    - rid: 16810002207998028
-      type: {class: VariableGroup, ns: , asm: Assembly-CSharp}
-      data:
-        id: 4b20202a-0ed6-42fb-abe6-4bb3a10280c4
-        key: Strings
-        displayName: Strings
-        children: []
-    - rid: 16810002207998037
+    - rid: 16810047478956105
       type: {class: QuestVariable, ns: , asm: Assembly-CSharp}
       data:
-        id: 39578c89-c730-4acf-ab56-8dd7cf749db2
-        key: GetMeFlowers
-        displayName: Get Me Flowers
+        id: 1f9ddeb8-a530-4556-b1a5-a0a02ca8bb04
+        key: GetFlowersforLuna
+        displayName: Get Flowers for Luna
         name:
-          id: 54e31feb-7c59-4dc3-af90-f59bc5940d1c
+          id: 84830027-495d-421f-8b14-f32ab550907f
           key: name
           displayName: Name
-          value: Get Me Flowers
+          value: Get Flowers for Luna
         status:
-          id: b4230211-1ef2-4c4e-a40d-651bd9e58774
+          id: f3948afc-4df5-411b-858c-f475e8675317
           key: status
           displayName: Status
           value: 0
         objectives:
-        - rid: 16810002207998038
-    - rid: 16810002207998038
+        - rid: 16810047478956106
+    - rid: 16810047478956106
       type: {class: ObjectiveVariable, ns: , asm: Assembly-CSharp}
       data:
-        id: 5bc59639-ee96-4077-9698-b1ad43964a32
-        key: Get4Flowers
-        displayName: Get 4 Flowers
+        id: 585dda12-9831-47bd-8928-a102b14175a9
+        key: Getfourflowers
+        displayName: Get four flowers
         display: 
         name:
-          id: 3d0ddfc3-aa57-4f68-9388-cfc8d7e174f2
+          id: 6252bf06-d164-453d-bdef-7292e79e0601
           key: name
           displayName: Obj Name
-          value: Get 4 Flowers
+          value: Get four flowers
         target:
-          id: 8d762435-dd79-4c6f-adc8-13aa5d0d84e6
+          id: 9d183a4c-3735-4b5f-87ee-a9ca8841faba
           key: target
           displayName: Target
           value: 4
         progress:
-          id: 27632d03-1a55-457f-b80a-4a2705a82ce1
+          id: f260f162-5990-4051-a8f4-c8bfb919e344
           key: progress
           displayName: Progress
           value: 0
-    - rid: 16810002207998040
-      type: {class: QuestVariable, ns: , asm: Assembly-CSharp}
-      data:
-        id: ebe47866-3981-4caa-bbb9-0cf730d00b33
-        key: NewQuest
-        displayName: New Quest
-        name:
-          id: afe9d14b-0d23-47e9-982e-343d3badbd3d
-          key: name
-          displayName: Name
-          value: Talk to Luna
-        status:
-          id: 3bb04345-ca51-4d1e-bb91-253725503b00
-          key: status
-          displayName: Status
-          value: 0
-        objectives:
-        - rid: 16810002207998041
-    - rid: 16810002207998041
-      type: {class: ObjectiveVariable, ns: , asm: Assembly-CSharp}
-      data:
-        id: 284e8fc1-c37a-4360-aa60-9ac006db92e0
-        key: TalktothegirlnamedLuna
-        displayName: Talk to the girl named Luna
-        display: 
-        name:
-          id: 0d14dd93-0cef-4211-893e-1da1da127150
-          key: name
-          displayName: Obj Name
-          value: Talk to the girl named Luna
-        target:
-          id: c56e8061-5aad-4d72-a150-90054629e141
-          key: target
-          displayName: Target
-          value: 1
-        progress:
-          id: cb65951d-8e87-4c0a-b134-e400200161af
-          key: progress
-          displayName: Progress
-          value: 0
-    - rid: 16810002207998042
+    - rid: 16810047478956107
       type: {class: IntVar, ns: , asm: Assembly-CSharp}
       data:
-        id: 58477434-0680-4dc4-8952-5bf8a3317d1d
+        id: b7386b1f-bd57-4075-b1e2-705000375cab
         key: NewInt
-        displayName: MaxHealth
-        value: 10
-    - rid: 16810002207998043
-      type: {class: IntVar, ns: , asm: Assembly-CSharp}
-      data:
-        id: 2adb67fb-7d7f-490c-b721-6e7a87ae43db
-        key: NewInt
-        displayName: Defense
-        value: 0
-    - rid: 16810025717858376
-      type: {class: BoolVar, ns: , asm: Assembly-CSharp}
-      data:
-        id: a7aca2a0-4f2a-41a0-832c-933d560844f9
-        key: NewBool
-        displayName: IsAwakened
-        value: 0
-    - rid: 16810025717858378
-      type: {class: StringVar, ns: , asm: Assembly-CSharp}
-      data:
-        id: c65b3f1a-ec99-4ee7-9d78-afbcfcc74c4d
-        key: NewString
-        displayName: PlayerName
-        value: 
-    - rid: 16810025717858382
-      type: {class: IntVar, ns: , asm: Assembly-CSharp}
-      data:
-        id: 0d24f930-33ba-4df0-a321-de8ad77d6b70
-        key: NewInt
-        displayName: New Int
+        displayName: Strength
         value: 0

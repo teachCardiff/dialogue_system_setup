@@ -2157,7 +2157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 838c544fe1c0643469481c1508aac8c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueAsset: {fileID: 11400000, guid: 4e3d829da427c934baedd2a1d7a118b0, type: 2}
+  dialogueAsset: {fileID: 11400000, guid: 08fbcece311e256488c6b30c07fd9a35, type: 2}
   triggerMode: 3
   singleUse: 0
   triggerKey: 32

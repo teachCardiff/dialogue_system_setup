@@ -91,6 +91,15 @@ public class GameStateInspector : Editor
         using (new EditorGUILayout.HorizontalScope())
         {
             if (GUILayout.Button("+ Quest")) AddQuest();
+            // New: Reset quests only (non-destructive)
+            if (GUILayout.Button("Reset Quests"))
+            {
+                var gsTarget = (GameState)target;
+                Undo.RecordObject(gsTarget, "Reset Quests");
+                gsTarget.ResetV2();
+                EditorUtility.SetDirty(gsTarget);
+                AssetDatabase.SaveAssets();
+            }
         }
 
         // Global Advanced toggle

@@ -27,28 +27,19 @@ MonoBehaviour:
       m_Calls: []
   onExitNode:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: 258ab3f7ccdaf644d9fb1b62e7c3ac9e, type: 2}
-        m_TargetAssemblyTypeName: SetIntConsequenceSO, Assembly-CSharp
-        m_MethodName: Execute
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: abeccb046d47fd64494cb73113a0de3d, type: 2}
-          m_ObjectArgumentAssemblyTypeName: GameState, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   exitActions:
-  - kind: 7
+  - kind: 8
     variable:
-      id: 
+      id: 1f9ddeb8-a530-4556-b1a5-a0a02ca8bb04
+      path: Root/Quests/GetFlowersforLuna
     intValue: 1
     boolValue: 0
     stringValue: 
     enumString: 
     objectiveIndex: 0
+    arithmeticOp: 0
+    clampToTargetRange: 1
   nextNode: {fileID: 0}
 --- !u!114 &11400000
 MonoBehaviour:
@@ -99,7 +90,8 @@ MonoBehaviour:
   - branchName: IN PROGRESS
     operations:
     - variable:
-        id: b4230211-1ef2-4c4e-a40d-651bd9e58774
+        id: f3948afc-4df5-411b-858c-f475e8675317
+        path: Root/Quests/GetFlowersforLuna/status
       numericOp: 0
       intValue: 0
       boolOp: 0

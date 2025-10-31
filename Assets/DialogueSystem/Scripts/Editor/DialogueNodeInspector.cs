@@ -13,6 +13,7 @@ public class DialogueNodeInspector : Editor
     SerializedProperty listenerIsSpeaker;
     SerializedProperty speakerName;
     SerializedProperty dialogueText;
+    SerializedProperty nextNode;
 
     SerializedProperty conditionalBranches;
     SerializedProperty choices;
@@ -30,6 +31,7 @@ public class DialogueNodeInspector : Editor
         listenerIsSpeaker = serializedObject.FindProperty("listenerIsSpeaker");
         speakerName = serializedObject.FindProperty("speakerName");
         dialogueText = serializedObject.FindProperty("dialogueText");
+        nextNode = serializedObject.FindProperty("nextNode");
 
         conditionalBranches = serializedObject.FindProperty("conditionalBranches");
         choices = serializedObject.FindProperty("choices");
@@ -37,7 +39,9 @@ public class DialogueNodeInspector : Editor
 
         // Branch list
         branchList = new ReorderableList(serializedObject, conditionalBranches, true, true, true, true);
-        branchList.drawHeaderCallback = rect => EditorGUI.LabelField(rect, "Conditional Branching");
+        branchList.drawHeaderCallback = rect => {
+            EditorGUI.LabelField(rect, "Conditional Branching");
+        };
         branchList.elementHeightCallback = index =>
         {
             var el = conditionalBranches.GetArrayElementAtIndex(index);
@@ -56,6 +60,13 @@ public class DialogueNodeInspector : Editor
             var line = new Rect(rect.x, rect.y + 2, rect.width, EditorGUIUtility.singleLineHeight);
             EditorGUI.PropertyField(line, nameProp);
             line.y += EditorGUIUtility.singleLineHeight + 2;
+            // Show warning if no operations set
+            if (opsProp.arraySize == 0)
+            {
+                var warn = new Rect(line.x, line.y, line.width, EditorGUIUtility.singleLineHeight);
+                EditorGUI.HelpBox(warn, "No operations: branch will be ignored.", MessageType.Warning);
+                line.y += EditorGUIUtility.singleLineHeight + 2;
+            }
             EditorGUI.PropertyField(line, opsProp, new GUIContent("Operations"), true);
             line.y += EditorGUI.GetPropertyHeight(opsProp) + 2;
             EditorGUI.PropertyField(line, targetProp);
@@ -119,6 +130,8 @@ public class DialogueNodeInspector : Editor
         }
         EditorGUILayout.PropertyField(listenerIsSpeaker);
         EditorGUILayout.PropertyField(dialogueText);
+
+        EditorGUILayout.PropertyField(nextNode, new GUIContent("Next Node"));
 
         EditorGUILayout.Space();
         branchList.DoLayoutList();
