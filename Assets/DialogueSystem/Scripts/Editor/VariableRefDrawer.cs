@@ -24,23 +24,17 @@ public class VariableRefDrawer : PropertyDrawer
         }
 
         var entries = new List<Entry>();
-        BuildEntries(gs.root, entries);
+        var path = new List<string>();
+        BuildEntriesFriendly(gs.root, entries, path, isRoot:true);
         if (entries.Count == 0)
         {
-            EditorGUI.HelpBox(line, "No variables in GameState.root.", MessageType.Info);
-            line.y += EditorGUIUtility.singleLineHeight + 4;
-            if (GUI.Button(line, "+ Create Int"))
-            {
-                var ints = gs.root.EnsureGroup("Legacy", "Ints");
-                var v = new IntVar { Key = "NewInt", DisplayName = "New Int" };
-                ints.AddChild(v);
-                gs.onStateChanged?.Invoke();
-                EditorUtility.SetDirty(gs);
-                AssetDatabase.SaveAssets();
-            }
+            EditorGUI.HelpBox(line, "No variables in GameState.", MessageType.Info);
             EditorGUI.EndProperty();
             return;
         }
+
+        // Preserve authoring order (no sort) so it matches GameState tree
+        // entries.Sort((a, b) => string.Compare(a.display, b.display, System.StringComparison.OrdinalIgnoreCase));
 
         int currentIndex = Mathf.Max(0, entries.FindIndex(e => e.id == idProp.stringValue));
         var labels = entries.Select(e => e.display).ToArray();
@@ -60,36 +54,70 @@ public class VariableRefDrawer : PropertyDrawer
         return EditorGUIUtility.singleLineHeight;
     }
 
-    private static void BuildEntries(Variable root, List<Entry> list)
+    private static void BuildEntriesFriendly(Variable node, List<Entry> list, List<string> path, bool isRoot)
     {
-        foreach (var v in VariableGroup.Traverse(root))
+        if (node == null) return;
+
+        // Skip adding the root itself to the path
+        if (!isRoot)
         {
-            if (v == null) continue;
-            // Skip the root VariableGroup itself
-            if (v == root) continue;
-            // Include QuestVariable as selectable
-            if (v is QuestVariable qv)
+            string label = GetDisplayLabel(node);
+
+            // Insert a virtual "Objectives" group name between a Quest and its Objective children for readability
+            bool isObjective = node is ObjectiveVariable;
+            bool lastIsQuest = node.Parent is QuestVariable;
+            if (isObjective && lastIsQuest)
             {
-                list.Add(new Entry { id = v.Id, display = TrimRoot(qv.GetPath()) });
-                continue;
+                if (path.Count == 0 || path[path.Count - 1] != "Objectives")
+                {
+                    path.Add("Objectives");
+                }
             }
-            // Include primitives and enums (have a concrete ValueType)
-            if (v.ValueType != null)
+
+            path.Add(label);
+
+            // Add selectable entries only for typed leaves (and enums), skip composite-only nodes
+            if (node.ValueType != null)
             {
-                list.Add(new Entry { id = v.Id, display = TrimRoot(v.GetPath()) });
+                // Skip quest.name and objective.name internal fields
+                if (node is StringVar s && s.Parent is QuestVariable && string.Equals(s.Key, "name", System.StringComparison.OrdinalIgnoreCase))
+                {
+                    // do nothing
+                }
+                else if (node is StringVar so && so.Parent is ObjectiveVariable && string.Equals(so.Key, "name", System.StringComparison.OrdinalIgnoreCase))
+                {
+                    // do nothing
+                }
+                else
+                {
+                    list.Add(new Entry { id = node.Id, display = string.Join("/", path) });
+                }
             }
         }
-        // Sort alphabetically by display path
-        list.Sort((a, b) => string.Compare(a.display, b.display, System.StringComparison.OrdinalIgnoreCase));
+
+        foreach (var child in node.GetChildren())
+        {
+            BuildEntriesFriendly(child, list, path, isRoot:false);
+            if (path.Count > 0)
+            {
+                path.RemoveAt(path.Count - 1);
+                if (path.Count > 0 && path[path.Count - 1] == "Objectives")
+                {
+                    path.RemoveAt(path.Count - 1);
+                }
+            }
+        }
     }
 
-    private static string TrimRoot(string path)
+    private static string GetDisplayLabel(Variable v)
     {
-        if (string.IsNullOrEmpty(path)) return path;
-        // Remove leading "Root/" if present
-        if (path.StartsWith("Root/")) return path.Substring(5);
-        if (path == "Root") return string.Empty;
-        return path;
+        if (v == null) return "(null)";
+        if (v is QuestVariable q && q.name != null && !string.IsNullOrEmpty(q.name.value))
+            return q.name.value;
+        if (v is ObjectiveVariable ov && ov.name != null && !string.IsNullOrEmpty(ov.name.value))
+            return ov.name.value;
+        var label = string.IsNullOrEmpty(v.DisplayName) ? v.Key : v.DisplayName;
+        return string.IsNullOrEmpty(label) ? v.GetType().Name : label;
     }
 
     private static GameState FindGameState()

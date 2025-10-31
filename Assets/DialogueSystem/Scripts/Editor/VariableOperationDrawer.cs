@@ -24,6 +24,12 @@ public class VariableOperationDrawer : PropertyDrawer
             var v = gs.TryResolveById(id);
             valueType = v?.ValueType;
         }
+        else
+        {
+            EditorGUI.HelpBox(line, "No GameState asset found.", MessageType.Warning);
+            EditorGUI.EndProperty();
+            return;
+        }
 
         if (valueType == typeof(int))
         {
