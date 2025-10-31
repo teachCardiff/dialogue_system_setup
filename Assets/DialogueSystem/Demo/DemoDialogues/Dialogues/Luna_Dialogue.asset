@@ -23,10 +23,32 @@ MonoBehaviour:
   choices: []
   conditionalBranches:
   - branchName: Completed
-    operations: []
+    operations:
+    - variable:
+        id: 9325d07c-71c6-48c1-9e5a-92d977adda50
+        path: Root/Quests/HelptheTownsfolk/status
+      numericOp: 0
+      intValue: 0
+      boolOp: 0
+      boolValue: 0
+      stringOp: 0
+      stringValue: 
+      enumOp: 0
+      enumString: Completed
     targetNode: {fileID: -4618290059791301591}
   - branchName: In Progress
-    operations: []
+    operations:
+    - variable:
+        id: 9325d07c-71c6-48c1-9e5a-92d977adda50
+        path: Root/Quests/HelptheTownsfolk/status
+      numericOp: 0
+      intValue: 0
+      boolOp: 0
+      boolValue: 0
+      stringOp: 0
+      stringValue: 
+      enumOp: 0
+      enumString: InProgress
     targetNode: {fileID: 2769127903998570883}
   - branchName: HaveTalked
     operations:
@@ -109,14 +131,14 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   exitActions:
-  - kind: 0
+  - kind: 6
     variable:
-      id: 
-      path: 
+      id: b94ed326-e9c9-455e-9e5f-6b48d8b92eae
+      path: Root/Quests/HelptheTownsfolk
     intValue: 0
     boolValue: 0
     stringValue: 
-    enumString: 
+    enumString: InProgress
     objectiveIndex: 0
     arithmeticOp: 0
     clampToTargetRange: 0
