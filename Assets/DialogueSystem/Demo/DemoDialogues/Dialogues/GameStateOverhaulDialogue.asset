@@ -250,23 +250,23 @@ MonoBehaviour:
   - nodeId: 7107c25f-092c-4be4-bb2d-5502a15dc216
     position: {x: -489, y: -266}
   - nodeId: 92d6ad17-4079-4a38-99ed-25357b4ff723
-    position: {x: -102, y: -468.5}
+    position: {x: -102, y: -468}
   - nodeId: d90fff11-935b-49ab-ad5c-511c6fd6caf8
-    position: {x: -108, y: -204.5}
+    position: {x: -108, y: -204}
   - nodeId: d3eabdd6-cbb9-4705-ab4b-99c0e4a4ba61
     position: {x: -925, y: 105}
   - nodeId: c2dde9a3-43a2-4094-b019-3692de59891a
-    position: {x: -416.5, y: 105}
+    position: {x: -416, y: 105}
   - nodeId: 9ec04a6e-840a-4906-9358-b5a2c119a0df
-    position: {x: 23.5, y: 105}
+    position: {x: 24, y: 105}
   - nodeId: d88a81a7-01d5-4a33-a371-0b2bb5d361db
-    position: {x: 336.5, y: 105}
+    position: {x: 337, y: 105}
   - nodeId: ace3612f-c67d-4591-b1a8-b1b900960539
-    position: {x: 23.5, y: 370.5}
+    position: {x: 24, y: 371}
   - nodeId: 24488f8f-ea80-42b3-b8b4-0b936b9d6446
-    position: {x: 326, y: 370.5}
+    position: {x: 326, y: 371}
   - nodeId: df7adeab-fe28-48f4-82ba-7f09ff0f4e85
-    position: {x: -416.5, y: 485.5}
+    position: {x: -416, y: 486}
   defaultSpeaker: {fileID: 0}
   defaultListener: {fileID: 0}
   currentNode: {fileID: -8253299042486143984}

@@ -43,6 +43,7 @@ MonoBehaviour:
         children:
         - rid: 16810047478956105
         - rid: 16810047478956108
+        - rid: 987104189638246468
     - rid: 16810047478956103
       type: {class: VariableGroup, ns: , asm: Assembly-CSharp}
       data:
@@ -173,6 +174,46 @@ MonoBehaviour:
           value: 1
         progress:
           id: 2ee8cb51-24e1-4fa8-af51-d25609f4d398
+          key: progress
+          displayName: Progress
+          value: 0
+    - rid: 987104189638246468
+      type: {class: QuestVariable, ns: , asm: Assembly-CSharp}
+      data:
+        id: 68197afd-a2a4-46ad-86d8-fce70b1eb424
+        key: HelptheMerchant
+        displayName: Help the Merchant
+        name:
+          id: e2d86896-b6b4-4871-b9e6-7aa95c220440
+          key: name
+          displayName: Name
+          value: Help the Merchant
+        status:
+          id: 8601d25d-9cca-4769-83ba-b80dba52b72c
+          key: status
+          displayName: Status
+          value: 0
+        objectives:
+        - rid: 987104189638246469
+    - rid: 987104189638246469
+      type: {class: ObjectiveVariable, ns: , asm: Assembly-CSharp}
+      data:
+        id: e737119a-6532-4809-aa7e-dcf2940f6ead
+        key: Findfourflowersforthemerchant
+        displayName: Find four flowers for the merchant
+        display: 
+        name:
+          id: 0a24668f-5f6d-4309-84c4-fcc802b73b0c
+          key: name
+          displayName: Obj Name
+          value: Find four flowers for the merchant
+        target:
+          id: c2c1f56d-fa04-4b49-8bc5-8b522eb741de
+          key: target
+          displayName: Target
+          value: 4
+        progress:
+          id: 38ab1562-a8bd-4d59-97c6-e56f1f3e5851
           key: progress
           displayName: Progress
           value: 0

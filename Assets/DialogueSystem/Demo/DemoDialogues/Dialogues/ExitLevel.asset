@@ -28,7 +28,7 @@ MonoBehaviour:
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
-  exitConsequences: []
+  exitActions: []
   nextNode: {fileID: 0}
 --- !u!114 &11400000
 MonoBehaviour:
@@ -47,7 +47,7 @@ MonoBehaviour:
   - {fileID: -4396795665407519264}
   nodePositions:
   - nodeId: 2c97ed73-b4ab-4ca0-b50c-eedc432eed74
-    position: {x: -962.5, y: 164}
+    position: {x: -962, y: 164}
   defaultSpeaker: {fileID: 0}
   defaultListener: {fileID: 0}
   currentNode: {fileID: -4396795665407519264}

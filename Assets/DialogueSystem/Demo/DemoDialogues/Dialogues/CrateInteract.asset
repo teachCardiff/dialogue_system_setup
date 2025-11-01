@@ -62,9 +62,9 @@ MonoBehaviour:
   - {fileID: -2929354141376380389}
   nodePositions:
   - nodeId: 3c2bb3cf-48ec-4bab-ba5c-1db62b938874
-    position: {x: 18, y: 170.5}
+    position: {x: 18, y: 171}
   - nodeId: 044ef571-4b1f-43a6-990c-48069a5cae34
-    position: {x: -809, y: 174.5}
+    position: {x: -809, y: 175}
   defaultSpeaker: {fileID: 0}
   defaultListener: {fileID: 0}
   currentNode: {fileID: -2929354141376380389}

@@ -36,6 +36,35 @@ namespace DialogueSystem.Editor
             GetWindow<DialogueEditor>("Dialogue Editor");
         }
 
+        // Allow other editors/inspectors to request a visual refresh for a specific node
+        public static void RefreshViewsForNode(DialogueNode node)
+        {
+            if (node == null) return;
+            var windows = Resources.FindObjectsOfTypeAll<DialogueEditor>();
+            foreach (var win in windows)
+            {
+                try
+                {
+                    if (win == null || win.graphView == null) continue;
+                    // Only refresh if this window is showing a dialogue that contains the node
+                    if (win.selectedDialogue == null || !win.selectedDialogue.nodes.Contains(node)) continue;
+
+                    foreach (var nv in win.graphView.nodes.OfType<DialogueNodeView>())
+                    {
+                        if (nv != null && nv.dialogueNode == node)
+                        {
+                            nv.RefreshFromModel();
+                            break;
+                        }
+                    }
+
+                    // Also repaint the window to ensure UI updates immediately
+                    win.Repaint();
+                }
+                catch { /* ignore repaint/refresh exceptions */ }
+            }
+        }
+
         // Helper to log a stack trace when destroying/removing nodes for diagnostics
         public static void LogNodeDestroyStack(UnityEngine.Object obj, string reason = "")
         {
@@ -977,6 +1006,7 @@ namespace DialogueSystem.Editor
         PopupField<string> expressionDropdown = null;
         private PopupField<string> listenerExpressionDropdown = null;
         private TextField speakerField;
+            private TextField dialogueTextField;
         private ObjectField charField;
         private ObjectField listenerField;
         private Toggle showListenerToggle;
@@ -1050,13 +1080,14 @@ namespace DialogueSystem.Editor
             /// ----- END OF LISTENER CHARACTER ----- ///
             
 
-            var textField = new TextField("Dialogue Text") { value = dialogueNode.dialogueText, multiline = true };
-            textField.RegisterValueChangedCallback(evt =>
+            dialogueTextField = new TextField("Dialogue Text") { multiline = true };
+            dialogueTextField.value = dialogueNode.dialogueText;
+            dialogueTextField.RegisterValueChangedCallback(evt =>
             {
                 dialogueNode.dialogueText = evt.newValue;
                 EditorUtility.SetDirty(dialogueNode);
             });
-            mainContainer.Add(textField);
+            mainContainer.Add(dialogueTextField);
 
             // Start node toggle
             var startToggle = new Toggle("Start Node") { value = dialogue.startNode == dialogueNode };
@@ -1094,6 +1125,11 @@ namespace DialogueSystem.Editor
 
             // Update title and text fields
             title = !string.IsNullOrEmpty(dialogueNode.speakerName) ? dialogueNode.speakerName : "Node";
+            if (dialogueTextField != null)
+            {
+                // Avoid re-entrant change notifications
+                dialogueTextField.SetValueWithoutNotify(dialogueNode.dialogueText);
+            }
 
             // Update character object fields
             if (charField != null) charField.value = dialogueNode.speakerCharacter;

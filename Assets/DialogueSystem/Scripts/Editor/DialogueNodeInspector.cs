@@ -109,6 +109,7 @@ public class DialogueNodeInspector : Editor
     public override void OnInspectorGUI()
     {
         serializedObject.Update();
+        EditorGUI.BeginChangeCheck();
 
         // Actors
         EditorGUILayout.LabelField("Actors", EditorStyles.boldLabel);
@@ -148,6 +149,18 @@ public class DialogueNodeInspector : Editor
         EditorGUILayout.PropertyField(serializedObject.FindProperty("onEnterNode"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("onExitNode"));
 
+        bool changed = EditorGUI.EndChangeCheck();
         serializedObject.ApplyModifiedProperties();
+
+        if (changed)
+        {
+            // Ensure the asset is marked dirty for saving and notify the graph editor to refresh visuals
+            EditorUtility.SetDirty(target);
+            var node = target as DialogueNode;
+            if (node != null)
+            {
+                DialogueSystem.Editor.DialogueEditor.RefreshViewsForNode(node);
+            }
+        }
     }
 }

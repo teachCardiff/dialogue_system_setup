@@ -28,7 +28,7 @@ MonoBehaviour:
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
-  exitConsequences: []
+  exitActions: []
   nextNode: {fileID: -3732373236951027278}
 --- !u!114 &-9082048600485696208
 MonoBehaviour:
@@ -70,7 +70,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  exitConsequences: []
+  exitActions: []
   nextNode: {fileID: 0}
 --- !u!114 &-8949664710614154996
 MonoBehaviour:
@@ -100,7 +100,7 @@ MonoBehaviour:
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
-  exitConsequences: []
+  exitActions: []
   nextNode: {fileID: 5293156138806957632}
 --- !u!114 &-8181038608668258879
 MonoBehaviour:
@@ -130,7 +130,7 @@ MonoBehaviour:
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
-  exitConsequences: []
+  exitActions: []
   nextNode: {fileID: 2075054157938188753}
 --- !u!114 &-7294158416961576469
 MonoBehaviour:
@@ -155,13 +155,13 @@ MonoBehaviour:
   choices: []
   conditionalBranches:
   - branchName: No Flowers
-    condition: {fileID: 11400000, guid: 534b70334592711478428edbdedc7dda, type: 2}
+    operations: []
     targetNode: {fileID: -8181038608668258879}
   - branchName: All Flowers
-    condition: {fileID: 11400000, guid: c0a70e4fa2cb31049929e6a82ca0826a, type: 2}
+    operations: []
     targetNode: {fileID: -8949664710614154996}
   - branchName: Some Flowers
-    condition: {fileID: 11400000, guid: 576c0ea96b5e8ac4db67d49c66a5a4e6, type: 2}
+    operations: []
     targetNode: {fileID: 4920220170874142042}
   onEnterNode:
     m_PersistentCalls:
@@ -169,7 +169,7 @@ MonoBehaviour:
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
-  exitConsequences: []
+  exitActions: []
   nextNode: {fileID: 0}
 --- !u!114 &-6763016470584409542
 MonoBehaviour:
@@ -200,7 +200,7 @@ MonoBehaviour:
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
-  exitConsequences: []
+  exitActions: []
   nextNode: {fileID: -9082048600485696208}
 --- !u!114 &-5593203219150723293
 MonoBehaviour:
@@ -230,7 +230,7 @@ MonoBehaviour:
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
-  exitConsequences: []
+  exitActions: []
   nextNode: {fileID: 7209791658795973225}
 --- !u!114 &-3732373236951027278
 MonoBehaviour:
@@ -260,7 +260,7 @@ MonoBehaviour:
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
-  exitConsequences: []
+  exitActions: []
   nextNode: {fileID: 0}
 --- !u!114 &-3726758095415614958
 MonoBehaviour:
@@ -290,7 +290,7 @@ MonoBehaviour:
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
-  exitConsequences: []
+  exitActions: []
   nextNode: {fileID: -6763016470584409542}
 --- !u!114 &-2738029060375608619
 MonoBehaviour:
@@ -315,7 +315,18 @@ MonoBehaviour:
   choices: []
   conditionalBranches:
   - branchName: Help Townsfolk Progress
-    condition: {fileID: 11400000, guid: 1cab2079e0eb35b47bc49df84f7e7f05, type: 2}
+    operations:
+    - variable:
+        id: 9325d07c-71c6-48c1-9e5a-92d977adda50
+        path: Root/Quests/HelptheTownsfolk/status
+      numericOp: 0
+      intValue: 0
+      boolOp: 0
+      boolValue: 0
+      stringOp: 0
+      stringValue: 
+      enumOp: 0
+      enumString: InProgress
     targetNode: {fileID: 7012299834521311936}
   onEnterNode:
     m_PersistentCalls:
@@ -323,7 +334,7 @@ MonoBehaviour:
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
-  exitConsequences: []
+  exitActions: []
   nextNode: {fileID: 1058269340062801190}
 --- !u!114 &-1071455400184411333
 MonoBehaviour:
@@ -353,7 +364,7 @@ MonoBehaviour:
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
-  exitConsequences: []
+  exitActions: []
   nextNode: {fileID: 4428323560780378697}
 --- !u!114 &11400000
 MonoBehaviour:
@@ -476,7 +487,7 @@ MonoBehaviour:
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
-  exitConsequences: []
+  exitActions: []
   nextNode: {fileID: -7294158416961576469}
 --- !u!114 &1058269340062801190
 MonoBehaviour:
@@ -506,7 +517,7 @@ MonoBehaviour:
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
-  exitConsequences: []
+  exitActions: []
   nextNode: {fileID: 0}
 --- !u!114 &2075054157938188753
 MonoBehaviour:
@@ -536,7 +547,7 @@ MonoBehaviour:
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
-  exitConsequences: []
+  exitActions: []
   nextNode: {fileID: 0}
 --- !u!114 &2958153680492259118
 MonoBehaviour:
@@ -561,11 +572,13 @@ MonoBehaviour:
   choices:
   - choiceText: Give what you have
     targetNode: {fileID: 8596345372643400548}
-    conditions: []
+    criteria: []
+    showIfCriteriaNotMet: 0
     consequences: []
   - choiceText: Wait
     targetNode: {fileID: -9106256650717107132}
-    conditions: []
+    criteria: []
+    showIfCriteriaNotMet: 0
     consequences: []
   conditionalBranches: []
   onEnterNode:
@@ -574,7 +587,7 @@ MonoBehaviour:
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
-  exitConsequences: []
+  exitActions: []
   nextNode: {fileID: 0}
 --- !u!114 &4428323560780378697
 MonoBehaviour:
@@ -628,7 +641,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  exitConsequences: []
+  exitActions: []
   nextNode: {fileID: 0}
 --- !u!114 &4544422311883375233
 MonoBehaviour:
@@ -658,7 +671,7 @@ MonoBehaviour:
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
-  exitConsequences: []
+  exitActions: []
   nextNode: {fileID: 0}
 --- !u!114 &4892982132819798203
 MonoBehaviour:
@@ -712,7 +725,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  exitConsequences: []
+  exitActions: []
   nextNode: {fileID: 0}
 --- !u!114 &4920220170874142042
 MonoBehaviour:
@@ -742,7 +755,7 @@ MonoBehaviour:
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
-  exitConsequences: []
+  exitActions: []
   nextNode: {fileID: 2958153680492259118}
 --- !u!114 &5293156138806957632
 MonoBehaviour:
@@ -767,11 +780,13 @@ MonoBehaviour:
   choices:
   - choiceText: Give the flowers
     targetNode: {fileID: -1071455400184411333}
-    conditions: []
+    criteria: []
+    showIfCriteriaNotMet: 0
     consequences: []
   - choiceText: Nevermind
     targetNode: {fileID: -5593203219150723293}
-    conditions: []
+    criteria: []
+    showIfCriteriaNotMet: 0
     consequences: []
   conditionalBranches: []
   onEnterNode:
@@ -780,7 +795,7 @@ MonoBehaviour:
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
-  exitConsequences: []
+  exitActions: []
   nextNode: {fileID: 0}
 --- !u!114 &6764674651265088946
 MonoBehaviour:
@@ -810,7 +825,7 @@ MonoBehaviour:
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
-  exitConsequences: []
+  exitActions: []
   nextNode: {fileID: 0}
 --- !u!114 &6927249070887177323
 MonoBehaviour:
@@ -836,11 +851,13 @@ MonoBehaviour:
   choices:
   - choiceText: Can I help?
     targetNode: {fileID: -3726758095415614958}
-    conditions: []
+    criteria: []
+    showIfCriteriaNotMet: 0
     consequences: []
   - choiceText: '*Walk away*'
     targetNode: {fileID: 6764674651265088946}
-    conditions: []
+    criteria: []
+    showIfCriteriaNotMet: 0
     consequences: []
   conditionalBranches: []
   onEnterNode:
@@ -849,7 +866,7 @@ MonoBehaviour:
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
-  exitConsequences: []
+  exitActions: []
   nextNode: {fileID: 0}
 --- !u!114 &7012299834521311936
 MonoBehaviour:
@@ -874,10 +891,10 @@ MonoBehaviour:
   choices: []
   conditionalBranches:
   - branchName: IN PROGRESS
-    condition: {fileID: 11400000, guid: 732018fc14f25d2428edffdb6c331907, type: 2}
+    operations: []
     targetNode: {fileID: 420727449347315468}
   - branchName: COMPLETED
-    condition: {fileID: 11400000, guid: b717a2542724d674cbb84f8935ff82e7, type: 2}
+    operations: []
     targetNode: {fileID: 4544422311883375233}
   onEnterNode:
     m_PersistentCalls:
@@ -885,7 +902,7 @@ MonoBehaviour:
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
-  exitConsequences: []
+  exitActions: []
   nextNode: {fileID: 6927249070887177323}
 --- !u!114 &7209791658795973225
 MonoBehaviour:
@@ -915,7 +932,7 @@ MonoBehaviour:
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
-  exitConsequences: []
+  exitActions: []
   nextNode: {fileID: 0}
 --- !u!114 &8596345372643400548
 MonoBehaviour:
@@ -945,5 +962,5 @@ MonoBehaviour:
   onExitNode:
     m_PersistentCalls:
       m_Calls: []
-  exitConsequences: []
+  exitActions: []
   nextNode: {fileID: 4892982132819798203}
