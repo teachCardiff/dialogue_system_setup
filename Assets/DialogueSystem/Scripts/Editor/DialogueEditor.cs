@@ -1049,6 +1049,8 @@ namespace DialogueSystem.Editor
         private ObjectField listenerField;
         private Toggle startToggle;
         private Button switchSpeakerButton;
+        private Button collapsedSwitchSpeakerButton;
+        private VisualElement collapsedHeaderRow;
         // Choices and branches are displayed under their respective Add buttons
         // Containers for expanded/collapsed layouts
         private VisualElement detailsContainer; // Shown when expanded
@@ -1145,6 +1147,21 @@ namespace DialogueSystem.Editor
                 UpdateActiveSpeakerUI();
                 RefreshCollapsedSummary();
             }) { text = "Switch Speaker" };
+            // Add an icon (circular arrows) to the button alongside text
+            try
+            {
+                var tex = EditorGUIUtility.IconContent("Refresh").image as Texture2D;
+                if (tex != null)
+                {
+                    var icon = new Image { image = tex, scaleMode = ScaleMode.ScaleToFit };
+                    icon.style.width = 16;
+                    icon.style.height = 16;
+                    icon.style.marginRight = 4;
+                    // Insert before the label so it appears to the left of the text
+                    switchSpeakerButton.contentContainer.Insert(0, icon);
+                }
+            }
+            catch { /* Icon not critical; ignore errors */ }
             detailsContainer.Add(switchSpeakerButton);
             UpdateSwitchSpeakerInteractivity();
 
@@ -1164,9 +1181,41 @@ namespace DialogueSystem.Editor
             RefreshBranches(); // Initial call
              
             // Build collapsed summary contents
-            speakerSummaryLabel = new Label("") { style = { unityFontStyleAndWeight = FontStyle.Bold } };
+            // Header row with speaker label on the left and a compact switch button on the right
+            collapsedHeaderRow = new VisualElement { style = { flexDirection = FlexDirection.Row, alignItems = Align.Center } };
+            speakerSummaryLabel = new Label("") { style = { unityFontStyleAndWeight = FontStyle.Bold, flexGrow = 1 } };
+            collapsedHeaderRow.Add(speakerSummaryLabel);
+
+            // Icon-only switch button for collapsed view
+            collapsedSwitchSpeakerButton = new Button(() =>
+            {
+                dialogueNode.listenerIsSpeaker = !dialogueNode.listenerIsSpeaker;
+                EditorUtility.SetDirty(dialogueNode);
+                UpdateActiveSpeakerUI();
+                RefreshCollapsedSummary();
+            }) { tooltip = "Switch Speaker" };
+            try
+            {
+                var tex = EditorGUIUtility.IconContent("Refresh").image as Texture2D;
+                if (tex != null)
+                {
+                    var icon = new Image { image = tex, scaleMode = ScaleMode.ScaleToFit };
+                    icon.style.width = 14;
+                    icon.style.height = 14;
+                    // Clear button text and just show the icon
+                    collapsedSwitchSpeakerButton.text = string.Empty;
+                    // Reduce default padding for a tighter look
+                    collapsedSwitchSpeakerButton.style.width = 22;
+                    collapsedSwitchSpeakerButton.style.height = 20;
+                    collapsedSwitchSpeakerButton.contentContainer.Clear();
+                    collapsedSwitchSpeakerButton.contentContainer.Add(icon);
+                }
+            }
+            catch { /* Icon optional */ }
+            collapsedHeaderRow.Add(collapsedSwitchSpeakerButton);
+            collapsedSummary.Add(collapsedHeaderRow);
+
             textSummaryLabel = new Label("") { style = { whiteSpace = WhiteSpace.Normal } }; // allow wrapping
-            collapsedSummary.Add(speakerSummaryLabel);
             collapsedSummary.Add(textSummaryLabel);
 
             // Add containers: details in extension (hidden by Unity when collapsed), summary in main
@@ -1180,6 +1229,7 @@ namespace DialogueSystem.Editor
             RefreshCollapsedSummary();
             UpdateStartToggleVisibility();
             UpdateStartNodeStyling();
+            UpdateSwitchSpeakerInteractivity();
             // Use the title button container click to detect Unity's collapse arrow toggling
             titleButtonContainer.RegisterCallback<ClickEvent>(_ =>
             {
@@ -1197,6 +1247,8 @@ namespace DialogueSystem.Editor
             if (switchSpeakerButton == null) return;
             bool enabled = dialogueNode != null && dialogueNode.speakerCharacter != null && dialogueNode.listenerCharacter != null;
             switchSpeakerButton.SetEnabled(enabled);
+            if (collapsedSwitchSpeakerButton != null)
+                collapsedSwitchSpeakerButton.SetEnabled(enabled);
         }
 
         // Show Start Node toggle only when no start is assigned, or on the start node itself
