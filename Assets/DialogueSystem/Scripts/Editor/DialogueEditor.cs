@@ -1059,10 +1059,28 @@ namespace DialogueSystem.Editor
         private Label textSummaryLabel;
         // We will use Unity's default collapse arrow; no custom button needed
 
+        // Add: clamp width constant to prevent node from stretching too wide
+        private const float NodeMaxWidth = 300f;
+
         public DialogueNodeView(DialogueNode node, Dialogue dialogue)
         {
             dialogueNode = node;
             selectedDialogue = dialogue;
+
+            // Clamp node width and allow children to shrink/wrap
+            style.maxWidth = NodeMaxWidth;
+            style.flexShrink = 1;
+            style.minWidth = 0;
+            mainContainer.style.maxWidth = NodeMaxWidth;
+            mainContainer.style.flexShrink = 1;
+            mainContainer.style.minWidth = 0;
+            mainContainer.style.backgroundColor = new Color(.12f, .12f, .12f, 1f);
+            extensionContainer.style.maxWidth = NodeMaxWidth;
+            extensionContainer.style.flexShrink = 1;
+            extensionContainer.style.minWidth = 0;
+            contentContainer.style.maxWidth = NodeMaxWidth;
+            contentContainer.style.flexShrink = 1;
+            contentContainer.style.minWidth = 0;
 
             // Input port
             var inputPort = Port.Create<Edge>(Orientation.Horizontal, Direction.Input, Port.Capacity.Multi, typeof(DialogueNode));
@@ -1082,11 +1100,20 @@ namespace DialogueSystem.Editor
 
             // Create containers for expanded/collapsed content
             detailsContainer = new VisualElement { style = { flexDirection = FlexDirection.Column, marginTop = 4, marginBottom = 4 } };
+            // Ensure inner containers can shrink within max width
+            detailsContainer.style.minWidth = 0;
+            detailsContainer.style.flexShrink = 1;
             collapsedSummary = new VisualElement { style = { flexDirection = FlexDirection.Column, marginTop = 4, marginBottom = 4 } };
+            collapsedSummary.style.minWidth = 0;
+            collapsedSummary.style.flexShrink = 1;
 
             // Active Speaker (readonly)
             activeSpeakerField = new TextField("Active Speaker");
             activeSpeakerField.SetEnabled(false);
+            // Allow field to fit within max width
+            activeSpeakerField.style.flexGrow = 1;
+            activeSpeakerField.style.flexShrink = 1;
+            activeSpeakerField.style.minWidth = 0;
             detailsContainer.Add(activeSpeakerField);
 
             charField = new ObjectField("Speaker") { objectType = typeof(Character), value = dialogueNode.speakerCharacter };
@@ -1108,9 +1135,31 @@ namespace DialogueSystem.Editor
                 RefreshCharFields();
                 UpdateActiveSpeakerUI();
             });
+            // Allow field to fit within max width
+            listenerField.style.flexGrow = 1;
+            listenerField.style.flexShrink = 1;
+            listenerField.style.minWidth = 0;
             detailsContainer.Add(listenerField);
  
             dialogueTextField = new TextField("Dialogue Text") { multiline = true };
+            // Ensure the text field wraps and doesn't force node to expand
+            dialogueTextField.style.whiteSpace = WhiteSpace.Normal;
+            dialogueTextField.style.flexGrow = 1;
+            dialogueTextField.style.flexShrink = 1;
+            dialogueTextField.style.minWidth = 0;
+            dialogueTextField.style.width = Length.Percent(100);
+            // Also set the inner text input to wrap
+            EditorApplication.delayCall += () =>
+            {
+                var input = dialogueTextField.Q("unity-text-input");
+                if (input != null)
+                {
+                    input.style.whiteSpace = WhiteSpace.Normal;
+                    input.style.flexGrow = 1;
+                    input.style.flexShrink = 1;
+                    input.style.minWidth = 0;
+                }
+            };
             dialogueTextField.value = dialogueNode.dialogueText;
             dialogueTextField.RegisterValueChangedCallback(evt =>
             {
@@ -1215,7 +1264,14 @@ namespace DialogueSystem.Editor
             collapsedHeaderRow.Add(collapsedSwitchSpeakerButton);
             collapsedSummary.Add(collapsedHeaderRow);
 
+            // Ensure collapsed labels wrap and don't expand width
             textSummaryLabel = new Label("") { style = { whiteSpace = WhiteSpace.Normal } }; // allow wrapping
+            textSummaryLabel.style.flexShrink = 1;
+            textSummaryLabel.style.minWidth = 0;
+            // Speaker summary should also wrap if needed
+            speakerSummaryLabel.style.whiteSpace = WhiteSpace.Normal;
+            speakerSummaryLabel.style.flexShrink = 1;
+            speakerSummaryLabel.style.minWidth = 0;
             collapsedSummary.Add(textSummaryLabel);
 
             // Add containers: details in extension (hidden by Unity when collapsed), summary in main

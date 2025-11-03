@@ -154,7 +154,7 @@ MonoBehaviour:
         id: f67df446-a2bd-45cb-96c0-39f44d7f83e2
         key: NewBool
         displayName: haveTalkedToLuna
-        value: 0
+        value: 1
     - rid: 16810047478956116
       type: {class: ObjectiveVariable, ns: , asm: Assembly-CSharp}
       data:
