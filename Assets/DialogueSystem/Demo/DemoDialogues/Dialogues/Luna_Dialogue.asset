@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeId: 57f2ccb5-ff10-41f6-9f73-f34241936c92
   speakerName: 
-  speakerCharacter: {fileID: 0}
+  speakerCharacter: {fileID: 11400000, guid: 5e97a2fa9ced9d74bba85bc6978d8644, type: 2}
   speakerExpression: Default
-  listenerCharacter: {fileID: 0}
+  listenerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
   listenerExpression: 
   listenerIsSpeaker: 0
   dialogueText: 
@@ -88,7 +88,7 @@ MonoBehaviour:
   speakerName: Luna
   speakerCharacter: {fileID: 11400000, guid: 5e97a2fa9ced9d74bba85bc6978d8644, type: 2}
   speakerExpression: Smile
-  listenerCharacter: {fileID: 0}
+  listenerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
   listenerExpression: 
   listenerIsSpeaker: 0
   dialogueText: Why you are in Pleasanton, of course!
@@ -118,7 +118,7 @@ MonoBehaviour:
   speakerName: Luna
   speakerCharacter: {fileID: 11400000, guid: 5e97a2fa9ced9d74bba85bc6978d8644, type: 2}
   speakerExpression: Smile
-  listenerCharacter: {fileID: 0}
+  listenerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
   listenerExpression: 
   listenerIsSpeaker: 0
   dialogueText: Great! Go talk to the other's here and learn about what they need.
@@ -157,9 +157,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeId: 78abd598-4321-442a-91a4-924515d1da54
   speakerName: Player
-  speakerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
+  speakerCharacter: {fileID: 11400000, guid: 5e97a2fa9ced9d74bba85bc6978d8644, type: 2}
   speakerExpression: Smile
-  listenerCharacter: {fileID: 0}
+  listenerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
   listenerExpression: 
   listenerIsSpeaker: 0
   dialogueText: Hello!
@@ -189,7 +189,7 @@ MonoBehaviour:
   speakerName: Luna
   speakerCharacter: {fileID: 11400000, guid: 5e97a2fa9ced9d74bba85bc6978d8644, type: 2}
   speakerExpression: Default
-  listenerCharacter: {fileID: 0}
+  listenerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
   listenerExpression: 
   listenerIsSpeaker: 0
   dialogueText: Thank you for helping the townsfolk out!
@@ -219,7 +219,7 @@ MonoBehaviour:
   speakerName: Luna
   speakerCharacter: {fileID: 11400000, guid: 5e97a2fa9ced9d74bba85bc6978d8644, type: 2}
   speakerExpression: Smile
-  listenerCharacter: {fileID: 0}
+  listenerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
   listenerExpression: 
   listenerIsSpeaker: 0
   dialogueText: Oh no problem! Just let me know if you can.
@@ -249,7 +249,7 @@ MonoBehaviour:
   speakerName: Luna
   speakerCharacter: {fileID: 11400000, guid: 5e97a2fa9ced9d74bba85bc6978d8644, type: 2}
   speakerExpression: Smile
-  listenerCharacter: {fileID: 0}
+  listenerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
   listenerExpression: 
   listenerIsSpeaker: 0
   dialogueText: Why hello there!
@@ -288,9 +288,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeId: e6e505ae-f8ee-4765-8f32-2cd1423c4f36
   speakerName: Player
-  speakerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
+  speakerCharacter: {fileID: 11400000, guid: 5e97a2fa9ced9d74bba85bc6978d8644, type: 2}
   speakerExpression: Talk
-  listenerCharacter: {fileID: 0}
+  listenerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
   listenerExpression: 
   listenerIsSpeaker: 0
   dialogueText: Umm...where am I?
@@ -320,7 +320,7 @@ MonoBehaviour:
   speakerName: Luna
   speakerCharacter: {fileID: 11400000, guid: 5e97a2fa9ced9d74bba85bc6978d8644, type: 2}
   speakerExpression: Angry
-  listenerCharacter: {fileID: 0}
+  listenerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
   listenerExpression: 
   listenerIsSpeaker: 0
   dialogueText: ...
@@ -392,7 +392,7 @@ MonoBehaviour:
   - nodeId: 896e6cd8-6397-4a49-994d-aa63b0c70d0b
     position: {x: 199, y: 764}
   defaultSpeaker: {fileID: 11400000, guid: 5e97a2fa9ced9d74bba85bc6978d8644, type: 2}
-  defaultListener: {fileID: 0}
+  defaultListener: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
   currentNode: {fileID: -7110149492458854456}
 --- !u!114 &1882027759992111648
 MonoBehaviour:
@@ -408,9 +408,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeId: 788f2711-e838-42e1-8618-787a0ea75fa6
   speakerName: Player
-  speakerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
+  speakerCharacter: {fileID: 11400000, guid: 5e97a2fa9ced9d74bba85bc6978d8644, type: 2}
   speakerExpression: Talk
-  listenerCharacter: {fileID: 0}
+  listenerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
   listenerExpression: 
   listenerIsSpeaker: 0
   dialogueText: Sure. I'll help if I can.
@@ -440,7 +440,7 @@ MonoBehaviour:
   speakerName: Luna
   speakerCharacter: {fileID: 11400000, guid: 5e97a2fa9ced9d74bba85bc6978d8644, type: 2}
   speakerExpression: Talk
-  listenerCharacter: {fileID: 0}
+  listenerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
   listenerExpression: 
   listenerIsSpeaker: 0
   dialogueText: I do have a favor to ask, if you're up for it.
@@ -480,7 +480,7 @@ MonoBehaviour:
   speakerName: Luna
   speakerCharacter: {fileID: 11400000, guid: 5e97a2fa9ced9d74bba85bc6978d8644, type: 2}
   speakerExpression: Smile
-  listenerCharacter: {fileID: 0}
+  listenerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
   listenerExpression: 
   listenerIsSpeaker: 0
   dialogueText: Go talk to the townsfolk and see how you can help.
@@ -508,9 +508,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeId: a124a581-3c57-4aa6-9f64-7d14d11988b8
   speakerName: Player
-  speakerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
+  speakerCharacter: {fileID: 11400000, guid: 5e97a2fa9ced9d74bba85bc6978d8644, type: 2}
   speakerExpression: Default
-  listenerCharacter: {fileID: 0}
+  listenerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
   listenerExpression: 
   listenerIsSpeaker: 0
   dialogueText: I'm sorry... I'm actually a little busy right now.
@@ -540,7 +540,7 @@ MonoBehaviour:
   speakerName: Luna
   speakerCharacter: {fileID: 11400000, guid: 5e97a2fa9ced9d74bba85bc6978d8644, type: 2}
   speakerExpression: Angry
-  listenerCharacter: {fileID: 0}
+  listenerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
   listenerExpression: 
   listenerIsSpeaker: 0
   dialogueText: '[b][shake, 7.0f]WHAT!?[/b][/shake]'

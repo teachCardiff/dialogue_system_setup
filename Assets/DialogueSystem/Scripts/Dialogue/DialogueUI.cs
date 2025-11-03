@@ -94,25 +94,8 @@ public class DialogueUI : MonoBehaviour
         dialogueText.text = string.Empty;
 
         // Sprite support (if provided)
-        if (speakerSprite != null && speakerImage != null)
-        {
-            speakerImage.sprite = speakerSprite;
-            speakerImage.gameObject.SetActive(true);
-        }
-        else
-        {
-            speakerImage?.gameObject?.SetActive(false);
-        }
-
-        if (listenerSprite != null && listenerImage != null)
-        {
-            listenerImage.sprite = listenerSprite;
-            listenerImage.gameObject.SetActive(true);
-        }
-        else
-        {
-            listenerImage?.gameObject?.SetActive(false);
-        }
+        SetCharacterImage(speakerImage, speakerSprite);
+        SetCharacterImage(listenerImage, listenerSprite);
 
         // Common UI setup
         choicesPanel.gameObject.SetActive(false);
@@ -157,6 +140,22 @@ public class DialogueUI : MonoBehaviour
 
         // Mark UI as ready once initialization is complete
         IsReady = true;
+    }
+
+    // Shows img only when both the Image component exists and a sprite is provided; otherwise hides it
+    private static void SetCharacterImage(Image img, Sprite sprite)
+    {
+        if (img == null)
+            return;
+        if (sprite != null)
+        {
+            img.sprite = sprite;
+            img.gameObject.SetActive(true);
+        }
+        else
+        {
+            img.gameObject.SetActive(false);
+        }
     }
 
     public void ShowChoices(List<DialogueChoice> choices, List<bool> enabledFlags = null, bool allowContinue = false)
@@ -586,7 +585,9 @@ public class DialogueUI : MonoBehaviour
         nextPressed = false;
         speakerText.text = "";
         dialogueText.text = "";
-        //speakerImage.gameObject.SetActive(false);
+        // Ensure character images are hidden when UI is closed
+        if (speakerImage != null) speakerImage.gameObject.SetActive(false);
+        if (listenerImage != null) listenerImage.gameObject.SetActive(false);
         gameObject.SetActive(false);
         IsReady = false;
         onHideComplete?.Invoke();
