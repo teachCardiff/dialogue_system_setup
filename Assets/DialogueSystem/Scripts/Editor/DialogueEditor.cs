@@ -22,13 +22,15 @@ namespace DialogueSystem.Editor
         public Dialogue selectedDialogue;
         private DialogueGraphView graphView;
         private Vector2 lastMousePosition; // Track for node-right-click creation
-    // IMGUI toolbar state
-    private bool applyOnlyIfMissing = true;
+        // IMGUI toolbar state
+        private bool applyOnlyIfMissing = true;
         // When true, OnGraphChanged will ignore element removals to avoid deleting assets while we
         // programmatically clear the graph (for example when switching selected Dialogue assets).
         private bool suppressGraphViewDeletion = false;
-    // Diagnostic dry-run: when true scheduled removals will only log and not actually remove assets
-    private static bool diagnosticsDryRun = false;
+        // Diagnostic dry-run: when true scheduled removals will only log and not actually remove assets
+        private static bool diagnosticsDryRun = false;
+        // Tracks last requested collapse state to provide a predictable toggle behavior
+        private bool nodesAreCollapsed = false;
 
         [MenuItem("Window/Dialogue Editor")]
         public static void Open()
@@ -172,6 +174,7 @@ namespace DialogueSystem.Editor
             {
                 GUILayout.BeginHorizontal(EditorStyles.toolbar);
                 if (GUILayout.Button("Preview", EditorStyles.toolbarButton)) PreviewDialogue();
+                if (GUILayout.Button("Toggle Collapse", EditorStyles.toolbarButton)) ToggleCollapseAllNodes();
                 // Rebuild Graph button removed per user request
 
                 GUILayout.Space(8);
@@ -302,6 +305,10 @@ namespace DialogueSystem.Editor
 
             toolbar.Add(previewButton);
 
+            // Collapse/Expand all nodes
+            var toggleCollapseButton = new Button(ToggleCollapseAllNodes) { text = "Toggle Collapse" };
+            toolbar.Add(toggleCollapseButton);
+
             // Create a stacked toolbar area: top row for buttons, bottom row for defaults/foldout
             var toolbarStack = new VisualElement { style = { flexDirection = FlexDirection.Column } };
 
@@ -415,6 +422,22 @@ namespace DialogueSystem.Editor
 
             // Call once to initialize (if a dialogue is already selected)
             RefreshDefaultsFields();
+        }
+
+        // Toggle collapse/expand for all node views in the current graph
+        private void ToggleCollapseAllNodes()
+        {
+            if (graphView == null) return;
+            // Decide target state: if any node is expanded, collapse all; otherwise expand all
+            bool anyExpanded = graphView.nodes.OfType<DialogueNodeView>().Any(nv => nv != null && nv.IsExpanded());
+            bool targetExpand = !anyExpanded; // expand if none expanded, otherwise collapse
+            foreach (var nv in graphView.nodes.OfType<DialogueNodeView>())
+            {
+                if (nv == null) continue;
+                nv.SetExpandedState(targetExpand);
+            }
+            nodesAreCollapsed = !targetExpand;
+            graphView.MarkDirtyRepaint();
         }
 
         public DialogueNodeView CreateNode(Vector2 screenPosition)
@@ -1006,19 +1029,19 @@ namespace DialogueSystem.Editor
         PopupField<string> expressionDropdown = null;
         private PopupField<string> listenerExpressionDropdown = null;
         private TextField speakerField;
-            private TextField dialogueTextField;
+        private TextField dialogueTextField;
         private ObjectField charField;
         private ObjectField listenerField;
         private Toggle showListenerToggle;
-    // NEW: single reusable IsSpeaker toggle instance — prevents duplicates on repeated RefreshCharFields calls
-    private Toggle isSpeakerToggle;
+        // NEW: single reusable IsSpeaker toggle instance — prevents duplicates on repeated RefreshCharFields calls
+        private Toggle isSpeakerToggle;
         // Containers for expanded/collapsed layouts
         private VisualElement detailsContainer; // Shown when expanded
         private VisualElement collapsedSummary; // Shown when collapsed
         private Label speakerSummaryLabel;
         private Label textSummaryLabel;
         private Toggle isSpeakerCollapsedToggle;
-    // We will use Unity's default collapse arrow; no custom button needed
+        // We will use Unity's default collapse arrow; no custom button needed
 
         public DialogueNodeView(DialogueNode node, Dialogue dialogue)
         {
@@ -1162,6 +1185,22 @@ namespace DialogueSystem.Editor
                     RefreshCollapsedSummary();
                 };
             });
+        }
+
+        // Allow external callers to set expanded/collapsed state in a safe, UI-updating way
+        public void SetExpandedState(bool expandedState)
+        {
+            this.expanded = expandedState;
+            // Ensure GraphView/Node updates its visuals (Unity method is safe to call even if already in desired state)
+            try { RefreshExpandedState(); } catch { /* older Unity versions may not require/allow this */ }
+            // Keep our custom summary/details in sync
+            SetCollapsedUI(!expandedState);
+            RefreshCollapsedSummary();
+        }
+
+        public bool IsExpanded()
+        {
+            return this.expanded;
         }
 
         // Refresh UI elements to reflect the underlying DialogueNode model

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Node_11
   m_EditorClassIdentifier: 
   nodeId: 57f2ccb5-ff10-41f6-9f73-f34241936c92
-  speakerName: Luna
-  speakerCharacter: {fileID: 11400000, guid: 5e97a2fa9ced9d74bba85bc6978d8644, type: 2}
+  speakerName: 
+  speakerCharacter: {fileID: 0}
   speakerExpression: Default
   listenerCharacter: {fileID: 0}
   listenerExpression: 
@@ -366,7 +366,7 @@ MonoBehaviour:
   - nodeId: f8f934ac-99f8-4bd2-904c-3d800ce8bc03
     position: {x: 199, y: 205}
   - nodeId: 78abd598-4321-442a-91a4-924515d1da54
-    position: {x: 511, y: 205}
+    position: {x: 510, y: 205}
   - nodeId: e6e505ae-f8ee-4765-8f32-2cd1423c4f36
     position: {x: 824, y: 205}
   - nodeId: eab22764-7807-49dd-9810-8ee676cd66b9
