@@ -31,6 +31,17 @@ namespace DialogueSystem.Editor
         private static bool diagnosticsDryRun = false;
         // Tracks last requested collapse state to provide a predictable toggle behavior
         private bool nodesAreCollapsed = false;
+        // Update all node views to reflect current start-node and toggle visibility
+        public void RefreshStartNodeUI()
+        {
+            if (graphView == null) return;
+            foreach (var nv in graphView.nodes.OfType<DialogueNodeView>())
+            {
+                if (nv == null) continue;
+                nv.UpdateStartToggleVisibility();
+                nv.UpdateStartNodeStyling();
+            }
+        }
 
         [MenuItem("Window/Dialogue Editor")]
         public static void Open()
@@ -474,6 +485,7 @@ namespace DialogueSystem.Editor
             AssetDatabase.SaveAssets();
 
             var nodeView = AddNodeToGraph(node, localPosition);
+            RefreshStartNodeUI();
             return nodeView;
         }
 
@@ -721,6 +733,8 @@ namespace DialogueSystem.Editor
 
             // After rebuilding, frame the start node (or the first node found)
             FrameStartNode();
+            // Ensure start node visuals/toggles are correct
+            RefreshStartNodeUI();
         }
 
         // New: Frame (focus) the start node (or first node when multiple/no explicit start)
@@ -1024,23 +1038,23 @@ namespace DialogueSystem.Editor
         private readonly Dialogue selectedDialogue;
         private readonly List<VisualElement> choiceElements = new List<VisualElement>();
         private VisualElement branchContainer;
+        private VisualElement choicesContainer;
         private List<Port> branchPorts = new List<Port>();
         private List<VisualElement> branchElements = new List<VisualElement>();
         PopupField<string> expressionDropdown = null;
         private PopupField<string> listenerExpressionDropdown = null;
-        private TextField speakerField;
+        private TextField activeSpeakerField;
         private TextField dialogueTextField;
         private ObjectField charField;
         private ObjectField listenerField;
-        private Toggle showListenerToggle;
-        // NEW: single reusable IsSpeaker toggle instance — prevents duplicates on repeated RefreshCharFields calls
-        private Toggle isSpeakerToggle;
+        private Toggle startToggle;
+        private Button switchSpeakerButton;
+        // Choices and branches are displayed under their respective Add buttons
         // Containers for expanded/collapsed layouts
         private VisualElement detailsContainer; // Shown when expanded
         private VisualElement collapsedSummary; // Shown when collapsed
         private Label speakerSummaryLabel;
         private Label textSummaryLabel;
-        private Toggle isSpeakerCollapsedToggle;
         // We will use Unity's default collapse arrow; no custom button needed
 
         public DialogueNodeView(DialogueNode node, Dialogue dialogue)
@@ -1068,15 +1082,10 @@ namespace DialogueSystem.Editor
             detailsContainer = new VisualElement { style = { flexDirection = FlexDirection.Column, marginTop = 4, marginBottom = 4 } };
             collapsedSummary = new VisualElement { style = { flexDirection = FlexDirection.Column, marginTop = 4, marginBottom = 4 } };
 
-            // Node fields (basic; detailed editing via Inspector) — lives in detailsContainer
-            speakerField = new TextField("Speaker Name") { value = dialogueNode.speakerName };
-            speakerField.RegisterValueChangedCallback(evt =>
-            {
-                dialogueNode.speakerName = evt.newValue;
-                title = string.IsNullOrEmpty(evt.newValue) ? "Node" : evt.newValue;
-                EditorUtility.SetDirty(dialogueNode);
-            });
-            detailsContainer.Add(speakerField);
+            // Active Speaker (readonly)
+            activeSpeakerField = new TextField("Active Speaker");
+            activeSpeakerField.SetEnabled(false);
+            detailsContainer.Add(activeSpeakerField);
 
             charField = new ObjectField("Speaker") { objectType = typeof(Character), value = dialogueNode.speakerCharacter };
             charField.RegisterValueChangedCallback(evt =>
@@ -1084,36 +1093,21 @@ namespace DialogueSystem.Editor
                 dialogueNode.speakerCharacter = evt.newValue as Character;
                 EditorUtility.SetDirty(dialogueNode);
                 RefreshCharFields();
+                UpdateActiveSpeakerUI();
             });
             detailsContainer.Add(charField);
 
-            /// ----- ADD LISTENER CHARACTER ------ ///
-            showListenerToggle = new Toggle("Show Listener") { value = dialogueNode.listenerCharacter != null };
-            showListenerToggle.RegisterValueChangedCallback(evt =>
-            {
-                if (!evt.newValue)
-                {
-                    dialogueNode.listenerCharacter = null;
-                    dialogueNode.listenerExpression = null;
-                }
-                EditorUtility.SetDirty(dialogueNode);
-                RefreshCharFields();
-            });
-            detailsContainer.Add(showListenerToggle);
-
+            // Listener is always visible
             listenerField = new ObjectField("Listener") { objectType = typeof(Character), value = dialogueNode.listenerCharacter };
             listenerField.RegisterValueChangedCallback(evt =>
             {
                 dialogueNode.listenerCharacter = evt.newValue as Character;
                 EditorUtility.SetDirty(dialogueNode);
                 RefreshCharFields();
+                UpdateActiveSpeakerUI();
             });
-            //mainContainer.Add(listenerField);
-
-            
-            /// ----- END OF LISTENER CHARACTER ----- ///
-            
-
+            detailsContainer.Add(listenerField);
+ 
             dialogueTextField = new TextField("Dialogue Text") { multiline = true };
             dialogueTextField.value = dialogueNode.dialogueText;
             dialogueTextField.RegisterValueChangedCallback(evt =>
@@ -1125,7 +1119,7 @@ namespace DialogueSystem.Editor
             detailsContainer.Add(dialogueTextField);
 
             // Start node toggle
-            var startToggle = new Toggle("Start Node") { value = dialogue.startNode == dialogueNode };
+            startToggle = new Toggle("Start Node") { value = dialogue.startNode == dialogueNode };
             startToggle.RegisterValueChangedCallback(evt =>
             {
                 if (evt.newValue)
@@ -1137,36 +1131,43 @@ namespace DialogueSystem.Editor
                     dialogue.startNode = null;
                 }
                 EditorUtility.SetDirty(dialogue);
+                // Update visibility and styling across all nodes
+                var gv = this.GetFirstAncestorOfType<DialogueGraphView>();
+                gv?.editor.RefreshStartNodeUI();
             });
             detailsContainer.Add(startToggle);
+
+            // Switch Speaker button (toggles which character is the active speaker without swapping slots)
+            switchSpeakerButton = new Button(() =>
+            {
+                dialogueNode.listenerIsSpeaker = !dialogueNode.listenerIsSpeaker;
+                EditorUtility.SetDirty(dialogueNode);
+                UpdateActiveSpeakerUI();
+                RefreshCollapsedSummary();
+            }) { text = "Switch Speaker" };
+            detailsContainer.Add(switchSpeakerButton);
+            UpdateSwitchSpeakerInteractivity();
 
             var addChoiceButton = new Button(() => AddChoice()) { text = "Add Choice" };
             detailsContainer.Add(addChoiceButton);
 
-            branchContainer = new VisualElement { style = { flexDirection = FlexDirection.Column } };
-            extensionContainer.Add(branchContainer); // Or inputContainer for top placement
+            // Container to hold all choices under the button
+            choicesContainer = new VisualElement { style = { flexDirection = FlexDirection.Column } };
+            detailsContainer.Add(choicesContainer);
 
+            // Branches appear under their Add button and after choices
             var addBranchButton = new Button(AddBranch) { text = "Add Conditional Branch" };
-            extensionContainer.Add(addBranchButton); // Place below choices
+            detailsContainer.Add(addBranchButton);
+            branchContainer = new VisualElement { style = { flexDirection = FlexDirection.Column } };
+            detailsContainer.Add(branchContainer);
 
             RefreshBranches(); // Initial call
-            
+             
             // Build collapsed summary contents
             speakerSummaryLabel = new Label("") { style = { unityFontStyleAndWeight = FontStyle.Bold } };
             textSummaryLabel = new Label("") { style = { whiteSpace = WhiteSpace.Normal } }; // allow wrapping
-            isSpeakerCollapsedToggle = new Toggle("Listener is Speaker");
-            isSpeakerCollapsedToggle.RegisterValueChangedCallback(e =>
-            {
-                dialogueNode.listenerIsSpeaker = e.newValue;
-                // Sync with detailed toggle if it exists
-                if (isSpeakerToggle != null)
-                    isSpeakerToggle.SetValueWithoutNotify(e.newValue);
-                EditorUtility.SetDirty(dialogueNode);
-                RefreshCharFields();
-            });
             collapsedSummary.Add(speakerSummaryLabel);
             collapsedSummary.Add(textSummaryLabel);
-            collapsedSummary.Add(isSpeakerCollapsedToggle);
 
             // Add containers: details in extension (hidden by Unity when collapsed), summary in main
             extensionContainer.Add(detailsContainer);
@@ -1175,7 +1176,10 @@ namespace DialogueSystem.Editor
             // Hook into Unity's built-in collapse arrow to toggle our summary/details
             // Initial state based on Node.expanded
             SetCollapsedUI(!expanded);
+            UpdateActiveSpeakerUI();
             RefreshCollapsedSummary();
+            UpdateStartToggleVisibility();
+            UpdateStartNodeStyling();
             // Use the title button container click to detect Unity's collapse arrow toggling
             titleButtonContainer.RegisterCallback<ClickEvent>(_ =>
             {
@@ -1185,6 +1189,68 @@ namespace DialogueSystem.Editor
                     RefreshCollapsedSummary();
                 };
             });
+        }
+
+        // Enable Switch Speaker only when both Speaker and Listener are assigned
+        private void UpdateSwitchSpeakerInteractivity()
+        {
+            if (switchSpeakerButton == null) return;
+            bool enabled = dialogueNode != null && dialogueNode.speakerCharacter != null && dialogueNode.listenerCharacter != null;
+            switchSpeakerButton.SetEnabled(enabled);
+        }
+
+        // Show Start Node toggle only when no start is assigned, or on the start node itself
+        public void UpdateStartToggleVisibility()
+        {
+            if (startToggle == null) return;
+            bool show = selectedDialogue != null && (selectedDialogue.startNode == null || selectedDialogue.startNode == dialogueNode);
+            startToggle.style.display = show ? DisplayStyle.Flex : DisplayStyle.None;
+            // Keep value in sync with model
+            startToggle.SetValueWithoutNotify(selectedDialogue != null && selectedDialogue.startNode == dialogueNode);
+        }
+
+        // Visually highlight the start node
+        public void UpdateStartNodeStyling()
+        {
+            bool isStart = selectedDialogue != null && selectedDialogue.startNode == dialogueNode;
+            if (isStart)
+            {
+                // Greenish header and subtle border to stand out
+                titleContainer.style.backgroundColor = new Color(0.12f, 0.35f, 0.12f, 1f);
+                style.borderLeftColor = new Color(0.2f, 0.6f, 0.2f, 1f);
+                style.borderLeftWidth = 3;
+            }
+            else
+            {
+                // Reset to defaults
+                titleContainer.style.backgroundColor = StyleKeyword.Null;
+                style.borderLeftWidth = 0;
+            }
+        }
+
+        private string ComputeActiveSpeakerName()
+        {
+            if (dialogueNode == null) return "";
+            if (dialogueNode.listenerIsSpeaker)
+            {
+                if (dialogueNode.listenerCharacter != null) return dialogueNode.listenerCharacter.npcName;
+                return "None";
+            }
+            // Speaker is active
+            if (dialogueNode.speakerCharacter != null) return dialogueNode.speakerCharacter.npcName;
+            if (!string.IsNullOrEmpty(dialogueNode.speakerName)) return dialogueNode.speakerName;
+            return "None";
+        }
+        
+        private void UpdateActiveSpeakerUI()
+        {
+            if (activeSpeakerField != null)
+            {
+                activeSpeakerField.SetValueWithoutNotify(ComputeActiveSpeakerName());
+            }
+            // Keep node title in sync as a quick visual cue in the graph
+            var t = ComputeActiveSpeakerName();
+            title = string.IsNullOrEmpty(t) || t == "None" ? "Node" : t;
         }
 
         // Allow external callers to set expanded/collapsed state in a safe, UI-updating way
@@ -1209,7 +1275,7 @@ namespace DialogueSystem.Editor
             if (dialogueNode == null) return;
 
             // Update title and text fields
-            title = !string.IsNullOrEmpty(dialogueNode.speakerName) ? dialogueNode.speakerName : "Node";
+            UpdateActiveSpeakerUI();
             if (dialogueTextField != null)
             {
                 // Avoid re-entrant change notifications
@@ -1224,35 +1290,15 @@ namespace DialogueSystem.Editor
             RefreshChoices();
             RefreshBranches();
             RefreshCharFields();
+            UpdateActiveSpeakerUI();
             RefreshCollapsedSummary();
+            UpdateSwitchSpeakerInteractivity();
+            UpdateStartToggleVisibility();
+            UpdateStartNodeStyling();
         }
 
         void RefreshCharFields()
         {
-            // if (expressionDropdown != null)
-            //     mainContainer.Remove(expressionDropdown);
-
-            // if (dialogueNode.character != null)
-            // {
-            //     var expressions = dialogueNode.character.expressions.ConvertAll(e => e.expressionName);
-            //     if (!expressions.Contains("Default")) expressions.Insert(0, "Default");
-
-            //     // Ensure the current value is valid
-            //     string currentValue = dialogueNode.charExpression;
-            //     if (string.IsNullOrEmpty(currentValue) || !expressions.Contains(currentValue))
-            //     {
-            //         currentValue = "Default";
-            //         dialogueNode.charExpression = currentValue;
-            //     }
-
-            //     expressionDropdown = new PopupField<string>("Expression", expressions, currentValue);
-            //     expressionDropdown.RegisterValueChangedCallback(e =>
-            //     {
-            //         dialogueNode.charExpression = e.newValue;
-            //         EditorUtility.SetDirty(dialogueNode);
-            //     });
-            //     mainContainer.Add(expressionDropdown);
-            // }
             // Remove old dropdown if present
             if (expressionDropdown != null)
             {
@@ -1261,132 +1307,74 @@ namespace DialogueSystem.Editor
             }
 
             // Remove listener UI if present
-            if (listenerField != null)
-                listenerField.RemoveFromHierarchy();
             if (listenerExpressionDropdown != null)
                 listenerExpressionDropdown.RemoveFromHierarchy();
 
+            // Speaker expression dropdown
             if (dialogueNode.speakerCharacter != null)
             {
-                // Overwrite speaker name with character SO name and disable editing
-                speakerField.value = dialogueNode.speakerCharacter.npcName;
-                speakerField.SetEnabled(false);
-
-                dialogueNode.speakerName = dialogueNode.speakerCharacter.npcName;
-                EditorUtility.SetDirty(dialogueNode);
-
                 // Build expression list
                 var expressions = dialogueNode.speakerCharacter.expressions.ConvertAll(e => e.expressionName);
-                if (!expressions.Contains("Default")) expressions.Insert(0, "Default");
+                bool hasAny = expressions.Count > 0 || dialogueNode.speakerCharacter.defaultSprite != null;
+                if (hasAny && !expressions.Contains("Default")) expressions.Insert(0, "Default");
 
-                // Ensure current value is valid
+                // Ensure current value is valid when showing dropdown
                 string currentValue = dialogueNode.speakerExpression;
-                if (string.IsNullOrEmpty(currentValue) || !expressions.Contains(currentValue))
+                if (hasAny && (string.IsNullOrEmpty(currentValue) || !expressions.Contains(currentValue)))
                 {
                     currentValue = "Default";
                     dialogueNode.speakerExpression = currentValue;
                 }
 
-                expressionDropdown = new PopupField<string>("Expression", expressions, currentValue);
-                expressionDropdown.RegisterValueChangedCallback(e =>
+                if (hasAny)
                 {
-                    dialogueNode.speakerExpression = e.newValue;
-                    EditorUtility.SetDirty(dialogueNode);
-                });
-
-                // Insert directly after the character field within details container
-                int afterCharIndex = detailsContainer.IndexOf(charField) + 1;
-                afterCharIndex = Mathf.Clamp(afterCharIndex, 0, detailsContainer.childCount);
-                detailsContainer.Insert(afterCharIndex, expressionDropdown);
+                    expressionDropdown = new PopupField<string>("Speaker Expression", expressions, currentValue);
+                    expressionDropdown.RegisterValueChangedCallback(e =>
+                    {
+                        dialogueNode.speakerExpression = e.newValue;
+                        EditorUtility.SetDirty(dialogueNode);
+                    });
+                    // Insert directly after the Speaker field
+                    int afterCharIndex = detailsContainer.IndexOf(charField) + 1;
+                    afterCharIndex = Mathf.Clamp(afterCharIndex, 0, detailsContainer.childCount);
+                    detailsContainer.Insert(afterCharIndex, expressionDropdown);
+                }
             }
-            else
-            {
-                // No character: enable speaker field for manual entry
-                speakerField.SetEnabled(true);
-            }
+            // No speaker character => no dropdown
 
-            // Expression dropdown for listener (similar to speaker)
-            if (showListenerToggle.value)
+            // Listener expression dropdown (similar rules)
             {
-                if (!detailsContainer.Contains(listenerField))
-                    detailsContainer.Add(listenerField);
-
                 if (dialogueNode.listenerCharacter != null)
                 {
                     var expressions = dialogueNode.listenerCharacter.expressions.ConvertAll(e => e.expressionName);
-                    if (!expressions.Contains("Default")) expressions.Insert(0, "Default");
+                    bool hasAny = expressions.Count > 0 || dialogueNode.listenerCharacter.defaultSprite != null;
+                    if (hasAny && !expressions.Contains("Default")) expressions.Insert(0, "Default");
                     string currentValue = dialogueNode.listenerExpression;
-                    if (string.IsNullOrEmpty(currentValue) || !expressions.Contains(currentValue))
+                    if (hasAny && (string.IsNullOrEmpty(currentValue) || !expressions.Contains(currentValue)))
                     {
                         currentValue = "Default";
                         dialogueNode.listenerExpression = currentValue;
                     }
-                    listenerExpressionDropdown = new PopupField<string>("Listener Expression", expressions, currentValue);
-                    listenerExpressionDropdown.RegisterValueChangedCallback(e =>
+                    if (hasAny)
                     {
-                        dialogueNode.listenerExpression = e.newValue;
-                        EditorUtility.SetDirty(dialogueNode);
-                    });
-                    detailsContainer.Add(listenerExpressionDropdown);
+                        listenerExpressionDropdown = new PopupField<string>("Listener Expression", expressions, currentValue);
+                        listenerExpressionDropdown.RegisterValueChangedCallback(e =>
+                        {
+                            dialogueNode.listenerExpression = e.newValue;
+                            EditorUtility.SetDirty(dialogueNode);
+                        });
+                        // Place right after the Listener field
+                        int afterListenerIndex = detailsContainer.IndexOf(listenerField) + 1;
+                        afterListenerIndex = Mathf.Clamp(afterListenerIndex, 0, detailsContainer.childCount);
+                        detailsContainer.Insert(afterListenerIndex, listenerExpressionDropdown);
+                    }
                 }
             }
 
-            // Toggle to turn on the listener as the speaker (reuse single toggle instance)
-            if (isSpeakerToggle == null)
-            {
-                isSpeakerToggle = new Toggle("Is Speaker") { value = dialogueNode.listenerIsSpeaker };
-                isSpeakerToggle.RegisterValueChangedCallback(e =>
-                {
-                    dialogueNode.listenerIsSpeaker = e.newValue;
-                    EditorUtility.SetDirty(dialogueNode);
-
-                    // If checked, override speaker name in editor UI
-                    if (e.newValue && dialogueNode.listenerCharacter != null)
-                    {
-                        speakerField.value = dialogueNode.listenerCharacter.npcName;
-                        speakerField.SetEnabled(false);
-                        dialogueNode.speakerName = dialogueNode.listenerCharacter.npcName;
-                    }
-                    else
-                    {
-                        // Restore speaker field based on speakerCharacter
-                        if (dialogueNode.speakerCharacter != null)
-                        {
-                            speakerField.value = dialogueNode.speakerCharacter.npcName;
-                            speakerField.SetEnabled(false);
-                            dialogueNode.speakerName = dialogueNode.speakerCharacter.npcName;
-                        }
-                        else
-                        {
-                            speakerField.SetEnabled(true);
-                        }
-                    }
-                    // Sync collapsed toggle
-                    if (isSpeakerCollapsedToggle != null)
-                        isSpeakerCollapsedToggle.SetValueWithoutNotify(e.newValue);
-                    RefreshCollapsedSummary();
-                });
-            }
-            else
-            {
-                // keep toggle's current checked state in sync with the node
-                isSpeakerToggle.value = dialogueNode.listenerIsSpeaker;
-            }
-
-            // Add the toggle to the UI (once)
-            if (!detailsContainer.Contains(isSpeakerToggle))
-                detailsContainer.Add(isSpeakerToggle);
-
-            // Initial override if already checked
-            if (dialogueNode.listenerIsSpeaker && dialogueNode.listenerCharacter != null)
-            {
-                speakerField.value = dialogueNode.listenerCharacter.npcName;
-                speakerField.SetEnabled(false);
-                dialogueNode.speakerName = dialogueNode.listenerCharacter.npcName;
-            }
-
-            // Update collapsed summary after character UI changes
+            // Update UI derived from active speaker and collapsed summary
+            UpdateActiveSpeakerUI();
             RefreshCollapsedSummary();
+            UpdateSwitchSpeakerInteractivity();
         }
 
         // Override to handle selection: Show this node's SO in Inspector
@@ -1558,8 +1546,8 @@ namespace DialogueSystem.Editor
             // Remove old choice elements and ports
             foreach (var element in choiceElements)
             {
-                if (mainContainer.Contains(element))
-                    mainContainer.Remove(element);
+                if (choicesContainer != null && choicesContainer.Contains(element))
+                    choicesContainer.Remove(element);
             }
             choiceElements.Clear();
 
@@ -1587,7 +1575,8 @@ namespace DialogueSystem.Editor
                 var deleteButton = new Button(() => DeleteChoice(currentIndex)) { text = "X" };
                 choiceContainer.Add(deleteButton);
 
-                mainContainer.Add(choiceContainer);
+                if (choicesContainer != null)
+                    choicesContainer.Add(choiceContainer);
                 choiceElements.Add(choiceContainer);
 
                 var choicePort = Port.Create<Edge>(Orientation.Horizontal, Direction.Output, Port.Capacity.Single, typeof(DialogueNode));
@@ -1815,16 +1804,8 @@ namespace DialogueSystem.Editor
         {
             if (collapsedSummary == null) return;
 
-            // Speaker: show character npcName if assigned; else show speakerName if not empty; else hide
-            string speakerToShow = null;
-            if (dialogueNode.speakerCharacter != null)
-            {
-                speakerToShow = dialogueNode.speakerCharacter.npcName;
-            }
-            else if (!string.IsNullOrEmpty(dialogueNode.speakerName))
-            {
-                speakerToShow = dialogueNode.speakerName;
-            }
+            // Speaker: show the ACTIVE speaker name
+            string speakerToShow = ComputeActiveSpeakerName();
 
             if (!string.IsNullOrEmpty(speakerToShow))
             {
@@ -1845,17 +1826,6 @@ namespace DialogueSystem.Editor
             else
             {
                 textSummaryLabel.style.display = DisplayStyle.None;
-            }
-
-            // Listener is Speaker toggle: only show if a listener is assigned
-            if (dialogueNode.listenerCharacter != null)
-            {
-                isSpeakerCollapsedToggle.SetValueWithoutNotify(dialogueNode.listenerIsSpeaker);
-                isSpeakerCollapsedToggle.style.display = DisplayStyle.Flex;
-            }
-            else
-            {
-                isSpeakerCollapsedToggle.style.display = DisplayStyle.None;
             }
         }
 
