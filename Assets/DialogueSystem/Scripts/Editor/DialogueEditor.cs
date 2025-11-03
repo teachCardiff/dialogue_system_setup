@@ -1074,7 +1074,7 @@ namespace DialogueSystem.Editor
             mainContainer.style.maxWidth = NodeMaxWidth;
             mainContainer.style.flexShrink = 1;
             mainContainer.style.minWidth = 0;
-            mainContainer.style.backgroundColor = new Color(.12f, .12f, .12f, 1f);
+            mainContainer.style.backgroundColor = new Color(.12f, .12f, .12f, 1f); // change background of node so it is not transparent
             extensionContainer.style.maxWidth = NodeMaxWidth;
             extensionContainer.style.flexShrink = 1;
             extensionContainer.style.minWidth = 0;
