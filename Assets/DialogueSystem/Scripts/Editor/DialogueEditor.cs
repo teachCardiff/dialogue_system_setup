@@ -1012,6 +1012,13 @@ namespace DialogueSystem.Editor
         private Toggle showListenerToggle;
     // NEW: single reusable IsSpeaker toggle instance — prevents duplicates on repeated RefreshCharFields calls
     private Toggle isSpeakerToggle;
+        // Containers for expanded/collapsed layouts
+        private VisualElement detailsContainer; // Shown when expanded
+        private VisualElement collapsedSummary; // Shown when collapsed
+        private Label speakerSummaryLabel;
+        private Label textSummaryLabel;
+        private Toggle isSpeakerCollapsedToggle;
+    // We will use Unity's default collapse arrow; no custom button needed
 
         public DialogueNodeView(DialogueNode node, Dialogue dialogue)
         {
@@ -1034,7 +1041,11 @@ namespace DialogueSystem.Editor
             // Add context menu for node deletion
             this.AddManipulator(new ContextualMenuManipulator(BuildNodeContextMenu));
 
-            // Node fields (basic; detailed editing via Inspector)
+            // Create containers for expanded/collapsed content
+            detailsContainer = new VisualElement { style = { flexDirection = FlexDirection.Column, marginTop = 4, marginBottom = 4 } };
+            collapsedSummary = new VisualElement { style = { flexDirection = FlexDirection.Column, marginTop = 4, marginBottom = 4 } };
+
+            // Node fields (basic; detailed editing via Inspector) — lives in detailsContainer
             speakerField = new TextField("Speaker Name") { value = dialogueNode.speakerName };
             speakerField.RegisterValueChangedCallback(evt =>
             {
@@ -1042,7 +1053,7 @@ namespace DialogueSystem.Editor
                 title = string.IsNullOrEmpty(evt.newValue) ? "Node" : evt.newValue;
                 EditorUtility.SetDirty(dialogueNode);
             });
-            mainContainer.Add(speakerField);
+            detailsContainer.Add(speakerField);
 
             charField = new ObjectField("Speaker") { objectType = typeof(Character), value = dialogueNode.speakerCharacter };
             charField.RegisterValueChangedCallback(evt =>
@@ -1051,7 +1062,7 @@ namespace DialogueSystem.Editor
                 EditorUtility.SetDirty(dialogueNode);
                 RefreshCharFields();
             });
-            mainContainer.Add(charField);
+            detailsContainer.Add(charField);
 
             /// ----- ADD LISTENER CHARACTER ------ ///
             showListenerToggle = new Toggle("Show Listener") { value = dialogueNode.listenerCharacter != null };
@@ -1065,7 +1076,7 @@ namespace DialogueSystem.Editor
                 EditorUtility.SetDirty(dialogueNode);
                 RefreshCharFields();
             });
-            mainContainer.Add(showListenerToggle);
+            detailsContainer.Add(showListenerToggle);
 
             listenerField = new ObjectField("Listener") { objectType = typeof(Character), value = dialogueNode.listenerCharacter };
             listenerField.RegisterValueChangedCallback(evt =>
@@ -1086,8 +1097,9 @@ namespace DialogueSystem.Editor
             {
                 dialogueNode.dialogueText = evt.newValue;
                 EditorUtility.SetDirty(dialogueNode);
+                RefreshCollapsedSummary();
             });
-            mainContainer.Add(dialogueTextField);
+            detailsContainer.Add(dialogueTextField);
 
             // Start node toggle
             var startToggle = new Toggle("Start Node") { value = dialogue.startNode == dialogueNode };
@@ -1103,10 +1115,10 @@ namespace DialogueSystem.Editor
                 }
                 EditorUtility.SetDirty(dialogue);
             });
-            mainContainer.Add(startToggle);
+            detailsContainer.Add(startToggle);
 
             var addChoiceButton = new Button(() => AddChoice()) { text = "Add Choice" };
-            mainContainer.Add(addChoiceButton);
+            detailsContainer.Add(addChoiceButton);
 
             branchContainer = new VisualElement { style = { flexDirection = FlexDirection.Column } };
             extensionContainer.Add(branchContainer); // Or inputContainer for top placement
@@ -1116,6 +1128,40 @@ namespace DialogueSystem.Editor
 
             RefreshBranches(); // Initial call
             
+            // Build collapsed summary contents
+            speakerSummaryLabel = new Label("") { style = { unityFontStyleAndWeight = FontStyle.Bold } };
+            textSummaryLabel = new Label("") { style = { whiteSpace = WhiteSpace.Normal } }; // allow wrapping
+            isSpeakerCollapsedToggle = new Toggle("Listener is Speaker");
+            isSpeakerCollapsedToggle.RegisterValueChangedCallback(e =>
+            {
+                dialogueNode.listenerIsSpeaker = e.newValue;
+                // Sync with detailed toggle if it exists
+                if (isSpeakerToggle != null)
+                    isSpeakerToggle.SetValueWithoutNotify(e.newValue);
+                EditorUtility.SetDirty(dialogueNode);
+                RefreshCharFields();
+            });
+            collapsedSummary.Add(speakerSummaryLabel);
+            collapsedSummary.Add(textSummaryLabel);
+            collapsedSummary.Add(isSpeakerCollapsedToggle);
+
+            // Add containers: details in extension (hidden by Unity when collapsed), summary in main
+            extensionContainer.Add(detailsContainer);
+            mainContainer.Add(collapsedSummary);
+
+            // Hook into Unity's built-in collapse arrow to toggle our summary/details
+            // Initial state based on Node.expanded
+            SetCollapsedUI(!expanded);
+            RefreshCollapsedSummary();
+            // Use the title button container click to detect Unity's collapse arrow toggling
+            titleButtonContainer.RegisterCallback<ClickEvent>(_ =>
+            {
+                EditorApplication.delayCall += () =>
+                {
+                    SetCollapsedUI(!expanded);
+                    RefreshCollapsedSummary();
+                };
+            });
         }
 
         // Refresh UI elements to reflect the underlying DialogueNode model
@@ -1139,6 +1185,7 @@ namespace DialogueSystem.Editor
             RefreshChoices();
             RefreshBranches();
             RefreshCharFields();
+            RefreshCollapsedSummary();
         }
 
         void RefreshCharFields()
@@ -1170,15 +1217,15 @@ namespace DialogueSystem.Editor
             // Remove old dropdown if present
             if (expressionDropdown != null)
             {
-                mainContainer.Remove(expressionDropdown);
+                expressionDropdown.RemoveFromHierarchy();
                 expressionDropdown = null;
             }
 
             // Remove listener UI if present
-            if (listenerField != null && mainContainer.Contains(listenerField))
-                mainContainer.Remove(listenerField);
-            if (listenerExpressionDropdown != null && mainContainer.Contains(listenerExpressionDropdown))
-                mainContainer.Remove(listenerExpressionDropdown);
+            if (listenerField != null)
+                listenerField.RemoveFromHierarchy();
+            if (listenerExpressionDropdown != null)
+                listenerExpressionDropdown.RemoveFromHierarchy();
 
             if (dialogueNode.speakerCharacter != null)
             {
@@ -1208,8 +1255,10 @@ namespace DialogueSystem.Editor
                     EditorUtility.SetDirty(dialogueNode);
                 });
 
-                // Insert directly after the character field
-                mainContainer.Insert(mainContainer.IndexOf(charField) + 1, expressionDropdown);
+                // Insert directly after the character field within details container
+                int afterCharIndex = detailsContainer.IndexOf(charField) + 1;
+                afterCharIndex = Mathf.Clamp(afterCharIndex, 0, detailsContainer.childCount);
+                detailsContainer.Insert(afterCharIndex, expressionDropdown);
             }
             else
             {
@@ -1220,8 +1269,8 @@ namespace DialogueSystem.Editor
             // Expression dropdown for listener (similar to speaker)
             if (showListenerToggle.value)
             {
-                if (!mainContainer.Contains(listenerField))
-                    mainContainer.Add(listenerField);
+                if (!detailsContainer.Contains(listenerField))
+                    detailsContainer.Add(listenerField);
 
                 if (dialogueNode.listenerCharacter != null)
                 {
@@ -1239,7 +1288,7 @@ namespace DialogueSystem.Editor
                         dialogueNode.listenerExpression = e.newValue;
                         EditorUtility.SetDirty(dialogueNode);
                     });
-                    mainContainer.Add(listenerExpressionDropdown);
+                    detailsContainer.Add(listenerExpressionDropdown);
                 }
             }
 
@@ -1273,6 +1322,10 @@ namespace DialogueSystem.Editor
                             speakerField.SetEnabled(true);
                         }
                     }
+                    // Sync collapsed toggle
+                    if (isSpeakerCollapsedToggle != null)
+                        isSpeakerCollapsedToggle.SetValueWithoutNotify(e.newValue);
+                    RefreshCollapsedSummary();
                 });
             }
             else
@@ -1282,8 +1335,8 @@ namespace DialogueSystem.Editor
             }
 
             // Add the toggle to the UI (once)
-            if (!mainContainer.Contains(isSpeakerToggle))
-                mainContainer.Add(isSpeakerToggle);
+            if (!detailsContainer.Contains(isSpeakerToggle))
+                detailsContainer.Add(isSpeakerToggle);
 
             // Initial override if already checked
             if (dialogueNode.listenerIsSpeaker && dialogueNode.listenerCharacter != null)
@@ -1292,6 +1345,9 @@ namespace DialogueSystem.Editor
                 speakerField.SetEnabled(false);
                 dialogueNode.speakerName = dialogueNode.listenerCharacter.npcName;
             }
+
+            // Update collapsed summary after character UI changes
+            RefreshCollapsedSummary();
         }
 
         // Override to handle selection: Show this node's SO in Inspector
@@ -1706,5 +1762,64 @@ namespace DialogueSystem.Editor
             if (port.userData is int index) return index;
             return -1; // For nextNode or invalid
         }
+
+        // Toggle UI for collapsed/expanded details and summary
+        private void SetCollapsedUI(bool collapsed)
+        {
+            if (collapsedSummary != null)
+                collapsedSummary.style.display = collapsed ? DisplayStyle.Flex : DisplayStyle.None;
+            // detailsContainer lives in extensionContainer which Unity will toggle automatically
+        }
+
+        // Keep collapsed summary content in sync with model and visibility rules
+        private void RefreshCollapsedSummary()
+        {
+            if (collapsedSummary == null) return;
+
+            // Speaker: show character npcName if assigned; else show speakerName if not empty; else hide
+            string speakerToShow = null;
+            if (dialogueNode.speakerCharacter != null)
+            {
+                speakerToShow = dialogueNode.speakerCharacter.npcName;
+            }
+            else if (!string.IsNullOrEmpty(dialogueNode.speakerName))
+            {
+                speakerToShow = dialogueNode.speakerName;
+            }
+
+            if (!string.IsNullOrEmpty(speakerToShow))
+            {
+                speakerSummaryLabel.text = $"Speaker: {speakerToShow}";
+                speakerSummaryLabel.style.display = DisplayStyle.Flex;
+            }
+            else
+            {
+                speakerSummaryLabel.style.display = DisplayStyle.None;
+            }
+
+            // Dialogue text: show only if non-empty
+            if (!string.IsNullOrEmpty(dialogueNode.dialogueText))
+            {
+                textSummaryLabel.text = dialogueNode.dialogueText;
+                textSummaryLabel.style.display = DisplayStyle.Flex;
+            }
+            else
+            {
+                textSummaryLabel.style.display = DisplayStyle.None;
+            }
+
+            // Listener is Speaker toggle: only show if a listener is assigned
+            if (dialogueNode.listenerCharacter != null)
+            {
+                isSpeakerCollapsedToggle.SetValueWithoutNotify(dialogueNode.listenerIsSpeaker);
+                isSpeakerCollapsedToggle.style.display = DisplayStyle.Flex;
+            }
+            else
+            {
+                isSpeakerCollapsedToggle.style.display = DisplayStyle.None;
+            }
+        }
+
+        // No custom collapse button; we piggyback on Unity's default arrow
     }
 }

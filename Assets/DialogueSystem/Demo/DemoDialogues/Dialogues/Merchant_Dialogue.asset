@@ -145,7 +145,7 @@ MonoBehaviour:
   m_Name: Node_6
   m_EditorClassIdentifier: 
   nodeId: 460d44ea-a7f3-46e0-b0ec-a5951fc8f0b9
-  speakerName: Merchant
+  speakerName: Player
   speakerCharacter: {fileID: 0}
   speakerExpression: 
   listenerCharacter: {fileID: 0}
@@ -458,7 +458,7 @@ MonoBehaviour:
     position: {x: -809, y: 519}
   defaultSpeaker: {fileID: 0}
   defaultListener: {fileID: 0}
-  currentNode: {fileID: -2738029060375608619}
+  currentNode: {fileID: 6764674651265088946}
 --- !u!114 &420727449347315468
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -883,7 +883,7 @@ MonoBehaviour:
   nodeId: 72fdf81c-542d-406a-9a6a-9ee33dbb8b75
   speakerName: 
   speakerCharacter: {fileID: 0}
-  speakerExpression: 
+  speakerExpression: Default
   listenerCharacter: {fileID: 0}
   listenerExpression: 
   listenerIsSpeaker: 0
@@ -891,10 +891,32 @@ MonoBehaviour:
   choices: []
   conditionalBranches:
   - branchName: IN PROGRESS
-    operations: []
+    operations:
+    - variable:
+        id: 8601d25d-9cca-4769-83ba-b80dba52b72c
+        path: Root/Quests/HelptheMerchant/status
+      numericOp: 0
+      intValue: 0
+      boolOp: 0
+      boolValue: 0
+      stringOp: 0
+      stringValue: 
+      enumOp: 0
+      enumString: InProgress
     targetNode: {fileID: 420727449347315468}
-  - branchName: COMPLETED
-    operations: []
+  - branchName: Ready to turn in
+    operations:
+    - variable:
+        id: 8601d25d-9cca-4769-83ba-b80dba52b72c
+        path: Root/Quests/HelptheMerchant/status
+      numericOp: 0
+      intValue: 0
+      boolOp: 0
+      boolValue: 0
+      stringOp: 0
+      stringValue: 
+      enumOp: 0
+      enumString: ReadyToTurnIn
     targetNode: {fileID: 4544422311883375233}
   onEnterNode:
     m_PersistentCalls:

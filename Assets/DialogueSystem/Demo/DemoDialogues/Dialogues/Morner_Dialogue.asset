@@ -539,7 +539,7 @@ MonoBehaviour:
     position: {x: 2168, y: 1005}
   defaultSpeaker: {fileID: 11400000, guid: c0f5165958beabc4da2ec2ee254ee18b, type: 2}
   defaultListener: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
-  currentNode: {fileID: -2915264302376407197}
+  currentNode: {fileID: 2110140916608024655}
 --- !u!114 &982885123101596447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -613,7 +613,7 @@ MonoBehaviour:
   m_Name: Node_4
   m_EditorClassIdentifier: 
   nodeId: 92b2bd88-040a-42dc-946e-e3318520b423
-  speakerName: Player
+  speakerName: Mourner
   speakerCharacter: {fileID: 11400000, guid: c0f5165958beabc4da2ec2ee254ee18b, type: 2}
   speakerExpression: Default
   listenerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
@@ -712,7 +712,7 @@ MonoBehaviour:
   m_Name: Node_20
   m_EditorClassIdentifier: 
   nodeId: 5eca5489-dac2-438f-a665-0de5f8042b07
-  speakerName: Player
+  speakerName: Mourner
   speakerCharacter: {fileID: 11400000, guid: c0f5165958beabc4da2ec2ee254ee18b, type: 2}
   speakerExpression: Default
   listenerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
