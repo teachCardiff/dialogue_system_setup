@@ -176,7 +176,7 @@ MonoBehaviour:
         id: 3cb43aa5-3009-4d15-9353-f8aa8b6af59c
         key: NewInt
         displayName: flowers
-        value: 2
+        value: 0
     - rid: 987104248695357441
       type: {class: QuestVariable, ns: , asm: Assembly-CSharp}
       data:

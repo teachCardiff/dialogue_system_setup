@@ -44,4 +44,40 @@ public class DialogueNode : ScriptableObject
     public DialogueNode nextNode;
 
     public bool IsEndNode => choices.Count == 0 && nextNode == null;
+
+    // ===== Audio & Flow (per-node overrides) =====
+    public enum VoiceWaitMode { None = 0, TextOnly = 1, AudioOnly = 2, Both = 3, Either = 4 }
+
+    [System.Serializable]
+    public class NodePlaybackSettings
+    {
+        [Header("Voice Line")]
+        public AudioClip voiceClip;
+        [Range(0f, 1f)] public float voiceVolume = 1f;
+
+        [Header("Completion Rule")]
+        [Tooltip("Use node-specific wait mode instead of the global setting.")]
+        public bool overrideWaitMode = false;
+        public VoiceWaitMode waitMode = VoiceWaitMode.Either;
+
+        [Header("Auto-Advance Override")]
+        [Tooltip("If enabled, this node overrides the global auto-advance setting.")]
+        public bool overrideAutoAdvance = false;
+        [Tooltip("When override is enabled, should this node auto-advance after completion?")]
+        public bool autoAdvance = true;
+        [Min(0f)] public float autoAdvanceDelay = 0.25f;
+
+        [Header("Input Behavior")]
+        [Tooltip("If true, player can skip/stop the currently playing voice with the advance input.")]
+        public bool allowSkipAudio = true;
+        [Tooltip("If true, voice playback stops when leaving this node.")]
+        public bool stopVoiceOnExit = true;
+
+        [Header("Pacing")]
+        [Tooltip("If true and a voice clip exists, typewriter speed will be adjusted to roughly match the clip length.")]
+        public bool matchTypewriterToAudio = false;
+    }
+
+    [Header("Audio & Flow (Overrides)")]
+    public NodePlaybackSettings playback = new NodePlaybackSettings();
 }

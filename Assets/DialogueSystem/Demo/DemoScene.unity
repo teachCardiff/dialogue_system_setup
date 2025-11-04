@@ -6052,6 +6052,18 @@ PrefabInstance:
       propertyPath: gameState
       value: 
       objectReference: {fileID: 11400000, guid: abeccb046d47fd64494cb73113a0de3d, type: 2}
+    - target: {fileID: 2419165209200422319, guid: 659b5f93910062b428164b32be1d7a8a, type: 3}
+      propertyPath: globalWaitMode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2419165209200422319, guid: 659b5f93910062b428164b32be1d7a8a, type: 3}
+      propertyPath: globalAutoAdvance
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2419165209200422319, guid: 659b5f93910062b428164b32be1d7a8a, type: 3}
+      propertyPath: allowSkipToNextWhileAudioPlays
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3858291575613480866, guid: 659b5f93910062b428164b32be1d7a8a, type: 3}
       propertyPath: m_Name
       value: DialogueManager

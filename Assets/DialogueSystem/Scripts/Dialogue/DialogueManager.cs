@@ -16,6 +16,21 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private GameState gameState;
     [SerializeField] private DialogueUI dialogueUI; // Reference to UI prefab instance
 
+    // NEW: global settings (designer friendly)
+    [Header("Dialogue Flow (Global)")]
+    [Tooltip("If true, nodes will automatically advance when completed (unless overridden by node).")]
+    public bool globalAutoAdvance = false;
+    [Tooltip("Minimum time a node stays on screen before it is allowed to auto-advance.")]
+    public float globalMinDisplayTime = 0.6f;
+    [Tooltip("Default completion rule when a node has voice/text.")]
+    public DialogueNode.VoiceWaitMode globalWaitMode = DialogueNode.VoiceWaitMode.Either;
+    [Tooltip("If true, pressing advance input while a voice is playing can skip to the next node (respecting node setting).")]
+    public bool allowSkipToNextWhileAudioPlays = true;
+
+    [Header("Debug Logging")]
+    [Tooltip("When enabled, prints verbose DialogueManager info logs to the Console.")]
+    public bool verboseLogs = false;
+
     private Dialogue currentDialogue;
     private DialogueNode currentNode;
     private DialogueInteract pendingInteractor;
@@ -53,10 +68,15 @@ public class DialogueManager : MonoBehaviour
         else Destroy(gameObject);
     }
 
+    private void OnValidate()
+    {
+        // nothing to sync globally right now
+    }
+
     public void StartDialogue(Dialogue dialogue, bool resetProgress = true)
     {
         if (currentDialogue != null) return; // Prevent overlap
-        Debug.Log($"[DialogueManager] StartDialogue('{dialogue?.name}') resetProgress={resetProgress}");
+        if (verboseLogs) Debug.Log($"[DialogueManager] StartDialogue('{dialogue?.name}') resetProgress={resetProgress}");
 
         if (resetProgress)
         {
@@ -89,7 +109,7 @@ public class DialogueManager : MonoBehaviour
     private IEnumerator RunNode()
     {
         debugCurrentNode = currentNode;
-        Debug.Log($"[DialogueManager] Enter Node: '{currentNode.name}' (speaker='{currentNode.speakerName}', textLen={currentNode.dialogueText?.Length ?? 0})");
+        if (verboseLogs) Debug.Log($"[DialogueManager] Enter Node: '{currentNode.name}' (speaker='{currentNode.speakerName}', textLen={currentNode.dialogueText?.Length ?? 0})");
         currentNode.onEnterNode?.Invoke();
         
         // Auto-branch if conditions met (before showing this node)
@@ -106,12 +126,12 @@ public class DialogueManager : MonoBehaviour
                     continue;
                 }
                 bool criteria = gameState.EvaluateOperations(branch.operations);
-                Debug.Log($"[DialogueManager] Branch[{i}] '{branch.branchName}': criteria={criteria} -> target='{branch.targetNode?.name}'");
+                if (verboseLogs) Debug.Log($"[DialogueManager] Branch[{i}] '{branch.branchName}': criteria={criteria} -> target='{branch.targetNode?.name}'");
                 if (criteria)
                 {
                     branchTaken = true;
                     currentNode = branch.targetNode;
-                    Debug.Log($"[DialogueManager] Taking branch -> '{currentNode?.name}'");
+                    if (verboseLogs) Debug.Log($"[DialogueManager] Taking branch -> '{currentNode?.name}'");
                     yield return RunNode();
                     yield break; // Exit this iteration
                 }
@@ -121,14 +141,14 @@ public class DialogueManager : MonoBehaviour
             {
                 if (currentNode.nextNode != null)
                 {
-                    Debug.Log($"[DialogueManager] No conditional branches met for node '{currentNode.name}'. Advancing to nextNode '{currentNode.nextNode.name}'.");
+                    if (verboseLogs) Debug.Log($"[DialogueManager] No conditional branches met for node '{currentNode.name}'. Advancing to nextNode '{currentNode.nextNode.name}'.");
                     currentNode = currentNode.nextNode;
                     yield return RunNode();
                     yield break;
                 }
                 else
                 {
-                    Debug.Log($"[DialogueManager] No conditional branches met for node '{currentNode.name}' and no nextNode. Ending dialogue.");
+                    if (verboseLogs) Debug.Log($"[DialogueManager] No conditional branches met for node '{currentNode.name}' and no nextNode. Ending dialogue.");
                     if (pendingInteractor != null && pendingInteractor.dialogueAsset == currentDialogue)
                     {
                         pendingInteractor.ShowLockedFeedback();
@@ -144,14 +164,14 @@ public class DialogueManager : MonoBehaviour
         {
             if (currentNode.nextNode != null)
             {
-                Debug.Log($"[DialogueManager] Empty node '{currentNode.name}', skipping to nextNode '{currentNode.nextNode.name}'.");
+                if (verboseLogs) Debug.Log($"[DialogueManager] Empty node '{currentNode.name}', skipping to nextNode '{currentNode.nextNode.name}'.");
                 currentNode = currentNode.nextNode;
                 yield return RunNode();
                 yield break;
             }
             else if (currentNode.IsEndNode)
             {
-                Debug.Log($"[DialogueManager] End node reached: '{currentNode.name}'. Ending dialogue.");
+                if (verboseLogs) Debug.Log($"[DialogueManager] End node reached: '{currentNode.name}'. Ending dialogue.");
                 ExitNodeAndApplyActions(currentNode);
                 if (pendingInteractor != null && pendingInteractor.dialogueAsset == currentDialogue)
                 {
@@ -186,30 +206,98 @@ public class DialogueManager : MonoBehaviour
             pendingInteractor = null;
         }
 
-        Debug.Log($"[DialogueManager] Show UI: speaker='{speakerName}', text='{currentNode.dialogueText}'");
+        if (verboseLogs) Debug.Log($"[DialogueManager] Show UI: speaker='{speakerName}', text='{currentNode.dialogueText}'");
         dialogueUI.ShowDialogue(speakerName, currentNode.dialogueText, speakerSprite, listenerSprite);
+
+        // Voice: start if clip present
+        if (currentNode.playback != null && currentNode.playback.voiceClip != null)
+        {
+            dialogueUI.PlayVoice(currentNode.playback.voiceClip, currentNode.playback.voiceVolume);
+            // Optional: match typewriter speed to audio length
+            if (currentNode.playback.matchTypewriterToAudio && !string.IsNullOrEmpty(currentNode.dialogueText))
+            {
+                var clipLen = currentNode.playback.voiceClip.length;
+                var chars = Mathf.Max(1, currentNode.dialogueText.Length);
+                // simple heuristic: set cps so full text roughly equals clip length
+                dialogueUI.typewriterSpeed = Mathf.Max(1f, chars / Mathf.Max(0.01f, clipLen));
+            }
+        }
 
         // Wait until UI is ready
         yield return new WaitUntil(() => dialogueUI != null && dialogueUI.IsReady);
 
-        // Wait for typewriter to finish or user skip
-        while (!dialogueUI.IsTextFullyRevealed())
+        // Completion rule selection (use node override if set)
+        var playback = currentNode.playback;
+        var waitMode = (playback != null && playback.overrideWaitMode) ? playback.waitMode : globalWaitMode;
+        var minDisplay = Mathf.Max(0f, globalMinDisplayTime);
+        float elapsed = 0f;
+
+        bool hasVoice = playback != null && playback.voiceClip != null;
+        bool IsTextDone() => dialogueUI.IsTextFullyRevealed();
+        bool IsAudioDone() => !hasVoice || !dialogueUI.IsVoicePlaying();
+
+        // Input handling and wait loop
+        while (true)
         {
-            if ((Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame) ||
-                (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame) ||
-                (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame))
+            // Skip typewriter on input regardless of wait mode
+            if (!IsTextDone())
             {
-                Debug.Log("[DialogueManager] Skip typewriter requested by input.");
-                dialogueUI.SkipTypewriter();
+                if ((Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame) ||
+                    (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame) ||
+                    (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame))
+                {
+                    dialogueUI.SkipTypewriter();
+                }
             }
+            else
+            {
+                // Text finished: only allow skipping audio/advancing if policy allows
+                bool inputPressed = (Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame) ||
+                                    (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame) ||
+                                    (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame);
+                if (inputPressed)
+                {
+                    bool allowSkipAudio = playback == null || playback.allowSkipAudio;
+                    if (hasVoice && !IsAudioDone() && allowSkipToNextWhileAudioPlays && allowSkipAudio)
+                    {
+                        dialogueUI.StopVoice();
+                    }
+                }
+            }
+
+            elapsed += Time.deltaTime;
+            bool minOk = elapsed >= minDisplay;
+            bool textDone = IsTextDone();
+            bool audioDone = IsAudioDone();
+
+            bool completed = false;
+            switch (waitMode)
+            {
+                case DialogueNode.VoiceWaitMode.None:
+                    completed = true; break;
+                case DialogueNode.VoiceWaitMode.TextOnly:
+                    completed = textDone; break;
+                case DialogueNode.VoiceWaitMode.AudioOnly:
+                    // Only audio determines completion even if text is done
+                    completed = audioDone; break;
+                case DialogueNode.VoiceWaitMode.Both:
+                    completed = textDone && audioDone; break;
+                case DialogueNode.VoiceWaitMode.Either:
+                default:
+                    completed = textDone || audioDone; break;
+            }
+
+            if (completed && minOk) break;
             yield return null;
         }
 
+        // End node: behave as before, but stop voice if requested
         if (currentNode.IsEndNode)
         {
-            Debug.Log($"[DialogueManager] Node '{currentNode.name}' is end node. Waiting for Next press.");
+            if (verboseLogs) Debug.Log($"[DialogueManager] Node '{currentNode.name}' is end node. Waiting for Next press.");
             yield return new WaitUntil(() => dialogueUI.IsNextPressed());
             ExitNodeAndApplyActions(currentNode);
+            if (currentNode.playback == null || currentNode.playback.stopVoiceOnExit) dialogueUI.StopVoice();
             if (pendingInteractor != null && pendingInteractor.dialogueAsset == currentDialogue)
             {
                 pendingInteractor.ShowLockedFeedback();
@@ -227,7 +315,7 @@ public class DialogueManager : MonoBehaviour
             {
                 var c = currentNode.choices[i];
                 bool available = c.IsAvailable(gameState);
-                Debug.Log($"[DialogueManager] Choice[{i}] '{c.choiceText}' available={available} showIfNotMet={c.showIfCriteriaNotMet} target='{c.targetNode?.name}'");
+                if (verboseLogs) Debug.Log($"[DialogueManager] Choice[{i}] '{c.choiceText}' available={available} showIfNotMet={c.showIfCriteriaNotMet} target='{c.targetNode?.name}'");
                 if (available)
                 {
                     visibleChoices.Add(c);
@@ -242,52 +330,70 @@ public class DialogueManager : MonoBehaviour
 
             debugAvailableChoices = visibleChoices;
             bool allowContinue = visibleChoices.Count == 0;
-            Debug.Log($"[DialogueManager] Showing choices: count={visibleChoices.Count}, allowContinue={allowContinue}");
+            if (verboseLogs) Debug.Log($"[DialogueManager] Showing choices: count={visibleChoices.Count}, allowContinue={allowContinue}");
 
             dialogueUI.ShowChoices(visibleChoices, enabledFlags, allowContinue);
 
             if (allowContinue)
             {
-                Debug.Log("[DialogueManager] No visible choices. Waiting for Next to continue to nextNode.");
+                if (verboseLogs) Debug.Log("[DialogueManager] No visible choices. Waiting for Next to continue to nextNode.");
                 yield return new WaitUntil(() => dialogueUI.IsNextPressed());
                 var previousNode = currentNode;
                 currentNode = currentNode.nextNode;
-                Debug.Log($"[DialogueManager] Continue pressed. Advancing to '{currentNode?.name}'. Applying exit actions for '{previousNode?.name}'.");
+                if (verboseLogs) Debug.Log($"[DialogueManager] Continue pressed. Advancing to '{currentNode?.name}'. Applying exit actions for '{previousNode?.name}'.");
                 dialogueUI.ClearChoices();
                 ExitNodeAndApplyActions(previousNode);
+                if (previousNode.playback == null || previousNode.playback.stopVoiceOnExit) dialogueUI.StopVoice();
             }
             else
             {
-                Debug.Log("[DialogueManager] Waiting for a choice selection.");
+                if (verboseLogs) Debug.Log("[DialogueManager] Waiting for a choice selection.");
                 yield return new WaitUntil(() => dialogueUI.selectedChoice != null);
                 var selected = dialogueUI.selectedChoice;
-                Debug.Log($"[DialogueManager] Selected choice '{selected.choiceText}'. Applying {selected.consequences?.Count ?? 0} action(s).");
+                if (verboseLogs) Debug.Log($"[DialogueManager] Selected choice '{selected.choiceText}'. Applying {selected.consequences?.Count ?? 0} action(s).");
                 gameState.ApplyActions(selected.consequences);
                 var previousNode = currentNode;
                 currentNode = selected.targetNode;
                 dialogueUI.ClearChoices();
                 ExitNodeAndApplyActions(previousNode);
+                if (previousNode.playback == null || previousNode.playback.stopVoiceOnExit) dialogueUI.StopVoice();
             }
         }
         else
         {
-            Debug.Log($"[DialogueManager] No choices at node '{currentNode.name}'. Waiting for Next to go to nextNode '{currentNode.nextNode?.name}'.");
-            yield return new WaitUntil(() => dialogueUI.IsNextPressed());
-            var previousNode = currentNode;
-            currentNode = currentNode.nextNode;
-            ExitNodeAndApplyActions(previousNode);
+            // Auto-advance or wait for Next
+            bool nodeWantsOverride = currentNode.playback != null && currentNode.playback.overrideAutoAdvance;
+            bool auto = nodeWantsOverride ? currentNode.playback.autoAdvance : globalAutoAdvance;
+            if (auto)
+            {
+                float delay = (currentNode.playback != null) ? Mathf.Max(0f, currentNode.playback.autoAdvanceDelay) : 0.25f;
+                if (delay > 0f) yield return new WaitForSeconds(delay);
+                var previousNode = currentNode;
+                currentNode = currentNode.nextNode;
+                ExitNodeAndApplyActions(previousNode);
+                if (previousNode.playback == null || previousNode.playback.stopVoiceOnExit) dialogueUI.StopVoice();
+            }
+            else
+            {
+                if (verboseLogs) Debug.Log($"[DialogueManager] No choices at node '{currentNode.name}'. Waiting for Next to go to nextNode '{currentNode.nextNode?.name}'.");
+                yield return new WaitUntil(() => dialogueUI.IsNextPressed());
+                var previousNode = currentNode;
+                currentNode = currentNode.nextNode;
+                ExitNodeAndApplyActions(previousNode);
+                if (previousNode.playback == null || previousNode.playback.stopVoiceOnExit) dialogueUI.StopVoice();
+            }
         }
 
         if (currentNode != null)
         {
             currentDialogue.currentNode = currentNode;
             currentDialogue.visitedNodes[currentNode.nodeId] = true;
-            Debug.Log($"[DialogueManager] Moving to next node '{currentNode.name}'.");
+            if (verboseLogs) Debug.Log($"[DialogueManager] Moving to next node '{currentNode.name}'.");
             yield return RunNode();
         }
         else
         {
-            Debug.Log("[DialogueManager] currentNode is null after advancing. Ending dialogue.");
+            if (verboseLogs) Debug.Log("[DialogueManager] currentNode is null after advancing. Ending dialogue.");
             if (pendingInteractor != null && pendingInteractor.dialogueAsset == currentDialogue)
             {
                 pendingInteractor.ShowLockedFeedback();
@@ -305,7 +411,7 @@ public class DialogueManager : MonoBehaviour
 
         try
         {
-            Debug.Log($"[DialogueManager] onExitNode Invoke for '{node.name}'");
+            if (verboseLogs) Debug.Log($"[DialogueManager] onExitNode Invoke for '{node.name}'");
             node.onExitNode?.Invoke();
         }
         catch (System.Exception ex)
@@ -317,7 +423,7 @@ public class DialogueManager : MonoBehaviour
         {
             try
             {
-                Debug.Log($"[DialogueManager] Applying {node.exitActions.Count} exit action(s) for node '{node.name}'.");
+                if (verboseLogs) Debug.Log($"[DialogueManager] Applying {node.exitActions.Count} exit action(s) for node '{node.name}'.");
                 gameState.ApplyActions(node.exitActions);
             }
             catch (System.Exception ex)

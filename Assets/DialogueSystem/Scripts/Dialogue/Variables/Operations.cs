@@ -3,6 +3,11 @@ using System;
 using System.Linq;
 using UnityEngine;
 
+public static class DialogueDebug
+{
+    public static bool Verbose = false;
+}
+
 [Serializable]
 public class VariableRef
 {
@@ -100,7 +105,7 @@ public class VariableOperation
                 case NumericOperator.Less: result = iv.value < intValue; break;
                 case NumericOperator.LessOrEqual: result = iv.value <= intValue; break;
             }
-            Debug.Log($"[VariableOperation] Int '{v.GetPath()}' op={numericOp} against {intValue} -> current={iv.value} result={result}");
+            if (DialogueDebug.Verbose) Debug.Log($"[VariableOperation] Int '{v.GetPath()}' op={numericOp} against {intValue} -> current={iv.value} result={result}");
             return result;
         }
         // Bool
@@ -114,7 +119,7 @@ public class VariableOperation
                 case BoolOperator.Equal: result = bv.value == boolValue; break;
                 case BoolOperator.NotEqual: result = bv.value != boolValue; break;
             }
-            Debug.Log($"[VariableOperation] Bool '{v.GetPath()}' op={boolOp} against {boolValue} -> current={bv.value} result={result}");
+            if (DialogueDebug.Verbose) Debug.Log($"[VariableOperation] Bool '{v.GetPath()}' op={boolOp} against {boolValue} -> current={bv.value} result={result}");
             return result;
         }
         // String
@@ -131,7 +136,7 @@ public class VariableOperation
                 case StringOperator.StartsWith: result = a.StartsWith(b, StringComparison.Ordinal); break;
                 case StringOperator.EndsWith: result = a.EndsWith(b, StringComparison.Ordinal); break;
             }
-            Debug.Log($"[VariableOperation] String '{v.GetPath()}' op={stringOp} against '{b}' -> current='{a}' result={result}");
+            if (DialogueDebug.Verbose) Debug.Log($"[VariableOperation] String '{v.GetPath()}' op={stringOp} against '{b}' -> current='{a}' result={result}");
             return result;
         }
         // Enum (QuestStatus etc.)
@@ -158,7 +163,7 @@ public class VariableOperation
                     case EnumOperator.Equal: result = Equals(current, parsed); break;
                     case EnumOperator.NotEqual: result = !Equals(current, parsed); break;
                 }
-                Debug.Log($"[VariableOperation] Enum '{v.GetPath()}' op={enumOp} against '{enumToParse}' -> current='{current}' result={result}");
+                if (DialogueDebug.Verbose) Debug.Log($"[VariableOperation] Enum '{v.GetPath()}' op={enumOp} against '{enumToParse}' -> current='{current}' result={result}");
                 return result;
             }
             Debug.LogWarning($"[VariableOperation] Enum parse failed for type '{v.ValueType?.Name}' from '{enumString}'.");
@@ -234,23 +239,23 @@ public class VariableAction
         switch (kind)
         {
             case ActionKind.SetInt:
-                if (v is VariableValue<int> iv) { Debug.Log($"[VariableAction] SetInt '{v.GetPath()}' = {intValue} (was {iv.value})"); iv.value = intValue; }
+                if (v is VariableValue<int> iv) { if (DialogueDebug.Verbose) Debug.Log($"[VariableAction] SetInt '{v.GetPath()}' = {intValue} (was {iv.value})"); iv.value = intValue; }
                 else Debug.LogWarning($"[VariableAction] SetInt: Target '{v.GetPath()}' is not an int.");
                 break;
             case ActionKind.IncInt:
-                if (v is VariableValue<int> iv2) { Debug.Log($"[VariableAction] IncInt '{v.GetPath()}' += {intValue} (was {iv2.value})"); iv2.value += intValue; }
+                if (v is VariableValue<int> iv2) { if (DialogueDebug.Verbose) Debug.Log($"[VariableAction] IncInt '{v.GetPath()}' += {intValue} (was {iv2.value})"); iv2.value += intValue; }
                 else Debug.LogWarning($"[VariableAction] IncInt: Target '{v.GetPath()}' is not an int.");
                 break;
             case ActionKind.SetBool:
-                if (v is VariableValue<bool> bv) { Debug.Log($"[VariableAction] SetBool '{v.GetPath()}' = {boolValue} (was {bv.value})"); bv.value = boolValue; }
+                if (v is VariableValue<bool> bv) { if (DialogueDebug.Verbose) Debug.Log($"[VariableAction] SetBool '{v.GetPath()}' = {boolValue} (was {bv.value})"); bv.value = boolValue; }
                 else Debug.LogWarning($"[VariableAction] SetBool: Target '{v.GetPath()}' is not a bool.");
                 break;
             case ActionKind.ToggleBool:
-                if (v is VariableValue<bool> bv2) { Debug.Log($"[VariableAction] ToggleBool '{v.GetPath()}' -> {(!bv2.value)} (was {bv2.value})"); bv2.value = !bv2.value; }
+                if (v is VariableValue<bool> bv2) { if (DialogueDebug.Verbose) Debug.Log($"[VariableAction] ToggleBool '{v.GetPath()}' -> {(!bv2.value)} (was {bv2.value})"); bv2.value = !bv2.value; }
                 else Debug.LogWarning($"[VariableAction] ToggleBool: Target '{v.GetPath()}' is not a bool.");
                 break;
             case ActionKind.SetString:
-                if (v is VariableValue<string> sv) { Debug.Log($"[VariableAction] SetString '{v.GetPath()}' = '{stringValue}' (was '{sv.value}')"); sv.value = stringValue; }
+                if (v is VariableValue<string> sv) { if (DialogueDebug.Verbose) Debug.Log($"[VariableAction] SetString '{v.GetPath()}' = '{stringValue}' (was '{sv.value}')"); sv.value = stringValue; }
                 else Debug.LogWarning($"[VariableAction] SetString: Target '{v.GetPath()}' is not a string.");
                 break;
             case ActionKind.SetEnum:
@@ -258,7 +263,7 @@ public class VariableAction
                 {
                     if (EnumUtil.TryParseFlexible(v.ValueType, enumString, out var parsed))
                     {
-                        Debug.Log($"[VariableAction] SetEnum '{v.GetPath()}' = '{parsed}' from '{enumString}' (was '{v.GetBoxed()}')");
+                        if (DialogueDebug.Verbose) Debug.Log($"[VariableAction] SetEnum '{v.GetPath()}' = '{parsed}' from '{enumString}' (was '{v.GetBoxed()}')");
                         v.SetBoxed(parsed);
                     }
                     else
@@ -275,7 +280,7 @@ public class VariableAction
                 {
                     if (EnumUtil.TryParseFlexible(typeof(QuestStatus), enumString, out var parsedQS))
                     {
-                        Debug.Log($"[VariableAction] SetQuestStatus '{qv.GetPath()}/status' = {parsedQS} (was {qv.status.value})");
+                        if (DialogueDebug.Verbose) Debug.Log($"[VariableAction] SetQuestStatus '{qv.GetPath()}/status' = {parsedQS} (was {qv.status.value})");
                         qv.status.value = (QuestStatus)parsedQS;
                     }
                     else Debug.LogWarning($"[VariableAction] SetQuestStatus: Could not parse '{enumString}' as QuestStatus.");
@@ -284,7 +289,7 @@ public class VariableAction
                 {
                     if (EnumUtil.TryParseFlexible(typeof(QuestStatus), enumString, out var parsedQS2))
                     {
-                        Debug.Log($"[VariableAction] SetQuestStatus leaf '{v.GetPath()}' = {parsedQS2} (was {svq.value})");
+                        if (DialogueDebug.Verbose) Debug.Log($"[VariableAction] SetQuestStatus leaf '{v.GetPath()}' = {parsedQS2} (was {svq.value})");
                         svq.value = (QuestStatus)parsedQS2;
                     }
                     else Debug.LogWarning($"[VariableAction] SetQuestStatus: Could not parse '{enumString}' as QuestStatus.");
@@ -299,7 +304,7 @@ public class VariableAction
                         {
                             if (EnumUtil.TryParseFlexible(typeof(QuestStatus), enumString, out var parsedQS3))
                             {
-                                Debug.Log($"[VariableAction] SetQuestStatus (fallback) '{qvf.GetPath()}/status' = {parsedQS3} (was {qvf.status.value})");
+                                if (DialogueDebug.Verbose) Debug.Log($"[VariableAction] SetQuestStatus (fallback) '{qvf.GetPath()}/status' = {parsedQS3} (was {qvf.status.value})");
                                 qvf.status.value = (QuestStatus)parsedQS3;
                                 break;
                             }
@@ -315,7 +320,7 @@ public class VariableAction
                     if (objectiveIndex >= 0 && objectiveIndex < qv2.objectives.Count)
                     {
                         var obj = qv2.objectives[objectiveIndex];
-                        Debug.Log($"[VariableAction] SetObjectiveProgress '{qv2.GetPath()}/Objectives/{obj.Display}' progress = {intValue} (was {obj.progress.value})");
+                        if (DialogueDebug.Verbose) Debug.Log($"[VariableAction] SetObjectiveProgress '{qv2.GetPath()}/Objectives/{obj.Display}' progress = {intValue} (was {obj.progress.value})");
                         qv2.objectives[objectiveIndex].progress.value = intValue;
                         if (qv2.objectives.TrueForAll(o => o.Completed)) qv2.status.value = QuestStatus.ReadyToTurnIn;
                     }
@@ -354,7 +359,7 @@ public class VariableAction
                             int max = Mathf.Max(0, obj.target.value);
                             after = Mathf.Clamp(after, 0, max);
                         }
-                        Debug.Log($"[VariableAction] ModifyObjectiveProgress '{qv3.GetPath()}/Objectives/{obj.Display}' {arithmeticOp} {operand} -> {after} (was {before})");
+                        if (DialogueDebug.Verbose) Debug.Log($"[VariableAction] ModifyObjectiveProgress '{qv3.GetPath()}/Objectives/{obj.Display}' {arithmeticOp} {operand} -> {after} (was {before})");
                         obj.progress.value = after;
                         if (qv3.objectives.TrueForAll(o => o.Completed)) qv3.status.value = QuestStatus.ReadyToTurnIn;
                     }

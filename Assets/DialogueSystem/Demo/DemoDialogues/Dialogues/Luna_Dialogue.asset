@@ -86,6 +86,17 @@ MonoBehaviour:
       m_Calls: []
   exitActions: []
   nextNode: {fileID: -3520415781976627993}
+  playback:
+    voiceClip: {fileID: 0}
+    voiceVolume: 1
+    overrideWaitMode: 0
+    waitMode: 4
+    overrideAutoAdvance: 0
+    autoAdvance: 1
+    autoAdvanceDelay: 0.25
+    allowSkipAudio: 1
+    stopVoiceOnExit: 1
+    matchTypewriterToAudio: 0
 --- !u!114 &-9088405419575577821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,6 +127,17 @@ MonoBehaviour:
       m_Calls: []
   exitActions: []
   nextNode: {fileID: 2308483982455164374}
+  playback:
+    voiceClip: {fileID: 8300000, guid: 50d9aac6e2e76174dbdf6e275a89cc69, type: 3}
+    voiceVolume: 1
+    overrideWaitMode: 0
+    waitMode: 4
+    overrideAutoAdvance: 0
+    autoAdvance: 1
+    autoAdvanceDelay: 0.25
+    allowSkipAudio: 1
+    stopVoiceOnExit: 1
+    matchTypewriterToAudio: 0
 --- !u!114 &-7110149492458854456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -157,6 +179,17 @@ MonoBehaviour:
     arithmeticOp: 0
     clampToTargetRange: 0
   nextNode: {fileID: 0}
+  playback:
+    voiceClip: {fileID: 0}
+    voiceVolume: 1
+    overrideWaitMode: 0
+    waitMode: 4
+    overrideAutoAdvance: 0
+    autoAdvance: 1
+    autoAdvanceDelay: 0.25
+    allowSkipAudio: 1
+    stopVoiceOnExit: 1
+    matchTypewriterToAudio: 0
 --- !u!114 &-6559002524594183355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,6 +220,17 @@ MonoBehaviour:
       m_Calls: []
   exitActions: []
   nextNode: {fileID: -2449602565557857564}
+  playback:
+    voiceClip: {fileID: 8300000, guid: 0290cd97ad2d3504e8061aae26588165, type: 3}
+    voiceVolume: 1
+    overrideWaitMode: 0
+    waitMode: 4
+    overrideAutoAdvance: 0
+    autoAdvance: 1
+    autoAdvanceDelay: 0.25
+    allowSkipAudio: 1
+    stopVoiceOnExit: 1
+    matchTypewriterToAudio: 0
 --- !u!114 &-4618290059791301591
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -217,6 +261,17 @@ MonoBehaviour:
       m_Calls: []
   exitActions: []
   nextNode: {fileID: 0}
+  playback:
+    voiceClip: {fileID: 0}
+    voiceVolume: 1
+    overrideWaitMode: 0
+    waitMode: 4
+    overrideAutoAdvance: 0
+    autoAdvance: 1
+    autoAdvanceDelay: 0.25
+    allowSkipAudio: 1
+    stopVoiceOnExit: 1
+    matchTypewriterToAudio: 0
 --- !u!114 &-4400914224224945064
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -247,6 +302,17 @@ MonoBehaviour:
       m_Calls: []
   exitActions: []
   nextNode: {fileID: 0}
+  playback:
+    voiceClip: {fileID: 0}
+    voiceVolume: 1
+    overrideWaitMode: 0
+    waitMode: 4
+    overrideAutoAdvance: 0
+    autoAdvance: 1
+    autoAdvanceDelay: 0.25
+    allowSkipAudio: 1
+    stopVoiceOnExit: 1
+    matchTypewriterToAudio: 0
 --- !u!114 &-3520415781976627993
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -288,6 +354,17 @@ MonoBehaviour:
     arithmeticOp: 0
     clampToTargetRange: 0
   nextNode: {fileID: -6559002524594183355}
+  playback:
+    voiceClip: {fileID: 8300000, guid: 9400eb985171566418704f132cce1091, type: 3}
+    voiceVolume: 1
+    overrideWaitMode: 0
+    waitMode: 4
+    overrideAutoAdvance: 0
+    autoAdvance: 1
+    autoAdvanceDelay: 0.25
+    allowSkipAudio: 1
+    stopVoiceOnExit: 1
+    matchTypewriterToAudio: 0
 --- !u!114 &-2449602565557857564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -318,6 +395,17 @@ MonoBehaviour:
       m_Calls: []
   exitActions: []
   nextNode: {fileID: -699252119067909963}
+  playback:
+    voiceClip: {fileID: 8300000, guid: 6c303461a97243842a48e92d45c7ef19, type: 3}
+    voiceVolume: 1
+    overrideWaitMode: 0
+    waitMode: 4
+    overrideAutoAdvance: 0
+    autoAdvance: 1
+    autoAdvanceDelay: 0.25
+    allowSkipAudio: 1
+    stopVoiceOnExit: 1
+    matchTypewriterToAudio: 0
 --- !u!114 &-940429354044167544
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -348,6 +436,17 @@ MonoBehaviour:
       m_Calls: []
   exitActions: []
   nextNode: {fileID: 0}
+  playback:
+    voiceClip: {fileID: 0}
+    voiceVolume: 1
+    overrideWaitMode: 0
+    waitMode: 4
+    overrideAutoAdvance: 0
+    autoAdvance: 1
+    autoAdvanceDelay: 0.25
+    allowSkipAudio: 1
+    stopVoiceOnExit: 1
+    matchTypewriterToAudio: 0
 --- !u!114 &-699252119067909963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -378,6 +477,17 @@ MonoBehaviour:
       m_Calls: []
   exitActions: []
   nextNode: {fileID: -9088405419575577821}
+  playback:
+    voiceClip: {fileID: 8300000, guid: 66c48d43c4023ee478d7e2e1c0042ff1, type: 3}
+    voiceVolume: 1
+    overrideWaitMode: 0
+    waitMode: 4
+    overrideAutoAdvance: 0
+    autoAdvance: 1
+    autoAdvanceDelay: 0.25
+    allowSkipAudio: 1
+    stopVoiceOnExit: 1
+    matchTypewriterToAudio: 0
 --- !u!114 &-63173592825479741
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -408,6 +518,17 @@ MonoBehaviour:
       m_Calls: []
   exitActions: []
   nextNode: {fileID: 0}
+  playback:
+    voiceClip: {fileID: 0}
+    voiceVolume: 1
+    overrideWaitMode: 0
+    waitMode: 4
+    overrideAutoAdvance: 0
+    autoAdvance: 1
+    autoAdvanceDelay: 0.25
+    allowSkipAudio: 1
+    stopVoiceOnExit: 1
+    matchTypewriterToAudio: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -442,41 +563,41 @@ MonoBehaviour:
   - {fileID: -940429354044167544}
   nodePositions:
   - nodeId: f8f934ac-99f8-4bd2-904c-3d800ce8bc03
-    position: {x: -786, y: -159}
+    position: {x: -800, y: -159.5}
   - nodeId: 78abd598-4321-442a-91a4-924515d1da54
-    position: {x: -464, y: -159}
+    position: {x: -464.5, y: -159.5}
   - nodeId: e6e505ae-f8ee-4765-8f32-2cd1423c4f36
-    position: {x: -165, y: -159}
+    position: {x: -165.5, y: -159.5}
   - nodeId: eab22764-7807-49dd-9810-8ee676cd66b9
-    position: {x: 128, y: -159}
+    position: {x: 127.5, y: -159.5}
   - nodeId: a735ce47-5742-4664-ad02-0d57cb4ebf9c
-    position: {x: 427, y: -159}
+    position: {x: 427, y: -159.5}
   - nodeId: b3804f19-a14d-498b-8a41-29ef371883c5
-    position: {x: 677, y: 49}
+    position: {x: 677, y: 48.5}
   - nodeId: 94afdb19-4369-46e8-bc0e-76ed9cd75757
-    position: {x: 1529, y: -9}
+    position: {x: 1529, y: -9.5}
   - nodeId: bad96483-8ae4-4dd6-b567-f0579d57a131
     position: {x: 1529, y: 329}
   - nodeId: 788f2711-e838-42e1-8618-787a0ea75fa6
-    position: {x: 1181, y: -9}
+    position: {x: 1181, y: -9.5}
   - nodeId: a124a581-3c57-4aa6-9f64-7d14d11988b8
     position: {x: 1181, y: 329}
   - nodeId: 67c68c67-b06c-4a6e-9645-bf6ba762e7cf
     position: {x: 1876, y: 329}
   - nodeId: 57f2ccb5-ff10-41f6-9f73-f34241936c92
-    position: {x: -1303, y: 22}
+    position: {x: -1224, y: 14}
   - nodeId: cf67a8eb-e022-4462-b12a-d9971334d1e9
-    position: {x: -760, y: 627}
+    position: {x: -800, y: 170.5}
   - nodeId: 896e6cd8-6397-4a49-994d-aa63b0c70d0b
-    position: {x: -800, y: -13}
+    position: {x: -800, y: 14}
   - nodeId: 17366ab9-cc9e-4c5e-bf91-7cad05661630
     position: {x: -1032, y: 329}
   - nodeId: b2da9d7a-789e-446f-a173-9ba5067bde28
-    position: {x: -760, y: 472}
+    position: {x: -778, y: 669.5}
   - nodeId: 25d93bf2-bec8-4cc2-ba30-4e515e87db02
-    position: {x: -734, y: 329}
+    position: {x: -739.5, y: 512}
   - nodeId: 7c3dbcda-69c5-43af-a9c1-98095e4cebec
-    position: {x: -734, y: 164}
+    position: {x: -739.5, y: 329}
   defaultSpeaker: {fileID: 11400000, guid: 5e97a2fa9ced9d74bba85bc6978d8644, type: 2}
   defaultListener: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
   currentNode: {fileID: -9100149295132089337}
@@ -510,6 +631,17 @@ MonoBehaviour:
       m_Calls: []
   exitActions: []
   nextNode: {fileID: -7110149492458854456}
+  playback:
+    voiceClip: {fileID: 0}
+    voiceVolume: 1
+    overrideWaitMode: 0
+    waitMode: 4
+    overrideAutoAdvance: 0
+    autoAdvance: 1
+    autoAdvanceDelay: 0.25
+    allowSkipAudio: 1
+    stopVoiceOnExit: 1
+    matchTypewriterToAudio: 0
 --- !u!114 &2083046710376435234
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -607,6 +739,17 @@ MonoBehaviour:
       m_Calls: []
   exitActions: []
   nextNode: {fileID: 0}
+  playback:
+    voiceClip: {fileID: 0}
+    voiceVolume: 1
+    overrideWaitMode: 0
+    waitMode: 4
+    overrideAutoAdvance: 0
+    autoAdvance: 1
+    autoAdvanceDelay: 0.25
+    allowSkipAudio: 1
+    stopVoiceOnExit: 1
+    matchTypewriterToAudio: 0
 --- !u!114 &2308483982455164374
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -647,6 +790,17 @@ MonoBehaviour:
       m_Calls: []
   exitActions: []
   nextNode: {fileID: 0}
+  playback:
+    voiceClip: {fileID: 8300000, guid: 53a1709edcf642349876bfd1a16d477a, type: 3}
+    voiceVolume: 1
+    overrideWaitMode: 0
+    waitMode: 4
+    overrideAutoAdvance: 0
+    autoAdvance: 1
+    autoAdvanceDelay: 0.25
+    allowSkipAudio: 1
+    stopVoiceOnExit: 1
+    matchTypewriterToAudio: 0
 --- !u!114 &2769127903998570883
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -677,6 +831,17 @@ MonoBehaviour:
       m_Calls: []
   exitActions: []
   nextNode: {fileID: 0}
+  playback:
+    voiceClip: {fileID: 0}
+    voiceVolume: 1
+    overrideWaitMode: 0
+    waitMode: 4
+    overrideAutoAdvance: 0
+    autoAdvance: 1
+    autoAdvanceDelay: 0.25
+    allowSkipAudio: 1
+    stopVoiceOnExit: 1
+    matchTypewriterToAudio: 0
 --- !u!114 &4320923002327876005
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -707,6 +872,17 @@ MonoBehaviour:
       m_Calls: []
   exitActions: []
   nextNode: {fileID: 0}
+  playback:
+    voiceClip: {fileID: 0}
+    voiceVolume: 1
+    overrideWaitMode: 0
+    waitMode: 4
+    overrideAutoAdvance: 0
+    autoAdvance: 1
+    autoAdvanceDelay: 0.25
+    allowSkipAudio: 1
+    stopVoiceOnExit: 1
+    matchTypewriterToAudio: 0
 --- !u!114 &5954068238915496916
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -737,6 +913,17 @@ MonoBehaviour:
       m_Calls: []
   exitActions: []
   nextNode: {fileID: 8003583929478802044}
+  playback:
+    voiceClip: {fileID: 0}
+    voiceVolume: 1
+    overrideWaitMode: 0
+    waitMode: 4
+    overrideAutoAdvance: 0
+    autoAdvance: 1
+    autoAdvanceDelay: 0.25
+    allowSkipAudio: 1
+    stopVoiceOnExit: 1
+    matchTypewriterToAudio: 0
 --- !u!114 &8003583929478802044
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -767,3 +954,14 @@ MonoBehaviour:
       m_Calls: []
   exitActions: []
   nextNode: {fileID: -4400914224224945064}
+  playback:
+    voiceClip: {fileID: 0}
+    voiceVolume: 1
+    overrideWaitMode: 0
+    waitMode: 4
+    overrideAutoAdvance: 0
+    autoAdvance: 1
+    autoAdvanceDelay: 0.25
+    allowSkipAudio: 1
+    stopVoiceOnExit: 1
+    matchTypewriterToAudio: 0

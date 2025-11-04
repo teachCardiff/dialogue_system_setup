@@ -32,6 +32,10 @@ public class DialogueUI : MonoBehaviour
     [SerializeField] private Image speakerImage;
     [SerializeField] private Image listenerImage;
 
+    // NEW: optional audio output for voice lines
+    [Header("Audio")]
+    [SerializeField] private AudioSource voiceSource;
+
     public DialogueChoice selectedChoice { get; private set; }
 
     [HideInInspector] public bool nextPressed; // Set to public so DialogueManager can reset it to false at the end of a dialogue.
@@ -62,8 +66,42 @@ public class DialogueUI : MonoBehaviour
     private void Awake()
     {
         IsReady = false;
-        OnHideAnimationComplete();
+        // Initialize UI without deactivating GameObject or invoking events to keep Editor inspectors stable
+        InitializeHiddenState();
         nextButton.onClick.AddListener(() => nextPressed = true);
+        // Ensure we have an AudioSource for voice. If not assigned, add one.
+        if (voiceSource == null)
+        {
+            voiceSource = gameObject.AddComponent<AudioSource>();
+            voiceSource.playOnAwake = false;
+            voiceSource.loop = false;
+            voiceSource.spatialBlend = 0f; // 2D by default
+        }
+    }
+
+    // Prepare a clean hidden state without toggling active or firing events (safe for Awake)
+    private void InitializeHiddenState()
+    {
+        // stop coroutines and reset text mesh
+        if (effectsCoroutine != null) { StopCoroutine(effectsCoroutine); effectsCoroutine = null; }
+        if (typewriterCoroutine != null) { StopCoroutine(typewriterCoroutine); typewriterCoroutine = null; }
+        ResetMesh();
+        // clear ranges/state
+        currentRevealCount = 0;
+        shakeRanges?.Clear();
+        waveRanges?.Clear();
+        pulseRanges?.Clear();
+        gradientRanges?.Clear();
+        nextPressed = false;
+        // reset UI text
+        if (speakerText != null) speakerText.text = string.Empty;
+        if (dialogueText != null) dialogueText.text = string.Empty;
+        // hide images
+        if (speakerImage != null) speakerImage.gameObject.SetActive(false);
+        if (listenerImage != null) listenerImage.gameObject.SetActive(false);
+        // ensure voice is stopped
+        StopVoice();
+        // DO NOT deactivate the root here; defer SetActive(false) to Hide()/OnHideAnimationComplete
     }
 
     public void ShowDialogue(string speaker, string text, Sprite speakerSprite, Sprite listenerSprite = null)
@@ -156,6 +194,28 @@ public class DialogueUI : MonoBehaviour
         {
             img.gameObject.SetActive(false);
         }
+    }
+
+    // === Voice playback helpers ===
+    public void PlayVoice(AudioClip clip, float volume = 1f)
+    {
+        if (voiceSource == null || clip == null) return;
+        voiceSource.Stop();
+        voiceSource.clip = clip;
+        voiceSource.volume = Mathf.Clamp01(volume);
+        voiceSource.Play();
+    }
+
+    public void StopVoice()
+    {
+        if (voiceSource == null) return;
+        voiceSource.Stop();
+        voiceSource.clip = null;
+    }
+
+    public bool IsVoicePlaying()
+    {
+        return voiceSource != null && voiceSource.isPlaying;
     }
 
     public void ShowChoices(List<DialogueChoice> choices, List<bool> enabledFlags = null, bool allowContinue = false)
@@ -588,6 +648,8 @@ public class DialogueUI : MonoBehaviour
         // Ensure character images are hidden when UI is closed
         if (speakerImage != null) speakerImage.gameObject.SetActive(false);
         if (listenerImage != null) listenerImage.gameObject.SetActive(false);
+        // Ensure voice is stopped
+        StopVoice();
         gameObject.SetActive(false);
         IsReady = false;
         onHideComplete?.Invoke();
