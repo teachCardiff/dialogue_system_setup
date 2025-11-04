@@ -41,9 +41,9 @@ MonoBehaviour:
         key: Quests
         displayName: Quests
         children:
-        - rid: 16810047478956105
         - rid: 16810047478956108
         - rid: 987104189638246468
+        - rid: 987104248695357441
     - rid: 16810047478956103
       type: {class: VariableGroup, ns: , asm: Assembly-CSharp}
       data:
@@ -51,7 +51,7 @@ MonoBehaviour:
         key: Player
         displayName: Player
         children:
-        - rid: 16810047478956107
+        - rid: 987104248695357440
     - rid: 16810047478956104
       type: {class: VariableGroup, ns: , asm: Assembly-CSharp}
       data:
@@ -60,53 +60,6 @@ MonoBehaviour:
         displayName: Flags
         children:
         - rid: 16810047478956115
-    - rid: 16810047478956105
-      type: {class: QuestVariable, ns: , asm: Assembly-CSharp}
-      data:
-        id: 1f9ddeb8-a530-4556-b1a5-a0a02ca8bb04
-        key: GetFlowersforLuna
-        displayName: Get Flowers for Luna
-        name:
-          id: 84830027-495d-421f-8b14-f32ab550907f
-          key: name
-          displayName: Name
-          value: Get Flowers for Luna
-        status:
-          id: f3948afc-4df5-411b-858c-f475e8675317
-          key: status
-          displayName: Status
-          value: 0
-        objectives:
-        - rid: 16810047478956106
-    - rid: 16810047478956106
-      type: {class: ObjectiveVariable, ns: , asm: Assembly-CSharp}
-      data:
-        id: 585dda12-9831-47bd-8928-a102b14175a9
-        key: Getfourflowers
-        displayName: Get four flowers
-        display: 
-        name:
-          id: 6252bf06-d164-453d-bdef-7292e79e0601
-          key: name
-          displayName: Obj Name
-          value: Get four flowers
-        target:
-          id: 9d183a4c-3735-4b5f-87ee-a9ca8841faba
-          key: target
-          displayName: Target
-          value: 4
-        progress:
-          id: f260f162-5990-4051-a8f4-c8bfb919e344
-          key: progress
-          displayName: Progress
-          value: 0
-    - rid: 16810047478956107
-      type: {class: IntVar, ns: , asm: Assembly-CSharp}
-      data:
-        id: b7386b1f-bd57-4075-b1e2-705000375cab
-        key: NewInt
-        displayName: Strength
-        value: 0
     - rid: 16810047478956108
       type: {class: QuestVariable, ns: , asm: Assembly-CSharp}
       data:
@@ -154,7 +107,7 @@ MonoBehaviour:
         id: f67df446-a2bd-45cb-96c0-39f44d7f83e2
         key: NewBool
         displayName: haveTalkedToLuna
-        value: 1
+        value: 0
     - rid: 16810047478956116
       type: {class: ObjectiveVariable, ns: , asm: Assembly-CSharp}
       data:
@@ -211,9 +164,56 @@ MonoBehaviour:
           id: c2c1f56d-fa04-4b49-8bc5-8b522eb741de
           key: target
           displayName: Target
-          value: 4
+          value: 1
         progress:
           id: 38ab1562-a8bd-4d59-97c6-e56f1f3e5851
+          key: progress
+          displayName: Progress
+          value: 0
+    - rid: 987104248695357440
+      type: {class: IntVar, ns: , asm: Assembly-CSharp}
+      data:
+        id: 3cb43aa5-3009-4d15-9353-f8aa8b6af59c
+        key: NewInt
+        displayName: flowers
+        value: 2
+    - rid: 987104248695357441
+      type: {class: QuestVariable, ns: , asm: Assembly-CSharp}
+      data:
+        id: 9034d858-bf84-461d-82a2-d6326255262a
+        key: HelptheMouner
+        displayName: Help the Mouner
+        name:
+          id: f8e81708-0c55-4ff2-8dc6-e734286784b3
+          key: name
+          displayName: Name
+          value: Help the Mouner
+        status:
+          id: 1e23fc48-52a5-4894-a7f4-317b9cee3315
+          key: status
+          displayName: Status
+          value: 0
+        objectives:
+        - rid: 987104248695357442
+    - rid: 987104248695357442
+      type: {class: ObjectiveVariable, ns: , asm: Assembly-CSharp}
+      data:
+        id: 42b9af7c-a424-4e8a-bf2e-15afb4f36bdb
+        key: Giveaflowertothemourner
+        displayName: Give a flower to the mourner
+        display: 
+        name:
+          id: de85da53-46ec-4ab2-bdd0-277534198181
+          key: name
+          displayName: Obj Name
+          value: Give a flower to the mourner
+        target:
+          id: a2597157-c0ee-4a93-b49e-1ea78f345626
+          key: target
+          displayName: Target
+          value: 1
+        progress:
+          id: 17aaa63a-4ac3-465a-9a5e-63fdb5c51459
           key: progress
           displayName: Progress
           value: 0

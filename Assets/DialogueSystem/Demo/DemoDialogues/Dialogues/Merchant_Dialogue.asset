@@ -57,20 +57,19 @@ MonoBehaviour:
       m_Calls: []
   onExitNode:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: fc5b889b0026f1848be4e13c18133a9d, type: 2}
-        m_TargetAssemblyTypeName: QuestConsequence, Assembly-CSharp
-        m_MethodName: Execute
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: abeccb046d47fd64494cb73113a0de3d, type: 2}
-          m_ObjectArgumentAssemblyTypeName: GameState, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  exitActions: []
+      m_Calls: []
+  exitActions:
+  - kind: 6
+    variable:
+      id: 68197afd-a2a4-46ad-86d8-fce70b1eb424
+      path: Root/Quests/HelptheMerchant
+    intValue: 0
+    boolValue: 0
+    stringValue: 
+    enumString: InProgress
+    objectiveIndex: 0
+    arithmeticOp: 0
+    clampToTargetRange: 0
   nextNode: {fileID: 0}
 --- !u!114 &-8949664710614154996
 MonoBehaviour:
@@ -155,13 +154,57 @@ MonoBehaviour:
   choices: []
   conditionalBranches:
   - branchName: No Flowers
-    operations: []
+    operations:
+    - variable:
+        id: 3cb43aa5-3009-4d15-9353-f8aa8b6af59c
+        path: Root/Player/NewInt
+      numericOp: 0
+      intValue: 0
+      boolOp: 0
+      boolValue: 0
+      stringOp: 0
+      stringValue: 
+      enumOp: 0
+      enumString: NotStarted
     targetNode: {fileID: -8181038608668258879}
   - branchName: All Flowers
-    operations: []
+    operations:
+    - variable:
+        id: 3cb43aa5-3009-4d15-9353-f8aa8b6af59c
+        path: Root/Player/NewInt
+      numericOp: 0
+      intValue: 4
+      boolOp: 0
+      boolValue: 0
+      stringOp: 0
+      stringValue: 
+      enumOp: 0
+      enumString: NotStarted
     targetNode: {fileID: -8949664710614154996}
   - branchName: Some Flowers
-    operations: []
+    operations:
+    - variable:
+        id: 3cb43aa5-3009-4d15-9353-f8aa8b6af59c
+        path: Root/Player/NewInt
+      numericOp: 5
+      intValue: 3
+      boolOp: 0
+      boolValue: 0
+      stringOp: 0
+      stringValue: 
+      enumOp: 0
+      enumString: NotStarted
+    - variable:
+        id: 3cb43aa5-3009-4d15-9353-f8aa8b6af59c
+        path: Root/Player/NewInt
+      numericOp: 3
+      intValue: 1
+      boolOp: 0
+      boolValue: 0
+      stringOp: 0
+      stringValue: 
+      enumOp: 0
+      enumString: NotStarted
     targetNode: {fileID: 4920220170874142042}
   onEnterNode:
     m_PersistentCalls:
@@ -419,7 +462,7 @@ MonoBehaviour:
   - nodeId: 72fdf81c-542d-406a-9a6a-9ee33dbb8b75
     position: {x: -1299, y: 346}
   - nodeId: 460d44ea-a7f3-46e0-b0ec-a5951fc8f0b9
-    position: {x: -408, y: 732}
+    position: {x: -408, y: 728}
   - nodeId: 5e2f32ca-fbb5-4e61-99ff-130f2c3dcae1
     position: {x: 503, y: 643}
   - nodeId: 92668989-85dd-46ad-ae8e-37aa691a995a
@@ -458,7 +501,7 @@ MonoBehaviour:
     position: {x: -809, y: 519}
   defaultSpeaker: {fileID: 0}
   defaultListener: {fileID: 0}
-  currentNode: {fileID: 6764674651265088946}
+  currentNode: {fileID: 4892982132819798203}
 --- !u!114 &420727449347315468
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -616,32 +659,41 @@ MonoBehaviour:
       m_Calls: []
   onExitNode:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: 7c2766711988efb438b9adcd01f85bab, type: 2}
-        m_TargetAssemblyTypeName: QuestConsequence, Assembly-CSharp
-        m_MethodName: Execute
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: abeccb046d47fd64494cb73113a0de3d, type: 2}
-          m_ObjectArgumentAssemblyTypeName: GameState, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 11400000, guid: 06a3975872b4a974497963225c3e8a34, type: 2}
-        m_TargetAssemblyTypeName: QuestConsequence, Assembly-CSharp
-        m_MethodName: Execute
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: abeccb046d47fd64494cb73113a0de3d, type: 2}
-          m_ObjectArgumentAssemblyTypeName: GameState, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  exitActions: []
+      m_Calls: []
+  exitActions:
+  - kind: 0
+    variable:
+      id: 3cb43aa5-3009-4d15-9353-f8aa8b6af59c
+      path: Root/Player/NewInt
+    intValue: 0
+    boolValue: 0
+    stringValue: 
+    enumString: 
+    objectiveIndex: 0
+    arithmeticOp: 0
+    clampToTargetRange: 0
+  - kind: 6
+    variable:
+      id: 68197afd-a2a4-46ad-86d8-fce70b1eb424
+      path: Root/Quests/HelptheMerchant
+    intValue: 0
+    boolValue: 0
+    stringValue: 
+    enumString: Completed
+    objectiveIndex: 0
+    arithmeticOp: 0
+    clampToTargetRange: 0
+  - kind: 7
+    variable:
+      id: b94ed326-e9c9-455e-9e5f-6b48d8b92eae
+      path: Root/Quests/HelptheTownsfolk
+    intValue: 1
+    boolValue: 0
+    stringValue: 
+    enumString: Completed
+    objectiveIndex: 1
+    arithmeticOp: 0
+    clampToTargetRange: 0
   nextNode: {fileID: 0}
 --- !u!114 &4544422311883375233
 MonoBehaviour:
@@ -700,32 +752,41 @@ MonoBehaviour:
       m_Calls: []
   onExitNode:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: 7c2766711988efb438b9adcd01f85bab, type: 2}
-        m_TargetAssemblyTypeName: QuestConsequence, Assembly-CSharp
-        m_MethodName: Execute
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: abeccb046d47fd64494cb73113a0de3d, type: 2}
-          m_ObjectArgumentAssemblyTypeName: GameState, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 11400000, guid: 06a3975872b4a974497963225c3e8a34, type: 2}
-        m_TargetAssemblyTypeName: QuestConsequence, Assembly-CSharp
-        m_MethodName: Execute
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: abeccb046d47fd64494cb73113a0de3d, type: 2}
-          m_ObjectArgumentAssemblyTypeName: GameState, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  exitActions: []
+      m_Calls: []
+  exitActions:
+  - kind: 7
+    variable:
+      id: b94ed326-e9c9-455e-9e5f-6b48d8b92eae
+      path: Root/Quests/HelptheTownsfolk
+    intValue: 1
+    boolValue: 0
+    stringValue: 
+    enumString: 
+    objectiveIndex: 1
+    arithmeticOp: 0
+    clampToTargetRange: 0
+  - kind: 6
+    variable:
+      id: 68197afd-a2a4-46ad-86d8-fce70b1eb424
+      path: Root/Quests/HelptheMerchant
+    intValue: 1
+    boolValue: 0
+    stringValue: 
+    enumString: Completed
+    objectiveIndex: 0
+    arithmeticOp: 0
+    clampToTargetRange: 0
+  - kind: 0
+    variable:
+      id: 3cb43aa5-3009-4d15-9353-f8aa8b6af59c
+      path: Root/Player/NewInt
+    intValue: 0
+    boolValue: 0
+    stringValue: 
+    enumString: Completed
+    objectiveIndex: 0
+    arithmeticOp: 0
+    clampToTargetRange: 0
   nextNode: {fileID: 0}
 --- !u!114 &4920220170874142042
 MonoBehaviour:
@@ -904,7 +965,7 @@ MonoBehaviour:
       enumOp: 0
       enumString: InProgress
     targetNode: {fileID: 420727449347315468}
-  - branchName: Ready to turn in
+  - branchName: COMPLETED
     operations:
     - variable:
         id: 8601d25d-9cca-4769-83ba-b80dba52b72c
@@ -916,7 +977,7 @@ MonoBehaviour:
       stringOp: 0
       stringValue: 
       enumOp: 0
-      enumString: ReadyToTurnIn
+      enumString: Completed
     targetNode: {fileID: 4544422311883375233}
   onEnterNode:
     m_PersistentCalls:

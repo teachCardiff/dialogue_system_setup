@@ -260,9 +260,9 @@ MonoBehaviour:
   - nodeId: 9ec04a6e-840a-4906-9358-b5a2c119a0df
     position: {x: 24, y: 105}
   - nodeId: d88a81a7-01d5-4a33-a371-0b2bb5d361db
-    position: {x: 337.5, y: 105}
+    position: {x: 338, y: 105}
   - nodeId: ace3612f-c67d-4591-b1a8-b1b900960539
-    position: {x: 1.5, y: 369.5}
+    position: {x: 2, y: 370}
   - nodeId: 24488f8f-ea80-42b3-b8b4-0b936b9d6446
     position: {x: 326, y: 371}
   - nodeId: df7adeab-fe28-48f4-82ba-7f09ff0f4e85

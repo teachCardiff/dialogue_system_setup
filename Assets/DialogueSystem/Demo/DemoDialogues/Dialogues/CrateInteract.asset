@@ -97,10 +97,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   exitActions:
-  - kind: 8
+  - kind: 1
     variable:
-      id: 1f9ddeb8-a530-4556-b1a5-a0a02ca8bb04
-      path: Root/Quests/GetFlowersforLuna
+      id: 3cb43aa5-3009-4d15-9353-f8aa8b6af59c
+      path: Root/Player/NewInt
     intValue: 1
     boolValue: 0
     stringValue: 

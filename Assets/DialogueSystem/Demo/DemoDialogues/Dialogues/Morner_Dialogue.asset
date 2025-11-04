@@ -63,10 +63,32 @@ MonoBehaviour:
   choices: []
   conditionalBranches:
   - branchName: HasFlowers
-    operations: []
+    operations:
+    - variable:
+        id: 3cb43aa5-3009-4d15-9353-f8aa8b6af59c
+        path: Root/Player/NewInt
+      numericOp: 3
+      intValue: 1
+      boolOp: 0
+      boolValue: 0
+      stringOp: 0
+      stringValue: 
+      enumOp: 0
+      enumString: NotStarted
     targetNode: {fileID: 2887210034651914019}
   - branchName: HasNotFlowers
-    operations: []
+    operations:
+    - variable:
+        id: 3cb43aa5-3009-4d15-9353-f8aa8b6af59c
+        path: Root/Player/NewInt
+      numericOp: 0
+      intValue: 0
+      boolOp: 0
+      boolValue: 0
+      stringOp: 0
+      stringValue: 
+      enumOp: 0
+      enumString: NotStarted
     targetNode: {fileID: 1923607289766883953}
   onEnterNode:
     m_PersistentCalls:
@@ -426,20 +448,41 @@ MonoBehaviour:
       m_Calls: []
   onExitNode:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: 60bd4236a431d3f479b9b4db10a44a3a, type: 2}
-        m_TargetAssemblyTypeName: QuestConsequence, Assembly-CSharp
-        m_MethodName: Execute
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: abeccb046d47fd64494cb73113a0de3d, type: 2}
-          m_ObjectArgumentAssemblyTypeName: GameState, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  exitActions: []
+      m_Calls: []
+  exitActions:
+  - kind: 1
+    variable:
+      id: 3cb43aa5-3009-4d15-9353-f8aa8b6af59c
+      path: Root/Player/NewInt
+    intValue: -1
+    boolValue: 0
+    stringValue: 
+    enumString: 
+    objectiveIndex: 0
+    arithmeticOp: 0
+    clampToTargetRange: 0
+  - kind: 6
+    variable:
+      id: 9034d858-bf84-461d-82a2-d6326255262a
+      path: Root/Quests/HelptheMouner
+    intValue: -1
+    boolValue: 0
+    stringValue: 
+    enumString: Completed
+    objectiveIndex: 0
+    arithmeticOp: 0
+    clampToTargetRange: 0
+  - kind: 7
+    variable:
+      id: b94ed326-e9c9-455e-9e5f-6b48d8b92eae
+      path: Root/Quests/HelptheTownsfolk
+    intValue: 1
+    boolValue: 0
+    stringValue: 
+    enumString: Completed
+    objectiveIndex: 0
+    arithmeticOp: 0
+    clampToTargetRange: 0
   nextNode: {fileID: 0}
 --- !u!114 &11400000
 MonoBehaviour:
@@ -539,7 +582,7 @@ MonoBehaviour:
     position: {x: 2168, y: 1005}
   defaultSpeaker: {fileID: 11400000, guid: c0f5165958beabc4da2ec2ee254ee18b, type: 2}
   defaultListener: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
-  currentNode: {fileID: 2110140916608024655}
+  currentNode: {fileID: -738110193118216922}
 --- !u!114 &982885123101596447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -683,13 +726,46 @@ MonoBehaviour:
   choices: []
   conditionalBranches:
   - branchName: COMPLETED
-    operations: []
+    operations:
+    - variable:
+        id: 1e23fc48-52a5-4894-a7f4-317b9cee3315
+        path: Root/Quests/HelptheMouner/status
+      numericOp: 0
+      intValue: 0
+      boolOp: 0
+      boolValue: 0
+      stringOp: 0
+      stringValue: 
+      enumOp: 0
+      enumString: Completed
     targetNode: {fileID: -3282019869129366207}
   - branchName: Help Mourner In Progress
-    operations: []
+    operations:
+    - variable:
+        id: 1e23fc48-52a5-4894-a7f4-317b9cee3315
+        path: Root/Quests/HelptheMouner/status
+      numericOp: 0
+      intValue: 0
+      boolOp: 0
+      boolValue: 0
+      stringOp: 0
+      stringValue: 
+      enumOp: 0
+      enumString: InProgress
     targetNode: {fileID: 8492249177157220587}
   - branchName: Help Townsfolk In Progress
-    operations: []
+    operations:
+    - variable:
+        id: 9325d07c-71c6-48c1-9e5a-92d977adda50
+        path: Root/Quests/HelptheTownsfolk/status
+      numericOp: 0
+      intValue: 0
+      boolOp: 0
+      boolValue: 0
+      stringOp: 0
+      stringValue: 
+      enumOp: 0
+      enumString: InProgress
     targetNode: {fileID: 8840223466166777574}
   onEnterNode:
     m_PersistentCalls:
@@ -892,7 +968,7 @@ MonoBehaviour:
   m_Name: Node_17
   m_EditorClassIdentifier: 
   nodeId: 780208c3-71bc-4ea2-9492-0fa4a537e928
-  speakerName: Player
+  speakerName: Mourner
   speakerCharacter: {fileID: 11400000, guid: c0f5165958beabc4da2ec2ee254ee18b, type: 2}
   speakerExpression: Default
   listenerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
@@ -906,20 +982,19 @@ MonoBehaviour:
       m_Calls: []
   onExitNode:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: fc7850144c060404d96de87dcaeedc96, type: 2}
-        m_TargetAssemblyTypeName: QuestConsequence, Assembly-CSharp
-        m_MethodName: Execute
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: abeccb046d47fd64494cb73113a0de3d, type: 2}
-          m_ObjectArgumentAssemblyTypeName: GameState, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  exitActions: []
+      m_Calls: []
+  exitActions:
+  - kind: 6
+    variable:
+      id: 9034d858-bf84-461d-82a2-d6326255262a
+      path: Root/Quests/HelptheMouner
+    intValue: 0
+    boolValue: 0
+    stringValue: 
+    enumString: InProgress
+    objectiveIndex: 0
+    arithmeticOp: 0
+    clampToTargetRange: 0
   nextNode: {fileID: 0}
 --- !u!114 &8492249177157220587
 MonoBehaviour:

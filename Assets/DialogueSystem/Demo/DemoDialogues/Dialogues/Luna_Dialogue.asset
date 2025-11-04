@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Node_11
   m_EditorClassIdentifier: 
   nodeId: 57f2ccb5-ff10-41f6-9f73-f34241936c92
-  speakerName: 
+  speakerName: Luna
   speakerCharacter: {fileID: 11400000, guid: 5e97a2fa9ced9d74bba85bc6978d8644, type: 2}
   speakerExpression: Default
   listenerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
@@ -49,7 +49,21 @@ MonoBehaviour:
       stringValue: 
       enumOp: 0
       enumString: InProgress
-    targetNode: {fileID: 2769127903998570883}
+    targetNode: {fileID: 2083046710376435234}
+  - branchName: Ready To Turn In
+    operations:
+    - variable:
+        id: 9325d07c-71c6-48c1-9e5a-92d977adda50
+        path: Root/Quests/HelptheTownsfolk/status
+      numericOp: 0
+      intValue: 0
+      boolOp: 2
+      boolValue: 0
+      stringOp: 0
+      stringValue: 
+      enumOp: 0
+      enumString: ReadyToTurnIn
+    targetNode: {fileID: 2083046710376435234}
   - branchName: HaveTalked
     operations:
     - variable:
@@ -304,6 +318,36 @@ MonoBehaviour:
       m_Calls: []
   exitActions: []
   nextNode: {fileID: -699252119067909963}
+--- !u!114 &-940429354044167544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_17
+  m_EditorClassIdentifier: 
+  nodeId: 7c3dbcda-69c5-43af-a9c1-98095e4cebec
+  speakerName: Luna
+  speakerCharacter: {fileID: 11400000, guid: 5e97a2fa9ced9d74bba85bc6978d8644, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
+  listenerExpression: Default
+  listenerIsSpeaker: 0
+  dialogueText: So you helped the Merchant.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitActions: []
+  nextNode: {fileID: 0}
 --- !u!114 &-699252119067909963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -334,6 +378,36 @@ MonoBehaviour:
       m_Calls: []
   exitActions: []
   nextNode: {fileID: -9088405419575577821}
+--- !u!114 &-63173592825479741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_15
+  m_EditorClassIdentifier: 
+  nodeId: b2da9d7a-789e-446f-a173-9ba5067bde28
+  speakerName: Luna
+  speakerCharacter: {fileID: 11400000, guid: 5e97a2fa9ced9d74bba85bc6978d8644, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
+  listenerExpression: Default
+  listenerIsSpeaker: 0
+  dialogueText: I see you tried helping both of them.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitActions: []
+  nextNode: {fileID: 0}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -362,38 +436,50 @@ MonoBehaviour:
   - {fileID: -9100149295132089337}
   - {fileID: 2769127903998570883}
   - {fileID: -4618290059791301591}
+  - {fileID: 2083046710376435234}
+  - {fileID: -63173592825479741}
+  - {fileID: 4320923002327876005}
+  - {fileID: -940429354044167544}
   nodePositions:
   - nodeId: f8f934ac-99f8-4bd2-904c-3d800ce8bc03
-    position: {x: -786.5, y: -159.5}
+    position: {x: -786, y: -159}
   - nodeId: 78abd598-4321-442a-91a4-924515d1da54
-    position: {x: -464.5, y: -159.5}
+    position: {x: -464, y: -159}
   - nodeId: e6e505ae-f8ee-4765-8f32-2cd1423c4f36
-    position: {x: -165.5, y: -159.5}
+    position: {x: -165, y: -159}
   - nodeId: eab22764-7807-49dd-9810-8ee676cd66b9
-    position: {x: 127.5, y: -159.5}
+    position: {x: 128, y: -159}
   - nodeId: a735ce47-5742-4664-ad02-0d57cb4ebf9c
-    position: {x: 427, y: -159.5}
+    position: {x: 427, y: -159}
   - nodeId: b3804f19-a14d-498b-8a41-29ef371883c5
-    position: {x: 677, y: 48.5}
+    position: {x: 677, y: 49}
   - nodeId: 94afdb19-4369-46e8-bc0e-76ed9cd75757
-    position: {x: 1529, y: -9.5}
+    position: {x: 1529, y: -9}
   - nodeId: bad96483-8ae4-4dd6-b567-f0579d57a131
     position: {x: 1529, y: 329}
   - nodeId: 788f2711-e838-42e1-8618-787a0ea75fa6
-    position: {x: 1181, y: -9.5}
+    position: {x: 1181, y: -9}
   - nodeId: a124a581-3c57-4aa6-9f64-7d14d11988b8
     position: {x: 1181, y: 329}
   - nodeId: 67c68c67-b06c-4a6e-9645-bf6ba762e7cf
     position: {x: 1876, y: 329}
   - nodeId: 57f2ccb5-ff10-41f6-9f73-f34241936c92
-    position: {x: -1224, y: 14}
+    position: {x: -1303, y: 22}
   - nodeId: cf67a8eb-e022-4462-b12a-d9971334d1e9
-    position: {x: -800, y: 170.5}
+    position: {x: -760, y: 627}
   - nodeId: 896e6cd8-6397-4a49-994d-aa63b0c70d0b
-    position: {x: -800, y: 14}
+    position: {x: -800, y: -13}
+  - nodeId: 17366ab9-cc9e-4c5e-bf91-7cad05661630
+    position: {x: -1032, y: 329}
+  - nodeId: b2da9d7a-789e-446f-a173-9ba5067bde28
+    position: {x: -760, y: 472}
+  - nodeId: 25d93bf2-bec8-4cc2-ba30-4e515e87db02
+    position: {x: -734, y: 329}
+  - nodeId: 7c3dbcda-69c5-43af-a9c1-98095e4cebec
+    position: {x: -734, y: 164}
   defaultSpeaker: {fileID: 11400000, guid: 5e97a2fa9ced9d74bba85bc6978d8644, type: 2}
   defaultListener: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
-  currentNode: {fileID: -4400914224224945064}
+  currentNode: {fileID: -9100149295132089337}
 --- !u!114 &1882027759992111648
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -424,6 +510,103 @@ MonoBehaviour:
       m_Calls: []
   exitActions: []
   nextNode: {fileID: -7110149492458854456}
+--- !u!114 &2083046710376435234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_14
+  m_EditorClassIdentifier: 
+  nodeId: 17366ab9-cc9e-4c5e-bf91-7cad05661630
+  speakerName: Luna
+  speakerCharacter: {fileID: 11400000, guid: 5e97a2fa9ced9d74bba85bc6978d8644, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
+  listenerExpression: Default
+  listenerIsSpeaker: 0
+  dialogueText: 
+  choices: []
+  conditionalBranches:
+  - branchName: Merchant Helped
+    operations:
+    - variable:
+        id: 2ee8cb51-24e1-4fa8-af51-d25609f4d398
+        path: Root/Quests/HelptheTownsfolk/HelptheMerchant/progress
+      numericOp: 0
+      intValue: 1
+      boolOp: 0
+      boolValue: 0
+      stringOp: 0
+      stringValue: 
+      enumOp: 0
+      enumString: NotStarted
+    targetNode: {fileID: -940429354044167544}
+  - branchName: Mourner Helped
+    operations:
+    - variable:
+        id: 3a9a05fe-b359-4695-a6b9-ff5af9a2c764
+        path: Root/Quests/HelptheTownsfolk/HelptheMourner/progress
+      numericOp: 0
+      intValue: 1
+      boolOp: 0
+      boolValue: 0
+      stringOp: 0
+      stringValue: 
+      enumOp: 0
+      enumString: NotStarted
+    targetNode: {fileID: 4320923002327876005}
+  - branchName: Both Helped
+    operations:
+    - variable:
+        id: 9325d07c-71c6-48c1-9e5a-92d977adda50
+        path: Root/Quests/HelptheTownsfolk/status
+      numericOp: 0
+      intValue: 0
+      boolOp: 0
+      boolValue: 0
+      stringOp: 0
+      stringValue: 
+      enumOp: 0
+      enumString: ReadyToTurnIn
+    targetNode: {fileID: -63173592825479741}
+  - branchName: None Helped
+    operations:
+    - variable:
+        id: 3a9a05fe-b359-4695-a6b9-ff5af9a2c764
+        path: Root/Quests/HelptheTownsfolk/HelptheMourner/progress
+      numericOp: 0
+      intValue: 0
+      boolOp: 0
+      boolValue: 0
+      stringOp: 0
+      stringValue: 
+      enumOp: 0
+      enumString: NotStarted
+    - variable:
+        id: 2ee8cb51-24e1-4fa8-af51-d25609f4d398
+        path: Root/Quests/HelptheTownsfolk/HelptheMerchant/progress
+      numericOp: 0
+      intValue: 0
+      boolOp: 0
+      boolValue: 0
+      stringOp: 0
+      stringValue: 
+      enumOp: 0
+      enumString: NotStarted
+    targetNode: {fileID: 2769127903998570883}
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitActions: []
+  nextNode: {fileID: 0}
 --- !u!114 &2308483982455164374
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -494,6 +677,36 @@ MonoBehaviour:
       m_Calls: []
   exitActions: []
   nextNode: {fileID: 0}
+--- !u!114 &4320923002327876005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_16
+  m_EditorClassIdentifier: 
+  nodeId: 25d93bf2-bec8-4cc2-ba30-4e515e87db02
+  speakerName: Luna
+  speakerCharacter: {fileID: 11400000, guid: 5e97a2fa9ced9d74bba85bc6978d8644, type: 2}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
+  listenerExpression: Default
+  listenerIsSpeaker: 0
+  dialogueText: So you helped the Mourner.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitActions: []
+  nextNode: {fileID: 0}
 --- !u!114 &5954068238915496916
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -507,7 +720,7 @@ MonoBehaviour:
   m_Name: Node_9
   m_EditorClassIdentifier: 
   nodeId: a124a581-3c57-4aa6-9f64-7d14d11988b8
-  speakerName: Player
+  speakerName: Luna
   speakerCharacter: {fileID: 11400000, guid: 5e97a2fa9ced9d74bba85bc6978d8644, type: 2}
   speakerExpression: Default
   listenerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
