@@ -18,6 +18,8 @@ public class DialogueManager : MonoBehaviour
 
     // NEW: global settings (designer friendly)
     [Header("Dialogue Flow (Global)")]
+    [Tooltip("Provides an input to use that will progress to the next node when pressed.")]
+    public InputActionReference progressDialogue;
     [Tooltip("If true, nodes will automatically advance when completed (unless overridden by node).")]
     public bool globalAutoAdvance = false;
     [Tooltip("Minimum time a node stays on screen before it is allowed to auto-advance.")]

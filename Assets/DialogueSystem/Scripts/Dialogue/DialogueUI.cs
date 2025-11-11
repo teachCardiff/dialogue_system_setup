@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem; // added for InputAction
 
 /// <summary>
 /// Simple UI for displaying dialogue.
@@ -63,12 +64,39 @@ public class DialogueUI : MonoBehaviour
     // UI ready flag so external callers can wait until the UI is initialized
     public bool IsReady { get; private set; } = false;
 
+    private void OnEnable()
+    {
+        var mgr = DialogueManager.Instance;
+        if (mgr != null && mgr.progressDialogue != null)
+        {
+            var act = mgr.progressDialogue.action;
+            act.performed += OnProgressPerformed;
+            if (!act.enabled) act.Enable();
+        }
+    }
+
+    private void OnDisable()
+    {
+        var mgr = DialogueManager.Instance;
+        if (mgr != null && mgr.progressDialogue != null)
+        {
+            var act = mgr.progressDialogue.action;
+            act.performed -= OnProgressPerformed;
+        }
+    }
+
+    private void OnProgressPerformed(InputAction.CallbackContext ctx)
+    {
+        Advance();
+    }
+
     private void Awake()
     {
         IsReady = false;
         // Initialize UI without deactivating GameObject or invoking events to keep Editor inspectors stable
         InitializeHiddenState();
-        nextButton.onClick.AddListener(() => nextPressed = true);
+        nextButton.onClick.AddListener(Advance); // use unified advance behavior
+        
         // Ensure we have an AudioSource for voice. If not assigned, add one.
         if (voiceSource == null)
         {
@@ -586,6 +614,19 @@ public class DialogueUI : MonoBehaviour
     public void SkipTypewriter()
     {
         skipTypewriter = true;
+    }
+
+    // Unified advance behavior for button and input action
+    public void Advance()
+    {
+        if (!IsTextFullyRevealed())
+        {
+            SkipTypewriter();
+        }
+        else
+        {
+            nextPressed = true;
+        }
     }
 
     public void ClearChoices()

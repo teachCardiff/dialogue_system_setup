@@ -44,6 +44,7 @@ MonoBehaviour:
         - rid: 16810047478956108
         - rid: 987104189638246468
         - rid: 987104248695357441
+        - rid: 922683919857352707
     - rid: 16810047478956103
       type: {class: VariableGroup, ns: , asm: Assembly-CSharp}
       data:
@@ -51,6 +52,8 @@ MonoBehaviour:
         key: Player
         displayName: Player
         children:
+        - rid: 922683919857352705
+        - rid: 922683919857352706
         - rid: 987104248695357440
     - rid: 16810047478956104
       type: {class: VariableGroup, ns: , asm: Assembly-CSharp}
@@ -60,6 +63,7 @@ MonoBehaviour:
         displayName: Flags
         children:
         - rid: 16810047478956115
+        - rid: 922683919857352704
     - rid: 16810047478956108
       type: {class: QuestVariable, ns: , asm: Assembly-CSharp}
       data:
@@ -127,6 +131,90 @@ MonoBehaviour:
           value: 1
         progress:
           id: 2ee8cb51-24e1-4fa8-af51-d25609f4d398
+          key: progress
+          displayName: Progress
+          value: 0
+    - rid: 922683919857352704
+      type: {class: IntVar, ns: , asm: Assembly-CSharp}
+      data:
+        id: 0827f53e-ffe2-4893-b14d-54c68a4739d1
+        key: NewInt
+        displayName: strength
+        value: 0
+    - rid: 922683919857352705
+      type: {class: StringVar, ns: , asm: Assembly-CSharp}
+      data:
+        id: 58687edf-c467-415b-a336-760ab6d298c3
+        key: NewString
+        displayName: playerName
+        value: 
+    - rid: 922683919857352706
+      type: {class: BoolVar, ns: , asm: Assembly-CSharp}
+      data:
+        id: 46027bfb-82f8-46b3-928f-ca4bf968b2bb
+        key: NewBool
+        displayName: New Bool
+        value: 0
+    - rid: 922683919857352707
+      type: {class: QuestVariable, ns: , asm: Assembly-CSharp}
+      data:
+        id: aad595e5-60ec-4daf-a196-9c9922b3cb60
+        key: AwesomeQuest
+        displayName: Awesome Quest
+        name:
+          id: 47fd86f3-2492-4a89-bd29-b0dba1943b16
+          key: name
+          displayName: Name
+          value: Awesome Quest
+        status:
+          id: e7978752-38b5-4501-bb19-3f5a7400d552
+          key: status
+          displayName: Status
+          value: 0
+        objectives:
+        - rid: 922683919857352708
+        - rid: 922683919857352709
+    - rid: 922683919857352708
+      type: {class: ObjectiveVariable, ns: , asm: Assembly-CSharp}
+      data:
+        id: 4d42b6e2-14ee-4d8a-8214-d0958667b076
+        key: Beawesome
+        displayName: Be awesome
+        display: 
+        name:
+          id: 166009a5-3cb2-4399-a1d0-9484418bb318
+          key: name
+          displayName: Obj Name
+          value: Be awesome
+        target:
+          id: fc6e071a-03e9-4de5-bcc0-89176542aa56
+          key: target
+          displayName: Target
+          value: 1
+        progress:
+          id: 95439b3e-2113-4c09-b7d8-486d5a19338a
+          key: progress
+          displayName: Progress
+          value: 0
+    - rid: 922683919857352709
+      type: {class: ObjectiveVariable, ns: , asm: Assembly-CSharp}
+      data:
+        id: 186e276e-895f-4bee-af2d-78e4d0ef081f
+        key: CollectFlowers
+        displayName: Collect Flowers
+        display: 
+        name:
+          id: 98bbfe3e-8b9d-4a96-8121-9291157eb03b
+          key: name
+          displayName: Obj Name
+          value: Collect Flowers
+        target:
+          id: fec12344-961b-495f-8ed7-d3b93dd1618f
+          key: target
+          displayName: Target
+          value: 4
+        progress:
+          id: e0f0f6d8-c041-40e5-b41d-ce78e46344d0
           key: progress
           displayName: Progress
           value: 0
