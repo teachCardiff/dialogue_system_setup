@@ -1,0 +1,139 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a09afc92a506d184c8c8e3fc2292ece4, type: 3}
+  m_Name: TestDialogue
+  m_EditorClassIdentifier: 
+  startNode: {fileID: 8095537879317460982}
+  nodes:
+  - {fileID: 8095537879317460982}
+  - {fileID: 5058269426397665536}
+  nodePositions:
+  - nodeId: 0876cee1-9201-40ba-98a6-086bc872bca0
+    position: {x: -87.5, y: -47.5}
+  - nodeId: e7b1ea64-4d22-464e-ba3f-f5102dcf7531
+    position: {x: 432.5, y: 19}
+  defaultSpeaker: {fileID: 0}
+  defaultListener: {fileID: 0}
+  currentNode: {fileID: 8095537879317460982}
+--- !u!114 &5058269426397665536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_1
+  m_EditorClassIdentifier: 
+  nodeId: e7b1ea64-4d22-464e-ba3f-f5102dcf7531
+  speakerName: 
+  speakerCharacter: {fileID: 0}
+  speakerExpression: 
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: Yup.
+  choices: []
+  conditionalBranches: []
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitActions: []
+  nextNode: {fileID: 0}
+  playback:
+    voiceClip: {fileID: 0}
+    voiceVolume: 1
+    overrideWaitMode: 0
+    waitMode: 4
+    overrideAutoAdvance: 0
+    autoAdvance: 1
+    autoAdvanceDelay: 0.25
+    allowSkipAudio: 1
+    stopVoiceOnExit: 1
+    matchTypewriterToAudio: 0
+--- !u!114 &8095537879317460982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56786f136997c24fbfbd385cf153dd2, type: 3}
+  m_Name: Node_0
+  m_EditorClassIdentifier: 
+  nodeId: 0876cee1-9201-40ba-98a6-086bc872bca0
+  speakerName: 
+  speakerCharacter: {fileID: 0}
+  speakerExpression: Default
+  listenerCharacter: {fileID: 0}
+  listenerExpression: 
+  listenerIsSpeaker: 0
+  dialogueText: Hmm...
+  choices: []
+  conditionalBranches:
+  - branchName: Started
+    operations:
+    - variable:
+        id: 9325d07c-71c6-48c1-9e5a-92d977adda50
+        path: Root/Quests/HelptheTownsfolk/status
+      numericOp: 0
+      intValue: 0
+      boolOp: 0
+      boolValue: 0
+      stringOp: 0
+      stringValue: 
+      enumOp: 0
+      enumString: NotStarted
+    targetNode: {fileID: 0}
+  - branchName: Talk to Luna
+    operations:
+    - variable:
+        id: f67df446-a2bd-45cb-96c0-39f44d7f83e2
+        path: Root/Flags/NewBool
+      numericOp: 0
+      intValue: 0
+      boolOp: 0
+      boolValue: 1
+      stringOp: 0
+      stringValue: 
+      enumOp: 0
+      enumString: NotStarted
+    targetNode: {fileID: 5058269426397665536}
+  - branchName: Test
+    operations: []
+    targetNode: {fileID: 0}
+  onEnterNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitNode:
+    m_PersistentCalls:
+      m_Calls: []
+  exitActions: []
+  nextNode: {fileID: 0}
+  playback:
+    voiceClip: {fileID: 0}
+    voiceVolume: 1
+    overrideWaitMode: 0
+    waitMode: 4
+    overrideAutoAdvance: 0
+    autoAdvance: 1
+    autoAdvanceDelay: 0.25
+    allowSkipAudio: 1
+    stopVoiceOnExit: 1
+    matchTypewriterToAudio: 0

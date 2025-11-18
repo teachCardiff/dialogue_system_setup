@@ -30,6 +30,17 @@ MonoBehaviour:
       m_Calls: []
   exitActions: []
   nextNode: {fileID: 0}
+  playback:
+    voiceClip: {fileID: 0}
+    voiceVolume: 1
+    overrideWaitMode: 0
+    waitMode: 4
+    overrideAutoAdvance: 0
+    autoAdvance: 1
+    autoAdvanceDelay: 0.25
+    allowSkipAudio: 1
+    stopVoiceOnExit: 1
+    matchTypewriterToAudio: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
