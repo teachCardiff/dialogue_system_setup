@@ -20,7 +20,7 @@ MonoBehaviour:
   - nodeId: 409d2354-2ff5-4898-acb1-4aa8794c7189
     position: {x: 0, y: -0.5}
   - nodeId: eb30d2fa-cbcb-4934-8296-d3cc932949a6
-    position: {x: 316, y: -0.5}
+    position: {x: 318, y: -0.5}
   defaultSpeaker: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
   defaultListener: {fileID: 0}
   currentNode: {fileID: 6711669015857125155}

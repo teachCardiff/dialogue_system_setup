@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public static class DemoScript
+public class DemoScript : MonoBehaviour
 {
-    public static void LoadAScene(int sceneIndex)
+    public void LoadAScene(int sceneIndex)
     {
         SceneManager.LoadScene(sceneIndex);
     }

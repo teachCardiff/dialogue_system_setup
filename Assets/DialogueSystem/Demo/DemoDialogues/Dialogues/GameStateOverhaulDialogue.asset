@@ -27,9 +27,32 @@ MonoBehaviour:
       m_Calls: []
   onExitNode:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11500000, guid: 9b99cbca2105d6045a5717c583bd1b16, type: 3}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   exitActions: []
   nextNode: {fileID: 0}
+  playback:
+    voiceClip: {fileID: 0}
+    voiceVolume: 1
+    overrideWaitMode: 0
+    waitMode: 4
+    overrideAutoAdvance: 0
+    autoAdvance: 1
+    autoAdvanceDelay: 0.25
+    allowSkipAudio: 1
+    stopVoiceOnExit: 1
+    matchTypewriterToAudio: 0
 --- !u!114 &-7734298086480148405
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,6 +83,17 @@ MonoBehaviour:
       m_Calls: []
   exitActions: []
   nextNode: {fileID: 0}
+  playback:
+    voiceClip: {fileID: 0}
+    voiceVolume: 1
+    overrideWaitMode: 0
+    waitMode: 4
+    overrideAutoAdvance: 0
+    autoAdvance: 1
+    autoAdvanceDelay: 0.25
+    allowSkipAudio: 1
+    stopVoiceOnExit: 1
+    matchTypewriterToAudio: 0
 --- !u!114 &-7038801307625094460
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,6 +145,17 @@ MonoBehaviour:
       m_Calls: []
   exitActions: []
   nextNode: {fileID: 0}
+  playback:
+    voiceClip: {fileID: 0}
+    voiceVolume: 1
+    overrideWaitMode: 0
+    waitMode: 4
+    overrideAutoAdvance: 0
+    autoAdvance: 1
+    autoAdvanceDelay: 0.25
+    allowSkipAudio: 1
+    stopVoiceOnExit: 1
+    matchTypewriterToAudio: 0
 --- !u!114 &-5478290007893483344
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141,6 +186,17 @@ MonoBehaviour:
       m_Calls: []
   exitActions: []
   nextNode: {fileID: 0}
+  playback:
+    voiceClip: {fileID: 0}
+    voiceVolume: 1
+    overrideWaitMode: 0
+    waitMode: 4
+    overrideAutoAdvance: 0
+    autoAdvance: 1
+    autoAdvanceDelay: 0.25
+    allowSkipAudio: 1
+    stopVoiceOnExit: 1
+    matchTypewriterToAudio: 0
 --- !u!114 &-4625227167155770187
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,6 +248,17 @@ MonoBehaviour:
       m_Calls: []
   exitActions: []
   nextNode: {fileID: 0}
+  playback:
+    voiceClip: {fileID: 0}
+    voiceVolume: 1
+    overrideWaitMode: 0
+    waitMode: 4
+    overrideAutoAdvance: 0
+    autoAdvance: 1
+    autoAdvanceDelay: 0.25
+    allowSkipAudio: 1
+    stopVoiceOnExit: 1
+    matchTypewriterToAudio: 0
 --- !u!114 &-977019167031255378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -222,6 +289,17 @@ MonoBehaviour:
       m_Calls: []
   exitActions: []
   nextNode: {fileID: 0}
+  playback:
+    voiceClip: {fileID: 0}
+    voiceVolume: 1
+    overrideWaitMode: 0
+    waitMode: 4
+    overrideAutoAdvance: 0
+    autoAdvance: 1
+    autoAdvanceDelay: 0.25
+    allowSkipAudio: 1
+    stopVoiceOnExit: 1
+    matchTypewriterToAudio: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -356,6 +434,17 @@ MonoBehaviour:
       m_Calls: []
   exitActions: []
   nextNode: {fileID: 0}
+  playback:
+    voiceClip: {fileID: 0}
+    voiceVolume: 1
+    overrideWaitMode: 0
+    waitMode: 4
+    overrideAutoAdvance: 0
+    autoAdvance: 1
+    autoAdvanceDelay: 0.25
+    allowSkipAudio: 1
+    stopVoiceOnExit: 1
+    matchTypewriterToAudio: 0
 --- !u!114 &5852986684297212024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -386,6 +475,17 @@ MonoBehaviour:
       m_Calls: []
   exitActions: []
   nextNode: {fileID: 0}
+  playback:
+    voiceClip: {fileID: 0}
+    voiceVolume: 1
+    overrideWaitMode: 0
+    waitMode: 4
+    overrideAutoAdvance: 0
+    autoAdvance: 1
+    autoAdvanceDelay: 0.25
+    allowSkipAudio: 1
+    stopVoiceOnExit: 1
+    matchTypewriterToAudio: 0
 --- !u!114 &7354318939710126531
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -427,6 +527,17 @@ MonoBehaviour:
     arithmeticOp: 0
     clampToTargetRange: 1
   nextNode: {fileID: -8253299042486143984}
+  playback:
+    voiceClip: {fileID: 0}
+    voiceVolume: 1
+    overrideWaitMode: 0
+    waitMode: 4
+    overrideAutoAdvance: 0
+    autoAdvance: 1
+    autoAdvanceDelay: 0.25
+    allowSkipAudio: 1
+    stopVoiceOnExit: 1
+    matchTypewriterToAudio: 0
 --- !u!114 &7726138900940244414
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -457,3 +568,14 @@ MonoBehaviour:
       m_Calls: []
   exitActions: []
   nextNode: {fileID: -5478290007893483344}
+  playback:
+    voiceClip: {fileID: 0}
+    voiceVolume: 1
+    overrideWaitMode: 0
+    waitMode: 4
+    overrideAutoAdvance: 0
+    autoAdvance: 1
+    autoAdvanceDelay: 0.25
+    allowSkipAudio: 1
+    stopVoiceOnExit: 1
+    matchTypewriterToAudio: 0
