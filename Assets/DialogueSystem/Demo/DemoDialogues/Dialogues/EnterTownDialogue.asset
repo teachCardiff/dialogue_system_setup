@@ -23,7 +23,7 @@ MonoBehaviour:
     position: {x: 316, y: -0.5}
   defaultSpeaker: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
   defaultListener: {fileID: 0}
-  currentNode: {fileID: 0}
+  currentNode: {fileID: 6711669015857125155}
 --- !u!114 &6711669015857125155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39,11 +39,11 @@ MonoBehaviour:
   nodeId: eb30d2fa-cbcb-4934-8296-d3cc932949a6
   speakerName: 
   speakerCharacter: {fileID: 11400000, guid: 8d3644b814408dc4e823918de1018f14, type: 2}
-  speakerExpression: 
+  speakerExpression: Default
   listenerCharacter: {fileID: 0}
   listenerExpression: 
   listenerIsSpeaker: 0
-  dialogueText: 
+  dialogueText: Maybe I'll ask around.
   choices: []
   conditionalBranches: []
   onEnterNode:
@@ -51,7 +51,19 @@ MonoBehaviour:
       m_Calls: []
   onExitNode:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 92f2ada745b4ca1409ab0eb2e2619553, type: 2}
+        m_TargetAssemblyTypeName: TimelineEventChannel, Assembly-CSharp
+        m_MethodName: RaiseResume
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   exitActions: []
   nextNode: {fileID: 0}
   playback:
